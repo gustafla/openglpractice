@@ -21,7 +21,14 @@ int main(int argc, char *argv[]) {
     fpsCounter.addFrameTime(frameTime);
     fpsCounter.printer(time);
 
+    // Clear for good luck
+    glClearColor(1,0,0,1);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    // Render
+
+    // Show window fb contents
+    window.swapBuffers();
   }
 
   return 0;
