@@ -7,6 +7,7 @@ class Window {
     void bind();
     void restoreViewport();
     bool swapBuffers();
+    float getTime();
 
   private:
     void open();

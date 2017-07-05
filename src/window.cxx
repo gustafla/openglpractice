@@ -13,6 +13,10 @@ Window::~Window() {
   close();
 }
 
+float Window::getTime() {
+  return static_cast<float>(SDL_GetTicks())/1000.f;
+}
+
 void Window::open() {
   SDL_Init(SDL_INIT_EVERYTHING);
   
@@ -46,7 +50,8 @@ bool Window::swapBuffers() {
   if (events.type == SDL_QUIT)
     return false;
   else if (events.type == SDL_KEYDOWN)
-    if (events.key.keysym.sym == SDLK_ESCAPE)
+    if (events.key.keysym.sym == SDLK_ESCAPE ||
+        events.key.keysym.sym == SDLK_q)
       return false;
 
   return true;
