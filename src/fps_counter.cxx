@@ -2,7 +2,7 @@
 #include <iostream>
 
 FpsCounter::FpsCounter(float printInterval, int sampleSize):
-  deltaTimeHistory(sampleSize), // Initialize dt history buf
+  frameTimeHistory(sampleSize), // Initialize dt history buf
   SAMPLE_SIZE(sampleSize), PRINT_INTERVAL(printInterval) {
 }
 
@@ -11,7 +11,7 @@ void FpsCounter::printer(float currentTime) {
   if (currentTime > lastPrintTime + PRINT_INTERVAL) {
     // Calculate average and print a report
     float avg = 0.;
-    for (auto const &f: deltaTimeHistory) {
+    for (auto const &f: frameTimeHistory) {
       avg += f;
     }
     avg /= static_cast<float>(SAMPLE_SIZE);
@@ -20,8 +20,8 @@ void FpsCounter::printer(float currentTime) {
   }
 }
 
-void FpsCounter::addDeltaTime(float dt) {
+void FpsCounter::addFrameTime(float dt) {
   // Tracking a circular buffer for delta time data
   static int i = 0;
-  deltaTimeHistory[i++ % SAMPLE_SIZE] = dt;
+  frameTimeHistory[i++ % SAMPLE_SIZE] = dt;
 }
