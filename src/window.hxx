@@ -6,7 +6,7 @@ class Window {
     ~Window();
     void bind();
     void restoreViewport();
-    void swapBuffers();
+    bool swapBuffers();
 
   private:
     void open();

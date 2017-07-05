@@ -1,8 +1,16 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.1)
 project (openglpractice)
 
+# C++11
+set (CMAKE_CXX_STANDARD 11)
+
+# Glob src files
+file(GLOB SRC_FILES
+  "src/*.cxx"
+)
+
 # add the executable
-add_executable(${PROJECT_NAME} main.cxx window.cxx)
+add_executable(${PROJECT_NAME} ${SRC_FILES})
 
 # for SDL
 INCLUDE(FindPkgConfig)
