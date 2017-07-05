@@ -1,8 +1,5 @@
 #include "window.hxx"
-#include <GL/glew.h>
-#include <SDL2/SDL.h>
 #include <cstdlib>
-#include <GL/gl.h>
 
 Window::Window():
 width(1280), height(720) {

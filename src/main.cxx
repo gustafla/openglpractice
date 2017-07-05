@@ -1,7 +1,6 @@
 #include <iostream>
 #include "window.hxx"
 #include "fps_counter.hxx"
-#include <GL/gl.h>
 #include <cmath>
 
 int main(int argc, char *argv[]) {
