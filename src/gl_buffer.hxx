@@ -5,6 +5,7 @@
 class GlBuffer {
   public:
     GlBuffer(GLenum type);
+    GlBuffer(GLenum type, GLsizeiptr size, GLvoid *data, GLenum usage);
     ~GlBuffer();
     void bind();
     void setData(GLsizeiptr size, GLvoid *data, GLenum usage);
