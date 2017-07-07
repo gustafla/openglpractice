@@ -20,13 +20,18 @@ void GlShader::setSource(GLsizei count, GLchar const *source[]) {
   glShaderSource(id, count, source, NULL);
 }
 
-void GlShader::compile() {
+GLint GlShader::compile() {
   glCompileShader(id); 
-  GLint err;
+  GLint succ;
   GLchar log[512];
-  glGetShaderiv(id, GL_COMPILE_STATUS, &err);
-  if (!err) {
+  glGetShaderiv(id, GL_COMPILE_STATUS, &succ);
+  if (!succ) {
     glGetShaderInfoLog(id, 512, NULL, log);
     std::cout << "Error compiling shader\n" << log << std::endl;
   }
+  return succ;
+}
+
+GLuint GlShader::getId() {
+  return id;
 }

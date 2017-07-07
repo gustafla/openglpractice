@@ -9,7 +9,8 @@ class GlShader {
     GlShader(GLenum type, GLsizei count, GLchar const *source[]);
     ~GlShader();
     void setSource(GLsizei count, GLchar const *source[]);
-    void compile();
+    GLint compile();
+    GLuint getId();
 
   private:
     GLuint id;
