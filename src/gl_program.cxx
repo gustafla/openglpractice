@@ -18,6 +18,7 @@ GlProgram::~GlProgram() {
 }
 
 void GlProgram::attachShader(GlShader &s) {
+  
   glAttachShader(id, s.getId());
 }
 

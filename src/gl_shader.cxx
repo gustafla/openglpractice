@@ -6,7 +6,7 @@ GlShader::GlShader(GLenum type):
   id = glCreateShader(type);
 }
 
-GlShader::GlShader(GLenum type, GLsizei count, GLchar const *source[]):
+GlShader::GlShader(GLenum type, GLsizei count, GLchar const source[]):
   GlShader(type) {
   setSource(count, source);
   compile();
@@ -16,8 +16,8 @@ GlShader::~GlShader() {
   glDeleteShader(id);
 }
 
-void GlShader::setSource(GLsizei count, GLchar const *source[]) {
-  glShaderSource(id, count, source, NULL);
+void GlShader::setSource(GLsizei count, GLchar const source[]) {
+  glShaderSource(id, count, &source, NULL);
 }
 
 GLint GlShader::compile() {
