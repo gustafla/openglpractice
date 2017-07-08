@@ -11,3 +11,7 @@ GlVertexArray::~GlVertexArray() {
 void GlVertexArray::bind() {
   glBindVertexArray(id);
 }
+
+void GlVertexArray::unbind() {
+  glBindVertexArray(0);
+}

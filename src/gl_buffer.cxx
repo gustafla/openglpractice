@@ -18,6 +18,10 @@ void GlBuffer::bind() {
   glBindBuffer(type, id);
 }
 
+void GlBuffer::unbind() {
+  glBindBuffer(type, 0);
+}
+
 void GlBuffer::setData(GLsizeiptr size, GLvoid *data, GLenum usage) {
   bind();
   glBufferData(type, size, data, usage);

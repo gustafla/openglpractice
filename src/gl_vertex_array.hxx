@@ -7,7 +7,8 @@ class GlVertexArray {
     GlVertexArray();
     ~GlVertexArray();
     void bind();
-    
+    void unbind();
+
   private:
     GLuint id;
 };

@@ -1,14 +1,15 @@
 #include "gl_shader.hxx"
 #include <iostream>
+#include <vector>
 
 GlShader::GlShader(GLenum type):
   type(type) {
   id = glCreateShader(type);
 }
 
-GlShader::GlShader(GLenum type, GLsizei count, GLchar const source[]):
+GlShader::GlShader(GLenum type, GLsizei count, GLchar const *sources[]):
   GlShader(type) {
-  setSource(count, source);
+  setSource(count, sources);
   compile();
 }
 
@@ -16,8 +17,9 @@ GlShader::~GlShader() {
   glDeleteShader(id);
 }
 
-void GlShader::setSource(GLsizei count, GLchar const source[]) {
-  glShaderSource(id, count, &source, NULL);
+void GlShader::setSource(GLsizei count, GLchar const *sources[]) {
+  std::vector<GLint> lens(count, -1);
+  glShaderSource(id, count, sources, &lens[0]);
 }
 
 GLint GlShader::compile() {
