@@ -8,9 +8,16 @@
 #include <cmath>
 
 static const GLfloat _verts[] = {
-  -0.5f, -0.5f, 0.0f,
-  0.5f, -0.5f, 0.0f,
-  0.0f,  0.5f, 0.0f
+  -0.5, -0.5, 0,
+  0, -0.5, 0,
+  -0.25, 0.25, 0,
+  0, -0.5, 0,
+  0.5, -0.5, 0,
+  0.25, 0.25, 0
+};
+
+static const GLuint _indices[] = {
+  0, 1, 2
 };
 
 static const GLchar *_vs = 
@@ -30,39 +37,41 @@ static const GLchar *_fs =
 class Renderer {
   public:
     Renderer():
-      vb(GL_ARRAY_BUFFER, sizeof(_verts), (GLvoid*)_verts, GL_STATIC_DRAW) {
-
+      vb(GL_ARRAY_BUFFER, sizeof(_verts), (GLvoid*)_verts, GL_STATIC_DRAW),
+      eb(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices), (GLvoid*)_indices, GL_STATIC_DRAW)
+    {
+  
       GlShader vs(GL_VERTEX_SHADER, 1, &_vs);
       GlShader fs(GL_FRAGMENT_SHADER, 1, &_fs);
-
+  
       shader.attachShader(vs);
       shader.attachShader(fs);
-
+  
       if (!shader.link()) {
         exit(EXIT_FAILURE);
       }
-
+  
+      eb.bind();
       vb.bind();
       va.bind();
       glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), (void*)0);
       glEnableVertexAttribArray(0);
-      va.unbind();
-      vb.unbind();
+      //va.unbind();
+      //vb.unbind();
+      //eb.unbind();
     }
 
     void render(float t) {
-      vb.bind();
       va.bind();
-
       shader.use();
-      glDrawArrays(GL_TRIANGLES, 0, 3);
-
+      //glDrawArrays(GL_TRIANGLES, 0, 6);
+      glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, _indices);
       va.unbind();
-      vb.unbind();
     }
 
   private:
     GlBuffer vb;
+    GlBuffer eb;
     GlProgram shader;
     GlVertexArray va;
 };
@@ -75,6 +84,8 @@ int main(int argc, char *argv[]) {
   float timeLast, time, frameTime;
 
   Renderer r;
+
+  //glDisable(GL_CULL_FACE);
 
   while (window.swapBuffers()) {
     // Approximate timings

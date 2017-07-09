@@ -47,8 +47,7 @@ bool Window::swapBuffers() {
   if (events.type == SDL_QUIT)
     return false;
   else if (events.type == SDL_KEYDOWN)
-    if (events.key.keysym.sym == SDLK_ESCAPE ||
-        events.key.keysym.sym == SDLK_q)
+    if (events.key.keysym.sym == SDLK_ESCAPE)
       return false;
 
   return true;
