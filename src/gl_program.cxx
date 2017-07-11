@@ -38,6 +38,21 @@ GLint GlProgram::link() {
     glGetProgramInfoLog(id, 512, NULL, log);
     std::cout << "Error linking program\n" << log << std::endl;
   }
+
+  //Look up and store all uniforms to a string keyed std::map
+  int uniformCount;
+  int uniformLength;
+  glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &uniformCount);
+  glGetProgramiv(id, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformLength);
+  GLchar* ufmName = new GLchar[uniformLength];
+  GLint ufmSize;
+  GLenum ufmType;
+  for (int i=0; i<uniformCount; i++) {
+    glGetActiveUniform(id, i, uniformLength, NULL, &ufmSize, &ufmType, ufmName);
+    uniforms[std::string(ufmName)] = glGetUniformLocation(id, ufmName);
+  }
+  delete[] ufmName;
+
   return succ;
 }
 
@@ -49,14 +64,14 @@ GLuint GlProgram::getId() {
   return id;
 }
 
-void setUfm(std::string const &name, float value) {
-
+void GlProgram::setUfm(std::string const &name, float value) {
+  glUniform1f(uniforms[name], value);
 }
 
-void setUfm(std::string const &name, bool value) {
-
+void GlProgram::setUfm(std::string const &name, bool value) {
+  glUniform1i(uniforms[name], value);
 }
 
-void setUfm(std::string const &name, int value) {
-
+void GlProgram::setUfm(std::string const &name, int value) {
+  glUniform1i(uniforms[name], value);
 }

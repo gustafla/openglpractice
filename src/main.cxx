@@ -66,7 +66,7 @@ class Renderer {
 
     void render(float t) {
       shader.use();
-      glUniform1f(shader_u_time, t);
+      shader.setUfm("u_time", t);
       va.bind();
       glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
       va.unbind();

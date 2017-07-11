@@ -2,6 +2,7 @@
 
 #include "window.hxx"
 #include "gl_shader.hxx"
+#include <map>
 
 class GlProgram {
   public:
@@ -21,4 +22,5 @@ class GlProgram {
 
   private:
     GLuint id;
+    std::map<std::string, GLint> uniforms;
 };
