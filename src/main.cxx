@@ -35,6 +35,13 @@ static const GLchar *_fs =
 "  FragColor = vec4(0.0, 0.2, 1.0, 1.0);\n"
 "}\n";
 
+static const GLchar *_fs2 =
+"#version 330 core\n"
+"out vec4 FragColor;\n"
+"void main() {\n"
+"  FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
+"}\n";
+
 class Renderer {
   public:
     Renderer():
@@ -44,11 +51,16 @@ class Renderer {
   
       GlShader vs(GL_VERTEX_SHADER, 1, &_vs);
       GlShader fs(GL_FRAGMENT_SHADER, 1, &_fs);
+      GlShader fs2(GL_FRAGMENT_SHADER, 1, &_fs2);
   
       shader.attachShader(vs);
       shader.attachShader(fs);
-  
       if (!shader.link()) {
+        exit(EXIT_FAILURE);
+      }
+      shader2.attachShader(vs);
+      shader2.attachShader(fs2);
+      if (!shader2.link()) {
         exit(EXIT_FAILURE);
       }
   
@@ -58,15 +70,17 @@ class Renderer {
       glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), (void*)0);
       glEnableVertexAttribArray(0);
       va.unbind();
-      vb.unbind();
-      eb.unbind();
     }
 
     void render(float t) {
-      va.bind();
       shader.use();
-      //glDrawArrays(GL_TRIANGLES, 0, 6);
-      glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+      va.bind();
+      glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+      va.unbind();
+
+      shader2.use();
+      va.bind();
+      glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (GLvoid*)(3*sizeof(GLuint)));
       va.unbind();
     }
 
@@ -74,6 +88,7 @@ class Renderer {
     GlBuffer vb;
     GlBuffer eb;
     GlProgram shader;
+    GlProgram shader2;
     GlVertexArray va;
 };
 
