@@ -1,12 +1,19 @@
 #include "gl_program.hxx"
 #include <iostream>
 
+GlProgram GlProgram::loadFromFiles(std::string const &vsName, std::string const &fsName) {
+  GlShader vs = GlShader::loadFromFile(vsName, GL_VERTEX_SHADER);
+  GlShader fs = GlShader::loadFromFile(fsName, GL_FRAGMENT_SHADER);
+  return GlProgram(vs, fs);
+}
+
 GlProgram::GlProgram() {
   id = glCreateProgram();
 }
 
-GlProgram::GlProgram(GlShader &vs, GlShader &fs):
-  GlProgram() {
+GlProgram::GlProgram(GlShader const &vs, GlShader const &fs):
+  GlProgram()
+{
   use();
   attachShader(vs);
   attachShader(fs);
@@ -17,8 +24,7 @@ GlProgram::~GlProgram() {
   glDeleteProgram(id);
 }
 
-void GlProgram::attachShader(GlShader &s) {
-  
+void GlProgram::attachShader(GlShader const &s) {
   glAttachShader(id, s.getId());
 }
 
@@ -41,4 +47,16 @@ void GlProgram::use() {
 
 GLuint GlProgram::getId() {
   return id;
+}
+
+void setUfm(std::string const &name, float value) {
+
+}
+
+void setUfm(std::string const &name, bool value) {
+
+}
+
+void setUfm(std::string const &name, int value) {
+
 }

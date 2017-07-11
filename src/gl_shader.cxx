@@ -3,7 +3,7 @@
 #include <vector>
 #include <fstream>
 
-GlShader GlShader::loadFromFile(std::string filename, GLenum type) {
+GlShader GlShader::loadFromFile(std::string const &filename, GLenum const type) {
   std::ifstream file(filename);
   if (file.fail()) {
     std::cout << "Failed to open file " << filename << std::endl;
@@ -35,13 +35,15 @@ GlShader GlShader::loadFromFile(std::string filename, GLenum type) {
   return GlShader(realtype, 1, &filetextptr);
 }
 
-GlShader::GlShader(GLenum type):
-  type(type) {
+GlShader::GlShader(GLenum const type):
+  type(type)
+{
   id = glCreateShader(type);
 }
 
-GlShader::GlShader(GLenum type, GLsizei count, GLchar const *sources[]):
-  GlShader(type) {
+GlShader::GlShader(GLenum const type, GLsizei const count, GLchar const *sources[]):
+  GlShader(type)
+{
   setSource(count, sources);
   compile();
 }
@@ -50,7 +52,7 @@ GlShader::~GlShader() {
   glDeleteShader(id);
 }
 
-void GlShader::setSource(GLsizei count, GLchar const *sources[]) {
+void GlShader::setSource(GLsizei const count, GLchar const *sources[]) {
   std::vector<GLint> lens(count, -1);
   glShaderSource(id, count, sources, &lens[0]);
 }
@@ -67,6 +69,6 @@ GLint GlShader::compile() {
   return succ;
 }
 
-GLuint GlShader::getId() {
+GLuint GlShader::getId() const {
   return id;
 }
