@@ -17,7 +17,8 @@ static const GLfloat _verts[] = {
 };
 
 static const GLuint _indices[] = {
-  0, 1, 2
+  0, 1, 2,
+  3, 4, 5
 };
 
 static const GLchar *_vs = 
@@ -51,21 +52,21 @@ class Renderer {
         exit(EXIT_FAILURE);
       }
   
+      va.bind();
       eb.bind();
       vb.bind();
-      va.bind();
       glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), (void*)0);
       glEnableVertexAttribArray(0);
-      //va.unbind();
-      //vb.unbind();
-      //eb.unbind();
+      va.unbind();
+      vb.unbind();
+      eb.unbind();
     }
 
     void render(float t) {
       va.bind();
       shader.use();
       //glDrawArrays(GL_TRIANGLES, 0, 6);
-      glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, _indices);
+      glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
       va.unbind();
     }
 
