@@ -21,19 +21,6 @@ static const GLuint _indices[] = {
   3, 4, 5
 };
 
-static const GLchar *_vs = 
-"#version 330 core\n"
-"layout (location=0) in vec3 aPos;\n"
-"void main() {\n"
-"  gl_Position = vec4(aPos, 1.0);\n"
-"}\n";
-
-static const GLchar *_fs =
-"#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main() {\n"
-"  FragColor = vec4(0.0, 0.2, 1.0, 1.0);\n"
-"}\n";
 
 static const GLchar *_fs2 =
 "#version 330 core\n"
@@ -49,8 +36,8 @@ class Renderer {
       eb(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices), (GLvoid*)_indices, GL_STATIC_DRAW)
     {
   
-      GlShader vs(GL_VERTEX_SHADER, 1, &_vs);
-      GlShader fs(GL_FRAGMENT_SHADER, 1, &_fs);
+      GlShader vs = GlShader::loadFromFile("vs.vert");
+      GlShader fs = GlShader::loadFromFile("fs.frag");
       GlShader fs2(GL_FRAGMENT_SHADER, 1, &_fs2);
   
       shader.attachShader(vs);
