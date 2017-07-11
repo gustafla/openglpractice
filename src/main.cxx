@@ -45,6 +45,9 @@ class Renderer {
       if (!shader.link()) {
         exit(EXIT_FAILURE);
       }
+
+      shader_u_time = glGetUniformLocation(shader.getId(), "u_time");
+
       shader2.attachShader(vs);
       shader2.attachShader(fs2);
       if (!shader2.link()) {
@@ -61,6 +64,7 @@ class Renderer {
 
     void render(float t) {
       shader.use();
+      glUniform1f(shader_u_time, t);
       va.bind();
       glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
       va.unbind();
@@ -77,13 +81,14 @@ class Renderer {
     GlProgram shader;
     GlProgram shader2;
     GlVertexArray va;
+    GLint shader_u_time;
 };
 
 int main(int argc, char *argv[]) {
   std::cout << "OpenGL test\n";
 
   Window window;
-  FpsCounter fpsCounter(4, 255);
+  FpsCounter fpsCounter(2, 64);
   float timeLast, time, frameTime;
 
   Renderer r;

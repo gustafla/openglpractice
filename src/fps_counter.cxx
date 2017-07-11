@@ -3,7 +3,9 @@
 
 FpsCounter::FpsCounter(float printInterval, int sampleSize):
   frameTimeHistory(sampleSize), // Initialize dt history buf
-  SAMPLE_SIZE(sampleSize), PRINT_INTERVAL(printInterval) {
+  SAMPLE_SIZE(sampleSize), PRINT_INTERVAL(printInterval),
+  lastPrintTime(0.f)
+{
 }
 
 void FpsCounter::printer(float currentTime) {
