@@ -8,12 +8,12 @@
 #include <cmath>
 
 static const GLfloat _verts[] = {
-  -0.5, -0.5, 0,
-  0, -0.5, 0,
-  -0.25, 0.25, 0,
-  0, -0.5, 0,
-  0.5, -0.5, 0,
-  0.25, 0.25, 0
+  -0.5, -0.5, 0, 0, 0, 0,
+  0, -0.5, 0, 0, 0, 0,
+  -0.25, 0.25, 0, 0, 0, 0,
+  0, -0.5, 0, 1, 0, 0,
+  0.5, -0.5, 0, 0, 1, 0,
+  0.25, 0.25, 0, 0, 0, 1
 };
 
 static const GLuint _indices[] = {
@@ -21,12 +21,12 @@ static const GLuint _indices[] = {
   3, 4, 5
 };
 
-
 static const GLchar *_fs2 =
 "#version 330 core\n"
 "out vec4 FragColor;\n"
+"in vec3 o_color;\n"
 "void main() {\n"
-"  FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
+"  FragColor = vec4(o_color, 1.0);\n"
 "}\n";
 
 class Renderer {
@@ -57,8 +57,10 @@ class Renderer {
       va.bind();
       eb.bind();
       vb.bind();
-      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), (void*)0);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(GLfloat), (void*)0);
       glEnableVertexAttribArray(0);
+      glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
+      glEnableVertexAttribArray(1);
       va.unbind();
     }
 
