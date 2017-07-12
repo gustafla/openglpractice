@@ -14,7 +14,7 @@ Player::Player(std::string const &filename) {
 
   want.freq = sampleRate;
   want.format = AUDIO_S16LSB;
-  want.channels = 2;
+  want.channels = channels;
   want.samples = 4096;
   want.callback = playerCallback;
   want.userdata = (void*)this;
@@ -27,7 +27,7 @@ Player::Player(std::string const &filename) {
   }
 
   // Prep player class members to play from previously loaded audio buffer
-  currentLen = len * sizeof(uint16_t);
+  currentLen = len * sizeof(uint16_t) * channels;
   audioPos = audioData = (uint8_t*)buffer;
 }
 
@@ -44,6 +44,7 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
 
   // Don't play if empty
   if (player->currentLen == 0) {
+    SDL_memset(stream, 0, len);
     return;
   }
 
