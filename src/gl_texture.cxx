@@ -2,23 +2,33 @@
 #include "stb_image.h"
 #include <iostream>
 
-GlTexture GlTexture::loadFromFile(std::string const &filename, GLenum const target) {
+GlTexture GlTexture::loadFromFile(std::string const &filename,
+    GLenum const target) {
   GlTexture texture(target);
   texture.setTexParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
   texture.setTexParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
   texture.setTexParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   texture.setTexParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+  // set loader param
+  stbi_set_flip_vertically_on_load(true);
+
   // load the image
   int width, height, nChannels;
-  unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nChannels, 0);
+  unsigned char *data = stbi_load(filename.c_str(), &width, &height,
+      &nChannels, 0);
   if (data) { // set it into the texture object
-    texture.setTexImage2D(0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    texture.setTexImage2D(0, GL_RGB, width, height, 0, GL_RGB,
+        GL_UNSIGNED_BYTE, data);
   } else {
     std::cout << "Failed to load texture " << filename << std::endl;
   }
   stbi_image_free(data);
   return texture;
+}
+
+void GlTexture::useUnit(unsigned int const offset) {
+  glActiveTexture(GL_TEXTURE0 + offset);
 }
 
 GlTexture::GlTexture(GLenum const target):
@@ -36,10 +46,11 @@ void GlTexture::bind() {
 }
 
 void GlTexture::setTexImage2D(GLint const level, GLint const internalFormat,
-        GLsizei const width, GLsizei const height, GLint const border,
-        GLenum const format, GLenum const type, GLvoid const *data) {
+    GLsizei const width, GLsizei const height, GLint const border,
+    GLenum const format, GLenum const type, GLvoid const *data) {
   bind();
-  glTexImage2D(target, level, internalFormat, width, height, border, format, type, data);
+  glTexImage2D(target, level, internalFormat, width, height, border, format,
+      type, data);
 }
 
 void GlTexture::generateMipmap() {
