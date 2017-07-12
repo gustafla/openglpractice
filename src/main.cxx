@@ -1,6 +1,7 @@
 #include <iostream>
 #include "window.hxx"
 #include "fps_counter.hxx"
+#include "player.hxx"
 
 int main(int argc, char *argv[]) {
   std::cout << "OpenGL test\n";
@@ -8,6 +9,9 @@ int main(int argc, char *argv[]) {
   Window window;
   FpsCounter fpsCounter(2, 64);
   float timeLast, time, frameTime;
+
+  Player player("music.ogg");
+  player.start();
 
   while (window.swapBuffers()) {
     // Approximate timings
