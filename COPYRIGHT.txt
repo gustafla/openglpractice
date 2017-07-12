@@ -1,5 +1,5 @@
-All program source files except stb_image.h and tiny_obj_loader.h are
-copyright 2017 Lauri Gustafsson.
+All program source files except stb_image.h, stb_vorbis.cxx and
+tiny_obj_loader.h are copyright 2017 Lauri Gustafsson.
 
 tiny_obj_loader.h copyright (c) 2012-2017 Syoyo Fujita and many contributors.
 
