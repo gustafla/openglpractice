@@ -13,12 +13,13 @@ class GlProgram {
     GLint link();
     void use();
     GLuint getId();
-    
+
     void setUfm(std::string const &name, float value);
     void setUfm(std::string const &name, bool value);
     void setUfm(std::string const &name, int value);
 
-    static GlProgram loadFromFiles(std::string const &vsName, std::string const &fsName);
+    static GlProgram loadFromFiles(std::string const &vsName,
+        std::string const &fsName);
 
   private:
     GLuint id;

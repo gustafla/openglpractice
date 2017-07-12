@@ -1,7 +1,8 @@
 #include "gl_program.hxx"
 #include <iostream>
 
-GlProgram GlProgram::loadFromFiles(std::string const &vsName, std::string const &fsName) {
+GlProgram GlProgram::loadFromFiles(std::string const &vsName,
+    std::string const &fsName) {
   GlShader vs = GlShader::loadFromFile(vsName, GL_VERTEX_SHADER);
   GlShader fs = GlShader::loadFromFile(fsName, GL_FRAGMENT_SHADER);
   return GlProgram(vs, fs);

@@ -2,7 +2,8 @@
 #include <cstdlib>
 
 Window::Window():
-width(1280), height(720) {
+  width(1280), height(720)
+{
   open();
 }
 
@@ -16,7 +17,7 @@ float Window::getTime() {
 
 void Window::open() {
   SDL_Init(SDL_INIT_EVERYTHING);
-  
+
   SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -27,7 +28,7 @@ void Window::open() {
   window = SDL_CreateWindow("",
       SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
       width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
-  );
+      );
 
   context = SDL_GL_CreateContext(window);
 

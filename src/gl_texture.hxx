@@ -16,7 +16,8 @@ class GlTexture {
     // do etc when needed
     GLuint getId() const;
 
-    static GlTexture loadFromFile(std::string const &filename, GLenum const target);
+    static GlTexture loadFromFile(std::string const &filename,
+        GLenum const target);
     static void useUnit(unsigned int const offset);
 
   private:

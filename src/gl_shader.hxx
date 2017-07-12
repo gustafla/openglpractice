@@ -12,7 +12,8 @@ class GlShader {
     GLint compile();
     GLuint getId() const;
 
-    static GlShader loadFromFile(std::string const &filename, GLenum const type=-1);
+    static GlShader loadFromFile(std::string const &filename,
+        GLenum const type=-1);
 
   private:
     GLuint id;

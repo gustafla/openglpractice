@@ -41,7 +41,8 @@ GlShader::GlShader(GLenum const type):
   id = glCreateShader(type);
 }
 
-GlShader::GlShader(GLenum const type, GLsizei const count, GLchar const *sources[]):
+GlShader::GlShader(GLenum const type, GLsizei const count,
+    GLchar const *sources[]):
   GlShader(type)
 {
   setSource(count, sources);
