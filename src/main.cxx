@@ -19,6 +19,9 @@ int main(int argc, char *argv[]) {
   Player player("music.ogg");
   player.start();
 
+  glClearColor(1,0,0,1);
+  glClear(GL_COLOR_BUFFER_BIT);
+
   while (window.swapBuffers()) {
     // Approximate timings
     timeLast = time;
@@ -30,10 +33,9 @@ int main(int argc, char *argv[]) {
     fpsCounter.printer(time);
 
     // Clear for good luck
-    glClearColor(1,0,0,1);
-    glClear(GL_COLOR_BUFFER_BIT);
 
     // Render
+
 
     // Show window fb contents
     window.swapBuffers();

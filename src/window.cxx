@@ -70,8 +70,8 @@ void Window::open() {
   );
 
   nativewindow.element = dispman_element;
-  nativewindow.width = width;
-  nativewindow.height = height;
+  nativewindow.width = screenWidth;
+  nativewindow.height = screenHeight;
   vc_dispmanx_update_submit_sync(dispman_update);
 
   window = &nativewindow;
@@ -121,7 +121,6 @@ void Window::open() {
 
   display = eglDisplay;
   buffer = eglBuffer;
-  context = eglContext;
 
   restoreViewport();
   bind();
@@ -135,7 +134,7 @@ void Window::open() {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
 
   window = SDL_CreateWindow("",
       SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
