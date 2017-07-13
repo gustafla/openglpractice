@@ -1,9 +1,15 @@
 #pragma once
 
+#ifdef BUILD_RPI
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#include <SDL/SDL.h>
+#else
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <GL/gl.h>
 #include <GL/glext.h>
+#endif // BUILD_RPI
 
 class Window {
   public:

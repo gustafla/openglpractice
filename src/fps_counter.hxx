@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include "window.hxx"
 #include <vector>
 
 // FpsCounter keeps a constant size log of deltatimes and handles FPS report

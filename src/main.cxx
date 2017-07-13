@@ -4,7 +4,13 @@
 #include "player.hxx"
 
 int main(int argc, char *argv[]) {
-  std::cout << "OpenGL test\n";
+  std::cout << "OpenGL test" << std::endl << "Platform: " <<
+#ifdef BUILD_RPI
+    "Raspberry Pi"
+#else
+    "Linux PC"
+#endif
+  << std::endl;
 
   Window window;
   FpsCounter fpsCounter(2, 64);
