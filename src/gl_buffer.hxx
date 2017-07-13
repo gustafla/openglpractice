@@ -1,8 +1,9 @@
 #pragma once
 
 #include "window.hxx"
+#include "bindable.hxx"
 
-class GlBuffer {
+class GlBuffer: public Bindable {
   public:
     GlBuffer(GLenum const type);
     GlBuffer(GLenum const type, GLsizeiptr const size, GLvoid const *data,

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-sshpass -p "raspberry" scp -r . pi@raspberrypi:~/openglpractice
+rsync -vrtl --delete --exclude=Makefile --exclude=CMakeCache.txt --exclude=CMakeFiles --rsh="/usr/bin/sshpass -p \"raspberry\" ssh" ./ pi@raspberrypi:~/openglpractice/
 sshpass -p "raspberry" ssh pi@raspberrypi \
-  "cd ~/openglpractice; rm CMakeCache.txt; cmake . && make"
+  "cd ~/openglpractice; cmake . && make"

@@ -1,6 +1,9 @@
 #pragma once
 
 #ifdef BUILD_RPI
+#include <bcm_host.h>
+#include <EGL/egl.h>
+#include <EGL/eglext.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #include <SDL/SDL.h>
@@ -24,8 +27,16 @@ class Window {
     void open();
     void close();
 
+#ifdef BUILD_RPI
+    EGLNativeWindowType window;
+    EGLDisplay display;
+    EGLContext context;
+    EGLSurface buffer;
+#else
     SDL_Window *window;
     SDL_GLContext context;
+#endif
+
     SDL_Event events;
     int width;
     int height;

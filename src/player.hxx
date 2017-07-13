@@ -16,6 +16,7 @@ class Player {
 
     static void playerCallback(void *userData, uint8_t *stream, int len);
 
-    SDL_AudioSpec audioSpec;
+#ifndef BUILD_RPI
     SDL_AudioDeviceID audioDevice;
+#endif //BUILD_RPI
 };

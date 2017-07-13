@@ -19,12 +19,18 @@ Player::Player(std::string const &filename) {
   want.callback = playerCallback;
   want.userdata = (void*)this;
 
+#ifdef BUILD_RPI
+  if(SDL_OpenAudio(&want, NULL) < 0) {
+    std::cout << "Player failed to get required audio format!" << std::endl;
+  }
+#else
   audioDevice = SDL_OpenAudioDevice(NULL, 0, &want, &have,
       SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 
   if (want.format != have.format) {
     std::cout << "Player failed to get required audio format!" << std::endl;
   }
+#endif //BUILD_RPI
 
   // Prep player class members to play from previously loaded audio buffer
   currentLen = len * sizeof(uint16_t) * channels;
@@ -32,11 +38,21 @@ Player::Player(std::string const &filename) {
 }
 
 Player::~Player() {
+#ifdef BUILD_RPI
+  SDL_CloseAudio();
+#else
+  SDL_CloseAudioDevice(audioDevice);
+#endif
+
   delete[] audioData;
 }
 
 void Player::start() {
+#ifdef BUILD_RPI
+  SDL_PauseAudio(0);
+#else
   SDL_PauseAudioDevice(audioDevice, 0);
+#endif
 }
 
 void Player::playerCallback(void *userData, uint8_t *stream, int len) {

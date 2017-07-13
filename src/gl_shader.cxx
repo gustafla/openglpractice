@@ -23,11 +23,11 @@ GlShader GlShader::loadFromFile(std::string const &filename, GLenum const type) 
       case 'v': case 'V':
         realtype = GL_VERTEX_SHADER;
         break;
-      case 'g': case 'G':
+      /*case 'g': case 'G':
         realtype = GL_GEOMETRY_SHADER;
         break;
       case 'c': case 'C':
-        realtype = GL_COMPUTE_SHADER;
+        realtype = GL_COMPUTE_SHADER;*/ // These are not usable in ES2
     }
   }
 
