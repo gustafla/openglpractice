@@ -42,9 +42,11 @@ void Player::start() {
 void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   Player *player = (Player*)userData;
 
+  // Prep with silence (copying doesn't always happen)
+  SDL_memset(stream, 0, len);
+
   // Don't play if empty
   if (player->currentLen == 0) {
-    SDL_memset(stream, 0, len);
     return;
   }
 
