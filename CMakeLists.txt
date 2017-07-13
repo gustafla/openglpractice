@@ -4,15 +4,20 @@ project (openglpractice)
 # C++11
 set (CMAKE_CXX_STANDARD 11)
 
+# Flags
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Dkiss_fft_scalar=float -O2")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+
 # Glob src files
 file(GLOB SRC_FILES
   "src/*.cxx"
+  "src/kissfft/*.c"
 )
 
 # add the executable
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
-# for SDL
+# libs
 INCLUDE(FindPkgConfig)
 
 # SDL2
