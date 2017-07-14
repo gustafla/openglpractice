@@ -2,9 +2,12 @@
 #include <cstdlib>
 
 Window::Window():
-  width(1280), height(720)
+  width(960), height(540)
 {
   open();
+  restoreViewport();
+  bind();
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 Window::~Window() {
@@ -19,11 +22,12 @@ float Window::getTime() {
 void Window::open() {
   // Initialize SDL for audio, input and time
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+  SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE);
   SDL_ShowCursor(0);
 
   // Start videocore rendering and query current screen resolution
   bcm_host_init();
+  SDL_Delay(1000);
   if (graphics_get_display_size(0, (uint32_t*)&nativeWindow.width,
         (uint32_t*)&nativeWindow.height) < 0) {
     exit(EXIT_FAILURE);
@@ -52,7 +56,6 @@ void Window::open() {
 
   // Temporary variables and config for EGL
   EGLint numConfigs, majorVersion, minorVersion;
-  EGLContext eglContext;
   EGLConfig eglConfig;
   EGLint contextAttribs[] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE};
   EGLint attribList[] = {
@@ -86,19 +89,16 @@ void Window::open() {
     exit(EXIT_FAILURE);
   }
 
-  eglContext = eglCreateContext(
+  context = eglCreateContext(
       display, eglConfig, EGL_NO_CONTEXT, contextAttribs);
 
-  if (eglContext == EGL_NO_CONTEXT) {
+  if (context == EGL_NO_CONTEXT) {
     exit(EXIT_FAILURE);
   }
 
-  if (!eglMakeCurrent(display, buffer, buffer, eglContext)) {
+  if (!eglMakeCurrent(display, buffer, buffer, context)) {
     exit(EXIT_FAILURE);
   }
-
-  restoreViewport();
-  bind();
 }
 #else
 void Window::open() {
@@ -122,8 +122,6 @@ void Window::open() {
 
   SDL_GL_SetSwapInterval(1);
   SDL_ShowCursor(0);
-  restoreViewport();
-  bind();
 }
 #endif // BUILD_RPI
 
@@ -154,7 +152,7 @@ void Window::close() {
   SDL_Quit();
 }
 
-void Window::bind() {
+void Window::bind() const {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 

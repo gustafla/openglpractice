@@ -1,5 +1,7 @@
 #pragma once
 
+#include "bindable.hxx"
+
 #ifdef BUILD_RPI
 #include <bcm_host.h>
 #include <EGL/egl.h>
@@ -14,11 +16,11 @@
 #include <GL/glext.h>
 #endif // BUILD_RPI
 
-class Window {
+class Window: public Bindable {
   public:
     Window();
     ~Window();
-    void bind();
+    void bind() const;
     void restoreViewport();
     bool swapBuffers();
     float getTime();
@@ -32,6 +34,7 @@ class Window {
 
 #ifdef BUILD_RPI
     EGL_DISPMANX_WINDOW_T nativeWindow;
+    EGLContext context;
     EGLDisplay display;
     EGLSurface buffer;
 #else

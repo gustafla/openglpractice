@@ -65,14 +65,14 @@ GLuint GlProgram::getId() {
   return id;
 }
 
-void GlProgram::setUfm(std::string const &name, float value) {
-  glUniform1f(uniforms[name], value);
+void GlProgram::setUfm(std::string const &name, float value) const {
+  glUniform1f(uniforms.at(name), value);
 }
 
-void GlProgram::setUfm(std::string const &name, bool value) {
-  glUniform1i(uniforms[name], value);
+void GlProgram::setUfm(std::string const &name, bool value) const {
+  glUniform1i(uniforms.at(name), value);
 }
 
-void GlProgram::setUfm(std::string const &name, int value) {
-  glUniform1i(uniforms[name], value);
+void GlProgram::setUfm(std::string const &name, int value) const {
+  glUniform1i(uniforms.at(name), value);
 }

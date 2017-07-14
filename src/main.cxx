@@ -6,11 +6,14 @@
 #include "gl_program.hxx"
 #include "gl_vertex_attrib.hxx"
 
-void tri() {
+void tri(float t) {
   static const float verts[] = {
-    -0.5, -0.5, 0.0,
-    0.5, -0.5, 0.0,
-    0.0, 0.5, 0.0
+    -1, -1, 0,
+    1, -1, 0,
+    -1, 1, 0,
+    1, -1, 0,
+    1, 1, 0,
+    -1, 1, 0
   };
 
   static const GlProgram shader =
@@ -21,7 +24,8 @@ void tri() {
 
   shader.use();
   attrib.bind();
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  shader.setUfm("u_time", t);
+  glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 int main(int argc, char *argv[]) {
@@ -53,13 +57,10 @@ int main(int argc, char *argv[]) {
     fpsCounter.printer(time);
 
     // Clear for good luck
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render
-    tri();
-
-    // Show window fb contents
-    window.swapBuffers();
+    tri(time);
   }
 
   return 0;

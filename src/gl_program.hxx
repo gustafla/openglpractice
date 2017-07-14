@@ -14,9 +14,9 @@ class GlProgram {
     void use() const;
     GLuint getId();
 
-    void setUfm(std::string const &name, float value);
-    void setUfm(std::string const &name, bool value);
-    void setUfm(std::string const &name, int value);
+    void setUfm(std::string const &name, float value) const;
+    void setUfm(std::string const &name, bool value) const;
+    void setUfm(std::string const &name, int value) const;
 
     static GlProgram loadFromFiles(std::string const &vsName,
         std::string const &fsName);
