@@ -109,6 +109,7 @@ void Window::open() {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1);
 
   window = SDL_CreateWindow("",
       SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
