@@ -27,7 +27,6 @@ void Window::open() {
 
   // Start videocore rendering and query current screen resolution
   bcm_host_init();
-  SDL_Delay(1000);
   if (graphics_get_display_size(0, (uint32_t*)&nativeWindow.width,
         (uint32_t*)&nativeWindow.height) < 0) {
     exit(EXIT_FAILURE);
