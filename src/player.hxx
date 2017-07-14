@@ -13,7 +13,6 @@ class Player {
     uint8_t *audioData;
     int currentLen;
     uint8_t *audioPos;
-
     static void playerCallback(void *userData, uint8_t *stream, int len);
 
 #ifndef BUILD_RPI

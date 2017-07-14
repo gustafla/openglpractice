@@ -1,6 +1,8 @@
 #include "player.hxx"
 #include "stb_vorbis.h"
 #include <iostream>
+#include <limits>
+#include <cmath>
 
 Player::Player(std::string const &filename) {
   // Load a vorbis file
@@ -15,7 +17,7 @@ Player::Player(std::string const &filename) {
   want.freq = sampleRate;
   want.format = AUDIO_S16LSB;
   want.channels = channels;
-  want.samples = 4096;
+  want.samples = 2048;
   want.callback = playerCallback;
   want.userdata = (void*)this;
 
@@ -43,7 +45,6 @@ Player::~Player() {
 #else
   SDL_CloseAudioDevice(audioDevice);
 #endif
-
   delete[] audioData;
 }
 
@@ -57,9 +58,10 @@ void Player::start() {
 
 void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   Player *player = (Player*)userData;
+  int copyLen = len;
 
   // Prep with silence (copying doesn't always happen)
-  SDL_memset(stream, 0, len);
+  SDL_memset(stream, 0, copyLen);
 
   // Don't play if empty
   if (player->currentLen == 0) {
@@ -67,14 +69,15 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   }
 
   // Limit reading to buffer bounds
-  len = (len > player->currentLen ? player->currentLen : len);
+  copyLen = (len > player->currentLen ? player->currentLen : len);
 
   // Copy audio buffer to player
-  SDL_memcpy(stream, player->audioPos, len);
+  SDL_memcpy(stream, player->audioPos, copyLen);
 
   // Move to next block
-  player->audioPos += len;
+  player->audioPos += copyLen;
 
   // Keep track of data left in the buffer
-  player->currentLen -= len;
+  player->currentLen -= copyLen;
 }
+

@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 
     // Run the FPS counter
     fpsCounter.addFrameTime(frameTime);
-    fpsCounter.printer(time);
+    //fpsCounter.printer(time);
 
     // Clear for good luck
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
