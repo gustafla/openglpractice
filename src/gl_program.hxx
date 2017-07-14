@@ -11,7 +11,7 @@ class GlProgram {
     ~GlProgram();
     void attachShader(GlShader const &s);
     GLint link();
-    void use();
+    void use() const;
     GLuint getId();
 
     void setUfm(std::string const &name, float value);

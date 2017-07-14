@@ -2,6 +2,6 @@
 
 class Bindable {
   public:
-    virtual void bind() = 0;
-    virtual void unbind() {};
+    virtual void bind() const = 0;
+    virtual void unbind() const {};
 };

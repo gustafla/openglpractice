@@ -11,7 +11,7 @@ GlVertexAttrib::GlVertexAttrib(GLuint index, GLint size, GLenum type,
 {
 }
 
-void GlVertexAttrib::bind() {
+void GlVertexAttrib::bind() const {
   glVertexAttribPointer(index, size, type, normalized, stride, pointer);
   glEnableVertexAttribArray(index);
 }

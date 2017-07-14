@@ -23,14 +23,16 @@ class Window {
     bool swapBuffers();
     float getTime();
 
+    int const width;
+    int const height;
+
   private:
     void open();
     void close();
 
 #ifdef BUILD_RPI
-    EGLNativeWindowType window;
+    EGL_DISPMANX_WINDOW_T nativeWindow;
     EGLDisplay display;
-    EGLContext context;
     EGLSurface buffer;
 #else
     SDL_Window *window;
@@ -38,6 +40,4 @@ class Window {
 #endif
 
     SDL_Event events;
-    int width;
-    int height;
 };

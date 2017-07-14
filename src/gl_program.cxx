@@ -57,7 +57,7 @@ GLint GlProgram::link() {
   return succ;
 }
 
-void GlProgram::use() {
+void GlProgram::use() const {
   glUseProgram(id);
 }
 

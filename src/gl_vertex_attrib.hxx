@@ -7,7 +7,7 @@ class GlVertexAttrib: public Bindable {
   public:
     GlVertexAttrib(GLuint index, GLint size, GLenum type, GLboolean normalized,
         GLsizei stride, GLvoid const *pointer);
-    void bind();
+    void bind() const;
 
   private:
     GLuint const index;
