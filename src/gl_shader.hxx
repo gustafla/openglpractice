@@ -7,6 +7,7 @@ class GlShader {
   public:
     GlShader(GLenum const type);
     GlShader(GLenum const type, GLsizei const count, GLchar const *source[]);
+    GlShader(GLenum const type, std::string const &source);
     ~GlShader();
     void setSource(GLsizei const count, GLchar const *source[]);
     GLint compile();

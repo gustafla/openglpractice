@@ -49,6 +49,14 @@ GlShader::GlShader(GLenum const type, GLsizei const count,
   compile();
 }
 
+GlShader::GlShader(GLenum const type, std::string const &source):
+  GlShader(type)
+{
+  GLchar const *ptr = source.c_str();
+  setSource(1, &ptr);
+  compile();
+}
+
 GlShader::~GlShader() {
   glDeleteShader(id);
 }

@@ -5,22 +5,15 @@
 
 #include "gl_program.hxx"
 #include "gl_vertex_attrib.hxx"
+#include "loading_bar.hxx"
+#include "verts.hxx"
 
 void tri(float t, float fftBass, float fftTreble) {
-  static const float verts[] = {
-    -1, -1, 0,
-    1, -1, 0,
-    -1, 1, 0,
-    1, -1, 0,
-    1, 1, 0,
-    -1, 1, 0
-  };
-
   static const GlProgram shader =
     GlProgram::loadFromFiles("vs.vert", "fs.frag");
 
-  static const GlVertexAttrib attrib(0, 3, GL_FLOAT, GL_FALSE,
-      3*sizeof(GLfloat), &verts);
+  static const GlVertexAttrib attrib(shader.getAttribLocation("a_pos"), 3,
+      GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), &Verts::square);
 
   shader.use();
   attrib.bind();
@@ -40,13 +33,13 @@ int main(int argc, char *argv[]) {
     << std::endl;
 
   Window window;
+  glClearColor(0,0,0,1);
+
   FpsCounter fpsCounter(2, 64);
   float timeLast, time, frameTime;
 
-  Player player("music.ogg");
+  Player player("music.ogg", window); // Passing window for loading bar
   player.play();
-
-  glClearColor(1,0,0,1);
 
   while (window.swapBuffers()) {
     // Approximate timings

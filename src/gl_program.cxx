@@ -54,6 +54,21 @@ GLint GlProgram::link() {
   }
   delete[] ufmName;
 
+  //Look up and store all attributes to a string keyed std::map
+  int attribCount;
+  int attribLength;
+  glGetProgramiv(id, GL_ACTIVE_ATTRIBUTES, &attribCount);
+  glGetProgramiv(id, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &attribLength);
+  GLchar* atrName = new GLchar[attribLength];
+  GLint atrSize;
+  GLenum atrType;
+  for (int i=0; i<attribCount; i++) {
+    glGetActiveAttrib(id, i, attribLength, NULL, &atrSize, &atrType,
+        atrName);
+    attributes[std::string(atrName)] = glGetAttribLocation(id, atrName);
+  }
+  delete[] atrName;
+
   return succ;
 }
 
@@ -75,4 +90,8 @@ void GlProgram::setUfm(std::string const &name, bool value) const {
 
 void GlProgram::setUfm(std::string const &name, int value) const {
   glUniform1i(uniforms.at(name), value);
+}
+
+GLint GlProgram::getAttribLocation(std::string const &name) const {
+  return attributes.at(name);
 }

@@ -6,43 +6,30 @@
 #include <cmath>
 
 Player::Player(std::string const &filename):
-  lastQueriedTicks(SDL_GetTicks())
+  lastQueriedTicks(SDL_GetTicks()), samplePos(0)
 {
-  // Load a vorbis file
-  int16_t *buffer;
-  nSamples = stb_vorbis_decode_filename(filename.c_str(), &channels,
-      &sampleRate, &buffer);
-
-  // Initialize an SDL audio device
-  SDL_AudioSpec want, have;
-
-  want.freq = sampleRate;
-  want.format = AUDIO_S16LSB;
-  want.channels = channels;
-  want.samples = 2048;
-  want.callback = playerCallback;
-  want.userdata = (void*)this;
-
-#ifdef BUILD_RPI
-  if(SDL_OpenAudio(&want, NULL) < 0) {
-    std::cout << "Player failed to get required audio format!" << std::endl;
-  }
-#else
-  audioDevice = SDL_OpenAudioDevice(NULL, 0, &want, &have,
-      SDL_AUDIO_ALLOW_FORMAT_CHANGE);
-
-  if (want.format != have.format) {
-    std::cout << "Player failed to get required audio format!" << std::endl;
-  }
-#endif //BUILD_RPI
-
-  // Prep player class members to play from previously loaded audio buffer
-  sampleSize = sizeof(int16_t) * channels;
-  nBytesLeft = nSamples * sampleSize;
-  audioPos = audioData = (uint8_t*)buffer;
+  int16_t *buffer = loadVorbisFile(filename);
 
   // Compute FFT
   computeFft(buffer);
+
+  // Print info
+  std::cout << "Music: " << ((sampleSize*nSamples)/1024.f)/1024.f
+    << "MB" << std::endl;
+  std::cout << "FFT: " << ((sizeof(float)*(nSamples/N_FFT)*2)/1024.f)/1024.f
+    << "MB" << std::endl;
+}
+
+Player::Player(std::string const &filename, Window &window):
+  lastQueriedTicks(SDL_GetTicks()), samplePos(0)
+{
+  LoadingBar loadingBar(window);
+  loadingBar.setState(0.1);
+
+  int16_t *buffer = loadVorbisFile(filename, &loadingBar);
+
+  // Compute FFT
+  computeFft(buffer, &loadingBar);
 
   // Print info
   std::cout << "Music: " << ((sampleSize*nSamples)/1024.f)/1024.f
@@ -119,17 +106,21 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   unsigned ticks = SDL_GetTicks();
   player->lastCallbackDelay = ticks - player->lastQueriedTicks;
   player->lastQueriedTicks = ticks;
+
+  // Update pos
+  player->samplePos = player->nSamples - player->nBytesLeft
+    / player->sampleSize;
 }
 
 float Player::getFftBass() {
-  return fftBassData[getCurrentSamplePos()/N_FFT];
+  return fftBassData[samplePos/N_FFT];
 }
 
 float Player::getFftTreble() {
-  return fftTrebleData[getCurrentSamplePos()/N_FFT];
+  return fftTrebleData[samplePos/N_FFT];
 }
 
-void Player::computeFft(int16_t *audioData) {
+void Player::computeFft(int16_t *audioData, LoadingBar *loadingBar) {
   fftBassData = new float[nSamples/N_FFT]; // Number of samples in music divided by 
   fftTrebleData = new float[nSamples/N_FFT]; // Number of samples in music divided by 
   // fft frame size
@@ -157,17 +148,64 @@ void Player::computeFft(int16_t *audioData) {
       avgTreble += out[b].r;
     }
     fftTrebleData[i] = avgTreble / (N_FFT-(N_FFT/BASS_RANGE));
+
+    if (loadingBar != NULL && i%100 == 0) {
+      float state = 0.5 + (0.5f * (i/static_cast<float>(nSamples/N_FFT)));
+      loadingBar->setState(state);
+    }
   }
 
   free(cfg);
 }
 
-int Player::getCurrentSamplePos() {
-  return nSamples - nBytesLeft / sampleSize;
+int16_t *Player::loadVorbisFile(std::string const &filename,
+    LoadingBar *loadingBar) {
+  // Load a vorbis file
+  int16_t *buffer;
+  nSamples = stb_vorbis_decode_filename(filename.c_str(), &channels,
+      &sampleRate, &buffer);
+
+  if (loadingBar != NULL) {
+    loadingBar->setState(0.4);
+  }
+
+  // Initialize an SDL audio device
+  SDL_AudioSpec want, have;
+
+  want.freq = sampleRate;
+  want.format = AUDIO_S16LSB;
+  want.channels = channels;
+  want.samples = 2048;
+  want.callback = playerCallback;
+  want.userdata = (void*)this;
+
+#ifdef BUILD_RPI
+  if(SDL_OpenAudio(&want, NULL) < 0) {
+    std::cout << "Player failed to get required audio format!" << std::endl;
+  }
+#else
+  audioDevice = SDL_OpenAudioDevice(NULL, 0, &want, &have,
+      SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+
+  if (want.format != have.format) {
+    std::cout << "Player failed to get required audio format!" << std::endl;
+  }
+#endif //BUILD_RPI
+
+  // Prep player class members to play from previously loaded audio buffer
+  sampleSize = sizeof(int16_t) * channels;
+  nBytesLeft = nSamples * sampleSize;
+  audioPos = audioData = (uint8_t*)buffer;
+
+  if (loadingBar != NULL) {
+    loadingBar->setState(0.5);
+  }
+
+  return buffer;
 }
 
 float Player::getTime() {
   unsigned ticks = SDL_GetTicks() - lastQueriedTicks;
-  return static_cast<float>(getCurrentSamplePos()) / sampleRate
+  return static_cast<float>(samplePos) / sampleRate
     + std::min(ticks, lastCallbackDelay) / 1000.f;
 }

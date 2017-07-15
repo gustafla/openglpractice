@@ -17,6 +17,7 @@ class GlProgram {
     void setUfm(std::string const &name, float value) const;
     void setUfm(std::string const &name, bool value) const;
     void setUfm(std::string const &name, int value) const;
+    GLint getAttribLocation(std::string const &name) const;
 
     static GlProgram loadFromFiles(std::string const &vsName,
         std::string const &fsName);
@@ -24,4 +25,5 @@ class GlProgram {
   private:
     GLuint id;
     std::map<std::string, GLint> uniforms;
+    std::map<std::string, GLint> attributes;
 };
