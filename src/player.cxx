@@ -1,15 +1,17 @@
 #include "player.hxx"
 #include "stb_vorbis.h"
+#include "kissfft/kiss_fft.h"
 #include <iostream>
 #include <limits>
 #include <cmath>
 
-Player::Player(std::string const &filename) {
+Player::Player(std::string const &filename):
+  lastQueriedTicks(SDL_GetTicks())
+{
   // Load a vorbis file
-  int channels, len, sampleRate;
   int16_t *buffer;
-  len = stb_vorbis_decode_filename(filename.c_str(), &channels, &sampleRate, 
-      &buffer);
+  nSamples = stb_vorbis_decode_filename(filename.c_str(), &channels,
+      &sampleRate, &buffer);
 
   // Initialize an SDL audio device
   SDL_AudioSpec want, have;
@@ -35,8 +37,18 @@ Player::Player(std::string const &filename) {
 #endif //BUILD_RPI
 
   // Prep player class members to play from previously loaded audio buffer
-  currentLen = len * sizeof(uint16_t) * channels;
+  sampleSize = sizeof(int16_t) * channels;
+  nBytesLeft = nSamples * sampleSize;
   audioPos = audioData = (uint8_t*)buffer;
+
+  // Compute FFT
+  computeFft(buffer);
+
+  // Print info
+  std::cout << "Music: " << ((sampleSize*nSamples)/1024.f)/1024.f
+    << "MB" << std::endl;
+  std::cout << "FFT: " << ((sizeof(float)*(nSamples/N_FFT)*2)/1024.f)/1024.f
+    << "MB" << std::endl;
 }
 
 Player::~Player() {
@@ -46,14 +58,37 @@ Player::~Player() {
   SDL_CloseAudioDevice(audioDevice);
 #endif
   delete[] audioData;
+  delete[] fftBassData;
+  delete[] fftTrebleData;
 }
 
-void Player::start() {
+void Player::play() {
 #ifdef BUILD_RPI
   SDL_PauseAudio(0);
 #else
   SDL_PauseAudioDevice(audioDevice, 0);
 #endif
+}
+
+void Player::pause() {
+#ifdef BUILD_RPI
+  SDL_PauseAudio(1);
+#else
+  SDL_PauseAudioDevice(audioDevice, 1);
+#endif
+}
+
+void Player::toggle() {
+#ifdef BUILD_RPI
+  switch (SDL_GetAudioStatus()) {
+#else
+  switch (SDL_GetAudioDeviceStatus(audioDevice)) {
+#endif
+    default:
+    case SDL_AUDIO_PAUSED:
+    case SDL_AUDIO_STOPPED: play(); break;
+    case SDL_AUDIO_PLAYING: pause(); break;
+  }
 }
 
 void Player::playerCallback(void *userData, uint8_t *stream, int len) {
@@ -64,12 +99,12 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   SDL_memset(stream, 0, copyLen);
 
   // Don't play if empty
-  if (player->currentLen == 0) {
+  if (player->nBytesLeft == 0) {
     return;
   }
 
   // Limit reading to buffer bounds
-  copyLen = (len > player->currentLen ? player->currentLen : len);
+  copyLen = (len > player->nBytesLeft ? player->nBytesLeft : len);
 
   // Copy audio buffer to player
   SDL_memcpy(stream, player->audioPos, copyLen);
@@ -78,6 +113,61 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   player->audioPos += copyLen;
 
   // Keep track of data left in the buffer
-  player->currentLen -= copyLen;
+  player->nBytesLeft -= copyLen;
+
+  // Query time
+  unsigned ticks = SDL_GetTicks();
+  player->lastCallbackDelay = ticks - player->lastQueriedTicks;
+  player->lastQueriedTicks = ticks;
 }
 
+float Player::getFftBass() {
+  return fftBassData[getCurrentSamplePos()/N_FFT];
+}
+
+float Player::getFftTreble() {
+  return fftTrebleData[getCurrentSamplePos()/N_FFT];
+}
+
+void Player::computeFft(int16_t *audioData) {
+  fftBassData = new float[nSamples/N_FFT]; // Number of samples in music divided by 
+  fftTrebleData = new float[nSamples/N_FFT]; // Number of samples in music divided by 
+  // fft frame size
+
+  kiss_fft_cfg cfg = kiss_fft_alloc(N_FFT, 0, NULL, NULL);
+
+  kiss_fft_cpx in[N_FFT];
+  kiss_fft_cpx out[N_FFT];
+  for (int i=0; i<(nSamples/N_FFT)-1; i++) { // i is FFT frame
+    for (int s=0; s<N_FFT; s++) { // s is sample within frame
+      int16_t sample = audioData[i*N_FFT*channels + s*channels]; // Get left channel
+      in[s].r = in[s].i = static_cast<float>(sample)
+        / (std::numeric_limits<int16_t>::max()-1);
+    }
+
+    kiss_fft(cfg, in, out);
+    
+    int const BASS_RANGE = 8;
+    float avgBass = 0.f, avgTreble=0.f;
+    for (int b=0; b<N_FFT/BASS_RANGE; b++) { // b is output bin
+      avgBass += out[b].r;
+    }
+    fftBassData[i] = avgBass / (N_FFT/BASS_RANGE);
+    for (int b=N_FFT/BASS_RANGE; b<N_FFT; b++) {
+      avgTreble += out[b].r;
+    }
+    fftTrebleData[i] = avgTreble / (N_FFT-(N_FFT/BASS_RANGE));
+  }
+
+  free(cfg);
+}
+
+int Player::getCurrentSamplePos() {
+  return nSamples - nBytesLeft / sampleSize;
+}
+
+float Player::getTime() {
+  unsigned ticks = SDL_GetTicks() - lastQueriedTicks;
+  return static_cast<float>(getCurrentSamplePos()) / sampleRate
+    + std::min(ticks, lastCallbackDelay) / 1000.f;
+}

@@ -160,3 +160,6 @@ void Window::restoreViewport() {
   glViewport(0, 0, width, height);
 }
 
+SDL_Event &Window::getEvents() {
+  return events;
+}

@@ -5,6 +5,7 @@ project (openglpractice)
 set (CMAKE_CXX_STANDARD 11)
 
 # Flags
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -Dkiss_fft_scalar=float")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 if (EXISTS /opt/vc/lib)
@@ -15,6 +16,7 @@ endif()
 # Glob src files
 file(GLOB SRC_FILES
   "src/*.cxx"
+  "src/kissfft/*.c"
 )
 
 # add the executable

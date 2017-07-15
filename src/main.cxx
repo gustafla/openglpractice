@@ -6,7 +6,7 @@
 #include "gl_program.hxx"
 #include "gl_vertex_attrib.hxx"
 
-void tri(float t) {
+void tri(float t, float fftBass, float fftTreble) {
   static const float verts[] = {
     -1, -1, 0,
     1, -1, 0,
@@ -25,6 +25,8 @@ void tri(float t) {
   shader.use();
   attrib.bind();
   shader.setUfm("u_time", t);
+  shader.setUfm("u_fft_bass", fftBass/7.f);
+  shader.setUfm("u_fft_treble", fftTreble/2.f);
   glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
@@ -42,25 +44,30 @@ int main(int argc, char *argv[]) {
   float timeLast, time, frameTime;
 
   Player player("music.ogg");
-  player.start();
+  player.play();
 
   glClearColor(1,0,0,1);
 
   while (window.swapBuffers()) {
     // Approximate timings
     timeLast = time;
-    time = window.getTime();
+    time = player.getTime();
     frameTime = time - timeLast;
 
     // Run the FPS counter
     fpsCounter.addFrameTime(frameTime);
-    //fpsCounter.printer(time);
+    fpsCounter.printer(time);
 
     // Clear for good luck
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render
-    tri(time);
+    tri(time, player.getFftBass(), player.getFftTreble());
+
+    // Extra inputs
+    if (window.getEvents().type == SDL_KEYDOWN)
+      if (window.getEvents().key.keysym.sym == SDLK_SPACE)
+        player.toggle();
   }
 
   return 0;

@@ -24,6 +24,7 @@ class Window: public Bindable {
     void restoreViewport();
     bool swapBuffers();
     float getTime();
+    SDL_Event &getEvents();
 
     int const width;
     int const height;
