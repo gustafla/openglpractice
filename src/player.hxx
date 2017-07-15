@@ -15,8 +15,8 @@ class Player {
     void pause();
     void toggle();
 
-    float getFftBass();
-    float getFftTreble();
+    float const getFftBass() const;
+    float const getFftTreble() const;
     float const getTime() const;
 
   private:

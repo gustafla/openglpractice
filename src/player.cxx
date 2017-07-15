@@ -112,11 +112,11 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
     / player->sampleSize;
 }
 
-float Player::getFftBass() {
+float const Player::getFftBass() const {
   return fftBassData[samplePos/N_FFT];
 }
 
-float Player::getFftTreble() {
+float const Player::getFftTreble() const {
   return fftTrebleData[samplePos/N_FFT];
 }
 
