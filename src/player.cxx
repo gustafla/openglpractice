@@ -204,7 +204,7 @@ int16_t *Player::loadVorbisFile(std::string const &filename,
   return buffer;
 }
 
-float Player::getTime() {
+float const Player::getTime() const {
   unsigned ticks = SDL_GetTicks() - lastQueriedTicks;
   return static_cast<float>(samplePos) / sampleRate
     + std::min(ticks, lastCallbackDelay) / 1000.f;

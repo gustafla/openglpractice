@@ -21,10 +21,9 @@ class Window: public Bindable {
     Window();
     ~Window();
     void bind() const;
-    void restoreViewport();
-    bool swapBuffers();
-    float getTime();
-    SDL_Event &getEvents();
+    void restoreViewport() const;
+    bool swapBuffers() const;
+    SDL_Event const &getEvents() const;
 
     int const width;
     int const height;

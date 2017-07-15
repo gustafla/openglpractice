@@ -35,7 +35,7 @@ void LoadingBar::setState(float state) {
   draw();
 }
 
-void LoadingBar::draw() {
+void LoadingBar::draw() const {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   shader.use();

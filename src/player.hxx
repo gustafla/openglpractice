@@ -17,7 +17,7 @@ class Player {
 
     float getFftBass();
     float getFftTreble();
-    float getTime();
+    float const getTime() const;
 
   private:
     int channels;

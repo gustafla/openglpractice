@@ -7,15 +7,12 @@ Window::Window():
   open();
   restoreViewport();
   bind();
+  glClearColor(0,0,0,1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 Window::~Window() {
   close();
-}
-
-float Window::getTime() {
-  return static_cast<float>(SDL_GetTicks())/1000.f;
 }
 
 #ifdef BUILD_RPI
@@ -125,14 +122,14 @@ void Window::open() {
 }
 #endif // BUILD_RPI
 
-bool Window::swapBuffers() {
+bool Window::swapBuffers() const {
 #ifdef BUILD_RPI
   eglSwapBuffers(display, buffer);
 #else
   SDL_GL_SwapWindow(window);
 #endif
 
-  SDL_PollEvent(&events);
+  SDL_PollEvent((SDL_Event* const)&events);
 
   if (events.type == SDL_QUIT)
     return false;
@@ -156,10 +153,10 @@ void Window::bind() const {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Window::restoreViewport() {
+void Window::restoreViewport() const {
   glViewport(0, 0, width, height);
 }
 
-SDL_Event &Window::getEvents() {
+SDL_Event const &Window::getEvents() const {
   return events;
 }
