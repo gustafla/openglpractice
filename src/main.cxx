@@ -26,15 +26,15 @@ int main(int argc, char *argv[]) {
   while (window.swapBuffers()) {
     // Approximate timings
     timeLast = time;
-    time = demo.getPlayer().getTime();
+    time = demo.getTime();
     frameTime = time - timeLast;
 
     // Run the FPS counter
     fpsCounter.addFrameTime(frameTime);
     fpsCounter.printer(time);
 
-    // Update Rocket
-    demo.updateRocket();
+    // Update demo data
+    demo.update();
 
     // Bind window FB
     window.bind();

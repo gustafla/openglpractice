@@ -30,6 +30,7 @@ static struct sync_cb playerControls = {
 #endif
 
 Demo::Demo(Window &window):
+  time(0.f),
   window(window),
   player("music.ogg", window)
 {
@@ -59,9 +60,10 @@ Shaders const &Demo::getShaders() const {
   return shaders;
 }
 
-void Demo::updateRocket() {
+void Demo::update() {
+  time = player.getTime();
 #ifndef SYNC_PLAYER
-  if (sync_update(rocket, (int)std::floor(player.getTime()*ROW_RATE),
+  if (sync_update(rocket, (int)std::floor(time*ROW_RATE),
         &playerControls, (void*)&player)) {
     sync_tcp_connect(rocket, "localhost", SYNC_DEFAULT_PORT);
   }
@@ -73,5 +75,9 @@ sync_track const *Demo::getRocketTrack(std::string const &name) const {
 }
 
 float const Demo::getValue(sync_track const *track) const {
-  return sync_get_val(track, player.getTime()*ROW_RATE);
+  return sync_get_val(track, time*ROW_RATE);
+}
+
+float const Demo::getTime() const {
+  return time;
 }

@@ -34,7 +34,7 @@ void Shader::draw() const {
   program.use();
   vaPos.bind();
   glUniform1f(program.getUniformLocation("u_time"),
-      demo.getPlayer().getTime());
+      demo.getTime());
   glUniform1f(program.getUniformLocation("u_fft_bass"),
       demo.getPlayer().getFftBass());
   glUniform1f(program.getUniformLocation("u_fft_treble"),
