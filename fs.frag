@@ -5,9 +5,10 @@ precision highp int;
 
 varying vec4 v_pos;
 
-uniform highp float u_time;
+uniform float u_time;
 uniform float u_fft_bass;
 uniform float u_fft_treble;
+uniform float u_test;
 
 void main() {
   vec2 p = vec2(sin(u_time), cos(u_time));
@@ -20,5 +21,8 @@ void main() {
   }
   if (length(v_pos.xy+vec2(0.5, 0.0)) < 0.3) {
     gl_FragColor = vec4(vec3(u_fft_treble), 1.0);
+  }
+  if (length(v_pos.xy) < 0.1) {
+    gl_FragColor = vec4(vec3(u_test), 1.0);
   }
 }

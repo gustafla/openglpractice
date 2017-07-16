@@ -68,3 +68,10 @@ void Demo::updateRocket() {
 #endif
 }
 
+sync_track const *Demo::getRocketTrack(std::string const &name) const {
+  return sync_get_track(rocket, name.c_str());
+}
+
+float const Demo::getValue(sync_track const *track) const {
+  return sync_get_val(track, player.getTime()*ROW_RATE);
+}

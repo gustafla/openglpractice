@@ -3,6 +3,14 @@
 #include "verts.hxx"
 #include <string>
 #include <iostream>
+#include <algorithm>
+
+std::string trackNameToUniformName(std::string const &name) {
+  std::string cleaned = name;
+  std::replace(cleaned.begin(), cleaned.end(), ':', '_');
+  std::replace(cleaned.begin(), cleaned.end(), '.', '_');
+  return "u_" + cleaned;
+}
 
 Shader Shader::loadFromFile(Demo const &demo, std::string filename) {
   return Shader(demo, GlShader::loadFromFile(filename));
@@ -25,9 +33,21 @@ Shader::Shader(Demo const &demo, std::string const &fsSource):
 void Shader::draw() const {
   program.use();
   vaPos.bind();
-  float t =  demo.getPlayer().getTime();
-  glUniform1f(program.getUniformLocation("u_time"), t);
-  glUniform1f(program.getUniformLocation("u_fft_bass"), demo.getPlayer().getFftBass());
-  glUniform1f(program.getUniformLocation("u_fft_treble"), demo.getPlayer().getFftTreble());
+  glUniform1f(program.getUniformLocation("u_time"),
+      demo.getPlayer().getTime());
+  glUniform1f(program.getUniformLocation("u_fft_bass"),
+      demo.getPlayer().getFftBass());
+  glUniform1f(program.getUniformLocation("u_fft_treble"),
+      demo.getPlayer().getFftTreble());
+
+  for (auto const &t: tracks) {
+    glUniform1f(t.id, demo.getValue(t.track));
+  }
+
   glDrawArrays(GL_TRIANGLES, 0, Verts::lenSquare/3);
+}
+
+void Shader::addRocketTrack(std::string const &name) {
+  tracks.push_back(RocketTrackUniform(demo.getRocketTrack(name),
+        program.getUniformLocation(trackNameToUniformName(name))));
 }
