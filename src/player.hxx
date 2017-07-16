@@ -5,6 +5,7 @@
 #include <string>
 
 #define N_FFT 2048
+#define LEN_BUF 2048
 
 class Player {
   public:
@@ -29,7 +30,6 @@ class Player {
     int nBytesLeft;  // in bytes
     int samplePos;
     unsigned lastQueriedTicks;
-    unsigned lastCallbackDelay; // in ticks
 
     float *fftBassData;
     float *fftTrebleData;

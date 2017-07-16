@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
     // Approximate timings
     timeLast = time;
     time = demo.getPlayer().getTime();
+    std::cout << time << std::endl;
     frameTime = time - timeLast;
 
     // Run the FPS counter

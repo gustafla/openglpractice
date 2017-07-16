@@ -103,9 +103,7 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   player->nBytesLeft -= copyLen;
 
   // Query time
-  unsigned ticks = SDL_GetTicks();
-  player->lastCallbackDelay = ticks - player->lastQueriedTicks;
-  player->lastQueriedTicks = ticks;
+  player->lastQueriedTicks = SDL_GetTicks();
 
   // Update pos
   player->samplePos = player->nSamples - player->nBytesLeft
@@ -175,7 +173,7 @@ int16_t *Player::loadVorbisFile(std::string const &filename,
   want.freq = sampleRate;
   want.format = AUDIO_S16LSB;
   want.channels = channels;
-  want.samples = 2048;
+  want.samples = LEN_BUF;
   want.callback = playerCallback;
   want.userdata = (void*)this;
 
@@ -206,6 +204,6 @@ int16_t *Player::loadVorbisFile(std::string const &filename,
 
 float const Player::getTime() const {
   unsigned ticks = SDL_GetTicks() - lastQueriedTicks;
-  return static_cast<float>(samplePos) / sampleRate
-    + std::min(ticks, lastCallbackDelay) / 1000.f;
+  return static_cast<float>(samplePos) / sampleRate;
+    + std::min(ticks, 1000u*(LEN_BUF/sampleRate)) / 1000.f;
 }
