@@ -3,6 +3,8 @@
 #include "fps_counter.hxx"
 #include "demo.hxx"
 
+#include "scenes/test.hxx"
+
 int main(int argc, char *argv[]) {
   std::cout << "OpenGL test" << std::endl << "Platform: " <<
 #ifdef BUILD_RPI
@@ -14,6 +16,8 @@ int main(int argc, char *argv[]) {
 
   Window window;
   Demo demo(window);
+
+  ScTest testScene(demo);
 
   FpsCounter fpsCounter(2, 64);
   float timeLast, time, frameTime;
@@ -35,7 +39,7 @@ int main(int argc, char *argv[]) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render
-    demo.draw();
+    testScene.draw();
   }
 
   return 0;

@@ -46,7 +46,7 @@ GlShader::GlShader(GLenum const type, GLsizei const count,
   GlShader(type)
 {
   setSource(count, sources);
-  compile();
+  compile(std::string(sources[0]));
 }
 
 GlShader::GlShader(GLenum const type, std::string const &source):
@@ -54,7 +54,7 @@ GlShader::GlShader(GLenum const type, std::string const &source):
 {
   GLchar const *ptr = source.c_str();
   setSource(1, &ptr);
-  compile();
+  compile(source);
 }
 
 GlShader::~GlShader() {
@@ -66,14 +66,15 @@ void GlShader::setSource(GLsizei const count, GLchar const *sources[]) {
   glShaderSource(id, count, sources, &lens[0]);
 }
 
-GLint GlShader::compile() {
+GLint GlShader::compile(std::string const &extra) {
   glCompileShader(id); 
   GLint succ;
   GLchar log[512];
   glGetShaderiv(id, GL_COMPILE_STATUS, &succ);
   if (!succ) {
     glGetShaderInfoLog(id, 512, NULL, log);
-    std::cout << "Error compiling shader\n" << log << std::endl;
+    std::cout << "Error compiling shader" << std::endl << extra << std::endl
+      << log << std::endl;
   }
   return succ;
 }

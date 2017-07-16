@@ -16,6 +16,7 @@ endif()
 # Glob src files
 file(GLOB SRC_FILES
   "src/*.cxx"
+  "src/scenes/*.cxx"
   "src/kissfft/*.c"
 )
 

@@ -10,7 +10,7 @@ class GlShader {
     GlShader(GLenum const type, std::string const &source);
     ~GlShader();
     void setSource(GLsizei const count, GLchar const *source[]);
-    GLint compile();
+    GLint compile(std::string const &extra);
     GLuint getId() const;
 
     static GlShader loadFromFile(std::string const &filename,

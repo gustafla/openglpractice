@@ -2,13 +2,11 @@
 
 #include "window.hxx"
 #include "player.hxx"
-#include "drawable.hxx"
 #include "shaders.hxx"
 
-class Demo: public Drawable {
+class Demo {
   public:
     Demo(Window &window);
-    void draw() const;
     Player const &getPlayer() const;
     Shaders const &getShaders() const;
 

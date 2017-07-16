@@ -6,7 +6,7 @@ static const std::string _vs =
 "precision highp float;\n"
 "attribute vec3 a_pos;\n"
 "varying vec4 v_pos;\n"
-"void main() {"
+"void main() {\n"
 "  gl_Position = v_pos = vec4(a_pos, 1.0);\n"
 "}\n";
 

@@ -7,10 +7,6 @@ Demo::Demo(Window &window):
   player.play();
 }
 
-void Demo::draw() const {
-
-}
-
 Player const &Demo::getPlayer() const {
   return player;
 }
