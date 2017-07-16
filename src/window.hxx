@@ -1,6 +1,7 @@
 #pragma once
 
 #include "bindable.hxx"
+#include <string>
 
 #ifdef BUILD_RPI
 #include <bcm_host.h>
@@ -15,6 +16,8 @@
 #include <GL/gl.h>
 #include <GL/glext.h>
 #endif // BUILD_RPI
+
+void die(std::string const &msg);
 
 class Window: public Bindable {
   public:

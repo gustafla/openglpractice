@@ -1,10 +1,11 @@
 #version 100
 
 precision highp float;
+precision highp int;
 
 varying vec4 v_pos;
 
-uniform float u_time;
+uniform highp float u_time;
 uniform float u_fft_bass;
 uniform float u_fft_treble;
 

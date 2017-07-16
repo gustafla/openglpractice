@@ -6,7 +6,7 @@
 #include <cmath>
 
 Player::Player(std::string const &filename):
-  lastQueriedTicks(SDL_GetTicks()), samplePos(0)
+  callbackTicks(SDL_GetTicks()), samplePos(0)
 {
   int16_t *buffer = loadVorbisFile(filename);
 
@@ -21,7 +21,7 @@ Player::Player(std::string const &filename):
 }
 
 Player::Player(std::string const &filename, Window &window):
-  lastQueriedTicks(SDL_GetTicks()), samplePos(0)
+  callbackTicks(SDL_GetTicks()), samplePos(0)
 {
   LoadingBar loadingBar(window);
   loadingBar.setState(0.1);
@@ -78,12 +78,19 @@ void Player::toggle() {
   }
 }
 
+bool const Player::isPlaying() const {
+#ifdef BUILD_RPI
+  return (SDL_GetAudioStatus() == SDL_AUDIO_PLAYING);
+#else
+  return (SDL_GetAudioDeviceStatus(audioDevice) == SDL_AUDIO_PLAYING);
+#endif
+}
+
 void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   Player *player = (Player*)userData;
-  int copyLen = len;
 
   // Prep with silence (copying doesn't always happen)
-  SDL_memset(stream, 0, copyLen);
+  SDL_memset(stream, 0, len);
 
   // Don't play if empty
   if (player->nBytesLeft == 0) {
@@ -91,23 +98,23 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
   }
 
   // Limit reading to buffer bounds
-  copyLen = (len > player->nBytesLeft ? player->nBytesLeft : len);
+  len = (len > player->nBytesLeft ? player->nBytesLeft : len);
 
   // Copy audio buffer to player
-  SDL_memcpy(stream, player->audioPos, copyLen);
+  SDL_memcpy(stream, player->audioPos, len);
 
   // Move to next block
-  player->audioPos += copyLen;
+  player->audioPos += len;
 
   // Keep track of data left in the buffer
-  player->nBytesLeft -= copyLen;
-
-  // Query time
-  player->lastQueriedTicks = SDL_GetTicks();
+  player->nBytesLeft -= len;
 
   // Update pos
   player->samplePos = player->nSamples - player->nBytesLeft
     / player->sampleSize;
+
+  // Get time
+  player->callbackTicks = SDL_GetTicks();
 }
 
 float const Player::getFftBass() const {
@@ -135,7 +142,7 @@ void Player::computeFft(int16_t *audioData, LoadingBar *loadingBar) {
     }
 
     kiss_fft(cfg, in, out);
-    
+
     int const BASS_RANGE = 8;
     float avgBass = 0.f, avgTreble=0.f;
     for (int b=0; b<N_FFT/BASS_RANGE; b++) { // b is output bin
@@ -203,7 +210,15 @@ int16_t *Player::loadVorbisFile(std::string const &filename,
 }
 
 float const Player::getTime() const {
-  unsigned ticks = SDL_GetTicks() - lastQueriedTicks;
-  return static_cast<float>(samplePos) / sampleRate;
-    + std::min(ticks, 1000u*(LEN_BUF/sampleRate)) / 1000.f;
+  float extra = static_cast<float>(SDL_GetTicks() - callbackTicks) / 1000.f;
+  return static_cast<float>(samplePos) / static_cast<float>(sampleRate)
+    + std::min(extra,
+        static_cast<float>(LEN_BUF)/static_cast<float>(sampleRate));
+}
+
+void Player::setTime(float const time) {
+  int offsetSamples = sampleRate*time;
+  int offsetBytes = std::min(offsetSamples*sampleSize, nSamples*sampleSize);
+  audioPos = audioData + offsetBytes;
+  nBytesLeft = nSamples*sampleSize - offsetBytes;
 }

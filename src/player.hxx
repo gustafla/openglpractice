@@ -15,10 +15,12 @@ class Player {
     void play();
     void pause();
     void toggle();
+    bool const isPlaying() const;
 
     float const getFftBass() const;
     float const getFftTreble() const;
     float const getTime() const;
+    void setTime(float const time);
 
   private:
     int channels;
@@ -29,7 +31,7 @@ class Player {
     int nSamples; // in samples
     int nBytesLeft;  // in bytes
     int samplePos;
-    unsigned lastQueriedTicks;
+    unsigned callbackTicks;
 
     float *fftBassData;
     float *fftTrebleData;

@@ -1,5 +1,11 @@
 #include "window.hxx"
 #include <cstdlib>
+#include <iostream>
+
+void die(std::string const &msg) {
+  std::cout << msg << std::endl;
+  exit(EXIT_FAILURE);
+}
 
 Window::Window():
   width(960), height(540)
@@ -19,7 +25,7 @@ Window::~Window() {
 void Window::open() {
   // Initialize SDL for audio, input and time
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE);
+  SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE|SDL_FULLSCREEN);
   SDL_ShowCursor(0);
 
   // Start videocore rendering and query current screen resolution

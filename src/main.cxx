@@ -5,6 +5,7 @@
 
 #include "scenes/test.hxx"
 
+
 int main(int argc, char *argv[]) {
   std::cout << "OpenGL test" << std::endl << "Platform: " <<
 #ifdef BUILD_RPI
@@ -26,12 +27,14 @@ int main(int argc, char *argv[]) {
     // Approximate timings
     timeLast = time;
     time = demo.getPlayer().getTime();
-    std::cout << time << std::endl;
     frameTime = time - timeLast;
 
     // Run the FPS counter
     fpsCounter.addFrameTime(frameTime);
     fpsCounter.printer(time);
+
+    // Update Rocket
+    demo.updateRocket();
 
     // Bind window FB
     window.bind();

@@ -80,18 +80,10 @@ GLuint GlProgram::getId() {
   return id;
 }
 
-void GlProgram::setUfm(std::string const &name, float value) const {
-  glUniform1f(uniforms.at(name), value);
-}
-
-void GlProgram::setUfm(std::string const &name, bool value) const {
-  glUniform1i(uniforms.at(name), value);
-}
-
-void GlProgram::setUfm(std::string const &name, int value) const {
-  glUniform1i(uniforms.at(name), value);
-}
-
 GLint GlProgram::getAttribLocation(std::string const &name) const {
   return attributes.at(name);
+}
+
+GLint GlProgram::getUniformLocation(std::string const &name) const {
+  return uniforms.at(name);
 }

@@ -2,6 +2,7 @@
 #include "gl_shader.hxx"
 #include "verts.hxx"
 #include <string>
+#include <iostream>
 
 Shader Shader::loadFromFile(Demo const &demo, std::string filename) {
   return Shader(demo, GlShader::loadFromFile(filename));
@@ -24,8 +25,9 @@ Shader::Shader(Demo const &demo, std::string const &fsSource):
 void Shader::draw() const {
   program.use();
   vaPos.bind();
-  program.setUfm("u_time", demo.getPlayer().getTime());
-  program.setUfm("u_fft_bass", demo.getPlayer().getFftBass());
-  program.setUfm("u_fft_treble", demo.getPlayer().getFftTreble());
+  float t =  demo.getPlayer().getTime();
+  glUniform1f(program.getUniformLocation("u_time"), t);
+  glUniform1f(program.getUniformLocation("u_fft_bass"), demo.getPlayer().getFftBass());
+  glUniform1f(program.getUniformLocation("u_fft_treble"), demo.getPlayer().getFftTreble());
   glDrawArrays(GL_TRIANGLES, 0, Verts::lenSquare/3);
 }

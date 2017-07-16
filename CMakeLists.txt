@@ -10,7 +10,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 if (EXISTS /opt/vc/lib)
   message ("Building for Raspberry Pi")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_RPI -I/opt/vc/include/ -L/opt/vc/lib -lGLESv2 -lEGL -lbcm_host")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_RPI -DSYNC_PLAYER -I/opt/vc/include/ -L/opt/vc/lib -lGLESv2 -lEGL -lbcm_host")
 endif()
 
 # Glob src files
@@ -18,6 +18,7 @@ file(GLOB SRC_FILES
   "src/*.cxx"
   "src/scenes/*.cxx"
   "src/kissfft/*.c"
+  "rocket/lib/*.c"
 )
 
 # add the executable

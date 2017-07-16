@@ -14,10 +14,8 @@ class GlProgram {
     void use() const;
     GLuint getId();
 
-    void setUfm(std::string const &name, float value) const;
-    void setUfm(std::string const &name, bool value) const;
-    void setUfm(std::string const &name, int value) const;
     GLint getAttribLocation(std::string const &name) const;
+    GLint getUniformLocation(std::string const &name) const;
 
     static GlProgram loadFromFiles(std::string const &vsName,
         std::string const &fsName);

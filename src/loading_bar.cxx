@@ -42,25 +42,25 @@ void LoadingBar::draw() const {
   vertexAttrib.bind();
 
   // Draw base
-  shader.setUfm("u_bright", 1.0f);
-  shader.setUfm("u_xscale", 0.9f);
-  shader.setUfm("u_yscale", 0.15f);
+  glUniform1f(shader.getUniformLocation("u_bright"), 1.0f);
+  glUniform1f(shader.getUniformLocation("u_xscale"), 0.9f);
+  glUniform1f(shader.getUniformLocation("u_yscale"), 0.15f);
   glDrawArrays(GL_TRIANGLES, 0, 6);
 
   glClear(GL_DEPTH_BUFFER_BIT);
 
   // Draw unfill
-  shader.setUfm("u_bright", 0.0f);
-  shader.setUfm("u_xscale", 0.88f);
-  shader.setUfm("u_yscale", 0.12f);
+  glUniform1f(shader.getUniformLocation("u_bright"), 0.0f);
+  glUniform1f(shader.getUniformLocation("u_xscale"), 0.88f);
+  glUniform1f(shader.getUniformLocation("u_yscale"), 0.12f);
   glDrawArrays(GL_TRIANGLES, 0, 6);
 
   glClear(GL_DEPTH_BUFFER_BIT);
 
   // Draw fill
-  shader.setUfm("u_bright", 1.0f);
-  shader.setUfm("u_xscale", 0.88f*state);
-  shader.setUfm("u_yscale", 0.12f);
+  glUniform1f(shader.getUniformLocation("u_bright"), 1.0f);
+  glUniform1f(shader.getUniformLocation("u_xscale"), 0.88f*state);
+  glUniform1f(shader.getUniformLocation("u_yscale"), 0.12f);
   glDrawArrays(GL_TRIANGLES, 0, 6);
 
   glClear(GL_DEPTH_BUFFER_BIT);
