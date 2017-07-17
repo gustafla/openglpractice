@@ -17,6 +17,10 @@ class Shader: public Drawable {
     void addRocketTrack(std::string const &name);
 
   private:
+    Demo const &demo;
+    GlProgram program;
+    GlVertexAttrib vaPos;
+
     class RocketTrackUniform {
       public:
         RocketTrackUniform(sync_track const *track, GLint const id):
@@ -27,8 +31,5 @@ class Shader: public Drawable {
         GLint const id;
     };
 
-    Demo const &demo;
-    GlProgram program;
-    GlVertexAttrib vaPos;
     std::vector<RocketTrackUniform> tracks;
 };

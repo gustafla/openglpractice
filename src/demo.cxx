@@ -1,4 +1,5 @@
 #include "demo.hxx"
+#include "debug.hxx"
 
 float const Demo::BPM = 160.f;
 int const Demo::RPB = 8;
@@ -32,7 +33,7 @@ static struct sync_cb playerControls = {
 Demo::Demo(Window &window):
   time(0.f),
   window(window),
-  player("music.ogg", window)
+  player("music.ogg", &window)
 {
   rocket = sync_create_device("sync");
 

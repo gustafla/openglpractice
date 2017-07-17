@@ -3,7 +3,7 @@
 #include "window.hxx"
 #include "player.hxx"
 #include "shaders.hxx"
-#include "../rocket/lib/sync.h"
+#include <rocket/sync.h>
 #include <map>
 
 class Demo {

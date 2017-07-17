@@ -16,6 +16,6 @@ void BindArray::unbind() {
   }
 }
 
-void BindArray::recordBind(Bindable &bind) {
-  binds.push_back(std::shared_ptr<Bindable>(&bind));
+void BindArray::recordBind(std::shared_ptr<Bindable> bindable) {
+  binds.push_back(bindable);
 }

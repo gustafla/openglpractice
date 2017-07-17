@@ -1,4 +1,5 @@
 #include "gl_shader.hxx"
+#include "debug.hxx"
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -6,7 +7,7 @@
 GlShader GlShader::loadFromFile(std::string const &filename, GLenum const type) {
   std::ifstream file(filename);
   if (file.fail()) {
-    std::cout << "Failed to open file " << filename << std::endl;
+    die("Failed to open file " + filename);
   }
 
   std::string filetext((std::istreambuf_iterator<char>(file)),
@@ -73,8 +74,8 @@ GLint GlShader::compile(std::string const &extra) {
   glGetShaderiv(id, GL_COMPILE_STATUS, &succ);
   if (!succ) {
     glGetShaderInfoLog(id, 512, NULL, log);
-    std::cout << "Error compiling shader" << std::endl << extra << std::endl
-      << log << std::endl;
+    die("Error compiling shader:\n" + std::string(extra) + "\n"
+        + std::string(log));
   }
   return succ;
 }

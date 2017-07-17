@@ -1,4 +1,5 @@
 #include "shader.hxx"
+#include "debug.hxx"
 #include "gl_shader.hxx"
 #include "verts.hxx"
 #include <string>
@@ -48,6 +49,8 @@ void Shader::draw() const {
 }
 
 void Shader::addRocketTrack(std::string const &name) {
+  std::string ufm = trackNameToUniformName(name);
+  msg("Rocket uniform " + std::string(ufm));
   tracks.push_back(RocketTrackUniform(demo.getRocketTrack(name),
-        program.getUniformLocation(trackNameToUniformName(name))));
+        program.getUniformLocation(ufm)));
 }

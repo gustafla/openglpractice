@@ -1,41 +1,34 @@
 #include "player.hxx"
 #include "stb_vorbis.h"
+#include "debug.hxx"
 #include "kissfft/kiss_fft.h"
 #include <iostream>
 #include <limits>
 #include <cmath>
 
-Player::Player(std::string const &filename):
+Player::Player(std::string const &filename, Window *window):
   callbackTicks(SDL_GetTicks()), samplePos(0)
 {
-  int16_t *buffer = loadVorbisFile(filename);
+  LoadingBar *loadingBar = NULL;
+  if (window != NULL) {
+    loadingBar = new LoadingBar(*window);
+    loadingBar->setState(0.1);
+  }
+
+  int16_t *buffer = loadVorbisFile(filename, loadingBar);
 
   // Compute FFT
-  computeFft(buffer);
+  computeFft(buffer, loadingBar);
 
   // Print info
-  std::cout << "Music: " << ((sampleSize*nSamples)/1024.f)/1024.f
-    << "MB" << std::endl;
-  std::cout << "FFT: " << ((sizeof(float)*(nSamples/N_FFT)*2)/1024.f)/1024.f
-    << "MB" << std::endl;
-}
+  msg("Music: " + std::to_string(((sampleSize*nSamples)/1024.f)/1024.f) + "MB");
+  msg("FFT: "
+      + std::to_string(((sizeof(float)*(nSamples/N_FFT)*2)/1024.f)/1024.f)
+      + "MB");
 
-Player::Player(std::string const &filename, Window &window):
-  callbackTicks(SDL_GetTicks()), samplePos(0)
-{
-  LoadingBar loadingBar(window);
-  loadingBar.setState(0.1);
-
-  int16_t *buffer = loadVorbisFile(filename, &loadingBar);
-
-  // Compute FFT
-  computeFft(buffer, &loadingBar);
-
-  // Print info
-  std::cout << "Music: " << ((sampleSize*nSamples)/1024.f)/1024.f
-    << "MB" << std::endl;
-  std::cout << "FFT: " << ((sizeof(float)*(nSamples/N_FFT)*2)/1024.f)/1024.f
-    << "MB" << std::endl;
+  if (loadingBar != NULL) {
+    delete loadingBar;
+  }
 }
 
 Player::~Player() {
@@ -186,14 +179,14 @@ int16_t *Player::loadVorbisFile(std::string const &filename,
 
 #ifdef BUILD_RPI
   if(SDL_OpenAudio(&want, NULL) < 0) {
-    std::cout << "Player failed to get required audio format!" << std::endl;
+    die("Failed to get required audio format!");
   }
 #else
   audioDevice = SDL_OpenAudioDevice(NULL, 0, &want, &have,
       SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 
   if (want.format != have.format) {
-    std::cout << "Player failed to get required audio format!" << std::endl;
+    die("Failed to get required audio format!");
   }
 #endif //BUILD_RPI
 

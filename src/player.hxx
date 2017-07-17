@@ -9,8 +9,7 @@
 
 class Player {
   public:
-    Player(std::string const &filename);
-    Player(std::string const &filename, Window &window);
+    Player(std::string const &filename, Window *window=NULL);
     ~Player();
     void play();
     void pause();

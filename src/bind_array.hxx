@@ -10,7 +10,7 @@ class BindArray: public Bindable {
     BindArray();
     void bind();
     void unbind();
-    void recordBind(Bindable &bind);
+    void recordBind(std::shared_ptr<Bindable> bindable);
 
   private:
     std::vector<std::shared_ptr<Bindable>> binds;

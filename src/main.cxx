@@ -1,13 +1,21 @@
+#include "debug.hxx"
 #include <iostream>
+#include <string>
 #include "window.hxx"
 #include "fps_counter.hxx"
 #include "demo.hxx"
 
 #include "scenes/test.hxx"
-
+#include "scenes/sky.hxx"
 
 int main(int argc, char *argv[]) {
-  std::cout << "OpenGL test" << std::endl << "Platform: " <<
+  std::cout <<
+#ifdef BUILD_NAME
+    STRING(BUILD_NAME) 
+#else
+    "OpenGL test"
+#endif
+    << std::endl << "Platform: " <<
 #ifdef BUILD_RPI
     "Raspberry Pi"
 #else
@@ -18,7 +26,7 @@ int main(int argc, char *argv[]) {
   Window window;
   Demo demo(window);
 
-  ScTest testScene(demo);
+  //ScSky testScene(demo);
 
   FpsCounter fpsCounter(2, 64);
   float timeLast, time, frameTime;
@@ -43,7 +51,7 @@ int main(int argc, char *argv[]) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render
-    testScene.draw();
+    //testScene.draw();
   }
 
   return 0;

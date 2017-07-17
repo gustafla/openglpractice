@@ -13,11 +13,7 @@
 #else
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
-#include <GL/gl.h>
-#include <GL/glext.h>
 #endif // BUILD_RPI
-
-void die(std::string const &msg);
 
 class Window: public Bindable {
   public:

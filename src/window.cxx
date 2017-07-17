@@ -1,11 +1,7 @@
 #include "window.hxx"
+#include "debug.hxx"
 #include <cstdlib>
 #include <iostream>
-
-void die(std::string const &msg) {
-  std::cout << msg << std::endl;
-  exit(EXIT_FAILURE);
-}
 
 Window::Window():
   width(960), height(540)
@@ -32,7 +28,7 @@ void Window::open() {
   bcm_host_init();
   if (graphics_get_display_size(0, (uint32_t*)&nativeWindow.width,
         (uint32_t*)&nativeWindow.height) < 0) {
-    exit(EXIT_FAILURE);
+    die("Failed to get display size.");
   }
 
   // Dispmanx variables and config
@@ -73,33 +69,33 @@ void Window::open() {
 
   display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
   if (display == EGL_NO_DISPLAY) {
-    exit(EXIT_FAILURE);
+    die("Failed to get EGL display.");
   }
 
   if (!eglInitialize(display, &majorVersion, &minorVersion)) {
-    exit(EXIT_FAILURE);
+    die("Failed to initialize EGL.");
   }
 
   if (!eglChooseConfig(display, attribList, &eglConfig, 1, &numConfigs)) {
-    exit(EXIT_FAILURE);
+    die("eglChooseConfig failed.");
   }
 
   buffer = eglCreateWindowSurface(
       display, eglConfig, (EGLNativeWindowType)&nativeWindow, NULL);
 
   if (buffer == EGL_NO_SURFACE) {
-    exit(EXIT_FAILURE);
+    die("Failed to get EGL back buffer.");
   }
 
   context = eglCreateContext(
       display, eglConfig, EGL_NO_CONTEXT, contextAttribs);
 
   if (context == EGL_NO_CONTEXT) {
-    exit(EXIT_FAILURE);
+    die("eglCreateContext failed.");
   }
 
   if (!eglMakeCurrent(display, buffer, buffer, context)) {
-    exit(EXIT_FAILURE);
+    die("eglMakeCurrent failed.");
   }
 }
 #else
@@ -129,6 +125,8 @@ void Window::open() {
 #endif // BUILD_RPI
 
 bool Window::swapBuffers() const {
+  chk();
+
 #ifdef BUILD_RPI
   eglSwapBuffers(display, buffer);
 #else
