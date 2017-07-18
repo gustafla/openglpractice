@@ -12,5 +12,9 @@ uniform float u_sunpos_x;
 uniform float u_sunpos_y;
 
 void main() {
-  gl_FragColor = vec4(vec3(v_pos.y), 1.);
+  float l = v_pos.y;
+  l += distance(vec2(u_sunpos_x, u_sunpos_y), v_pos.xy);
+  l += u_fft_bass;
+  l += u_fft_treble;
+  gl_FragColor = vec4(vec3(l), 1.);
 }

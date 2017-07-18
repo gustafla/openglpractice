@@ -52,6 +52,7 @@ GLint GlProgram::link() {
   int uniformLength;
   glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &uniformCount);
   chk(__FILE__, __LINE__);
+  msg("Uniform count: " + std::to_string(uniformCount));
   glGetProgramiv(id, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformLength);
   chk(__FILE__, __LINE__);
   GLchar* ufmName = new GLchar[uniformLength];
@@ -61,7 +62,7 @@ GLint GlProgram::link() {
     glGetActiveUniform(id, i, uniformLength, NULL, &ufmSize, &ufmType, ufmName);
     chk(__FILE__, __LINE__);
     msg("GlProgram has uniform " + std::string(ufmName));
-    uniforms[std::string(ufmName)] = glGetUniformLocation(id, ufmName)+1;
+    uniforms[std::string(ufmName)] = glGetUniformLocation(id, ufmName);
   }
   delete[] ufmName;
 
@@ -79,7 +80,7 @@ GLint GlProgram::link() {
     glGetActiveAttrib(id, i, attribLength, NULL, &atrSize, &atrType,
         atrName);
     chk(__FILE__, __LINE__);
-    attributes[std::string(atrName)] = glGetAttribLocation(id, atrName)+1;
+    attributes[std::string(atrName)] = glGetAttribLocation(id, atrName);
   }
   delete[] atrName;
 
@@ -97,9 +98,15 @@ GLuint GlProgram::getId() {
 }
 
 GLint GlProgram::getAttribLocation(std::string const &name) const {
-  return attributes.at(name)-1;
+  if (attributes.count(name) == 0) {
+    return -1;
+  }
+  return attributes.at(name);
 }
 
 GLint GlProgram::getUniformLocation(std::string const &name) const {
-  return uniforms.at(name)-1;
+  if (uniforms.count(name) == 0) {
+    return -1;
+  }
+  return uniforms.at(name);
 }
