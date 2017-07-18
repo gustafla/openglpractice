@@ -18,6 +18,8 @@ class Demo {
     sync_track const *getRocketTrack(std::string const &name) const;
     float const getValue(sync_track const *track) const;
     float const getTime() const;
+    float const getFftBass() const;
+    float const getFftTreble() const;
 
     static float const BPM;
     static int const RPB;
@@ -31,4 +33,8 @@ class Demo {
     sync_device *rocket;
 
     float time;
+    float fftBass;
+    float fftTreble;
+    sync_track const *fftBassMult;
+    sync_track const *fftTrebleMult;
 };

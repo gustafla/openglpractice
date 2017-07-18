@@ -32,6 +32,8 @@ static struct sync_cb playerControls = {
 
 Demo::Demo(Window &window):
   time(0.f),
+  fftBass(0.f),
+  fftTreble(0.f),
   window(window),
   player("music.ogg", &window)
 {
@@ -42,6 +44,9 @@ Demo::Demo(Window &window):
     die("Sync failed to connect.");
   }
 #endif
+
+  fftBassMult = getRocketTrack("fft:bass");
+  fftTrebleMult = getRocketTrack("fft:treble");
 
   player.play();
 }
@@ -67,6 +72,8 @@ Verts const &Demo::getVerts() const {
 
 void Demo::update() {
   time = player.getTime();
+  fftBass = player.getFftBass();
+  fftTreble = player.getFftTreble();
 #ifndef SYNC_PLAYER
   if (sync_update(rocket, (int)std::floor(time*ROW_RATE),
         &playerControls, (void*)&player)) {
@@ -85,4 +92,12 @@ float const Demo::getValue(sync_track const *track) const {
 
 float const Demo::getTime() const {
   return time;
+}
+
+float const Demo::getFftBass() const {
+  return fftBass * getValue(fftBassMult);
+}
+
+float const Demo::getFftTreble() const {
+  return fftTreble * getValue(fftTrebleMult);
 }
