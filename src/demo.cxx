@@ -1,5 +1,6 @@
 #include "demo.hxx"
 #include "debug.hxx"
+#include <cmath>
 
 float const Demo::BPM = 160.f;
 int const Demo::RPB = 8;
