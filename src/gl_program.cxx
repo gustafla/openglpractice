@@ -10,6 +10,7 @@ GlProgram GlProgram::loadFromFiles(std::string const &vsName,
 }
 
 GlProgram::GlProgram() {
+  msg("GlProgram::GlProgram()");
   id = glCreateProgram();
   chk(__FILE__, __LINE__);
 }
@@ -17,13 +18,14 @@ GlProgram::GlProgram() {
 GlProgram::GlProgram(GlShader const &vs, GlShader const &fs):
   GlProgram()
 {
-  //use();
+  msg("GlProgram::GlProgram(GlShader const &vs, GlShader const &fs)");
   attachShader(vs);
   attachShader(fs);
   link();
 }
 
 GlProgram::~GlProgram() {
+  msg("GlProgram destroyed!");
   glDeleteProgram(id);
 }
 
@@ -33,6 +35,7 @@ void GlProgram::attachShader(GlShader const &s) {
 }
 
 GLint GlProgram::link() {
+  msg("GlProgram::link()");
   glLinkProgram(id);
   chk(__FILE__, __LINE__);
 
@@ -80,6 +83,7 @@ GLint GlProgram::link() {
   }
   delete[] atrName;
 
+  msg("GlProgram link finished with "+std::to_string(succ));
   return succ;
 }
 

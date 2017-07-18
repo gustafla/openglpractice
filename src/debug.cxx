@@ -9,13 +9,13 @@ void die(std::string const &msg) {
 }
 
 void msg(std::string const &msg) {
-#ifndef SYNC_PLAYER
+#ifndef BUILD_RELEASE
   std::cout << msg << std::endl;
 #endif
 }
 
 void chk(std::string const &msg) {
-#ifndef SYNC_PLAYER
+#ifndef BUILD_RELEASE
   switch(glGetError()) {
     default:
       die(msg + "\nUnknown OpenGL error"); break;
@@ -36,9 +36,13 @@ void chk(std::string const &msg) {
 }
 
 void chk(std::string const &msg1, int n) {
+#ifndef BUILD_RELEASE
   chk(msg1 + " " + std::to_string(n) + ":");
+#endif
 }
 
 void chk() {
+#ifndef BUILD_RELEASE
   chk("");
+#endif
 }

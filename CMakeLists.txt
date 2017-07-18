@@ -5,18 +5,23 @@ project (openglpractice)
 set (CMAKE_CXX_STANDARD 11)
 
 # Flags
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -Dkiss_fft_scalar=float")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -lGLESv2")
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Dkiss_fft_scalar=float")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lGLESv2")
 
+# Platform flags
 if (EXISTS /opt/vc/lib)
   message ("Building for Raspberry Pi")
-  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DBUILD_RPI -DSYNC_PLAYER")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_RPI -DSYNC_PLAYER -I/opt/vc/include/ -L/opt/vc/lib -lEGL -lbcm_host")
+  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DBUILD_RPI")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_RPI -I/opt/vc/include/ -L/opt/vc/lib -lEGL -lbcm_host")
 else()
-  message ("Building debug for PC")
-  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+  message ("Building for PC")
 endif()
+
+# Release and debug flags
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -g -DBUILD_DEBUG")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -g")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -DSYNC_PLAYER")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2 -DSYNC_PLAYER")
 
 # Glob src files
 file(GLOB SRC_FILES
@@ -43,8 +48,8 @@ else()
   INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS})
   TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES})
   # GLEW
-  PKG_SEARCH_MODULE(GLEW REQUIRED glew)
-  INCLUDE_DIRECTORIES(${GLEW_INCLUDE_DIRS})
-  TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${GLEW_LIBRARIES})
+  #PKG_SEARCH_MODULE(GLEW REQUIRED glew)
+  #INCLUDE_DIRECTORIES(${GLEW_INCLUDE_DIRS})
+  #TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${GLEW_LIBRARIES})
 endif()
 

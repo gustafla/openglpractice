@@ -4,7 +4,10 @@
 #include <vector>
 #include <fstream>
 
-GlShader GlShader::loadFromFile(std::string const &filename, GLenum const type) {
+GlShader GlShader::loadFromFile(std::string const &filename,
+    GLenum const type) {
+  msg("GlShader::loadFromFile(std::string const &filename=\"" + filename
+      + "\", GLenum const type)");
   std::ifstream file(filename);
   if (file.fail()) {
     die("Failed to open file " + filename);
@@ -32,8 +35,9 @@ GlShader GlShader::loadFromFile(std::string const &filename, GLenum const type) 
     }
   }
 
-  const char* filetextptr = filetext.c_str(); //BAD, but it's alright for this
-  return GlShader(realtype, 1, &filetextptr);
+  //const char* filetextptr = filetext.c_str(); //BAD, but it's alright for this
+  //return GlShader(realtype, 1, &filetextptr);
+  return GlShader(realtype, filetext);
 }
 
 GlShader::GlShader(GLenum const type):
@@ -54,12 +58,14 @@ GlShader::GlShader(GLenum const type, GLsizei const count,
 GlShader::GlShader(GLenum const type, std::string const &source):
   GlShader(type)
 {
+  msg("GlShader::GlShader(GLenum const type, std::string const &source)");
   GLchar const *ptr = source.c_str();
   setSource(1, &ptr);
   compile(source);
 }
 
 GlShader::~GlShader() {
+  msg("GlShader destroyed!");
   glDeleteShader(id);
 }
 
@@ -70,6 +76,7 @@ void GlShader::setSource(GLsizei const count, GLchar const *sources[]) {
 }
 
 GLint GlShader::compile(std::string const &extra) {
+  msg("GlShader::compile:\n"+extra);
   glCompileShader(id); 
   chk(__FILE__, __LINE__);
   GLint succ;
@@ -81,6 +88,7 @@ GLint GlShader::compile(std::string const &extra) {
     die("Error compiling shader:\n" + std::string(extra) + "\n"
         + std::string(log));
   }
+  msg("shader compiled with status " + std::to_string(succ));
   return succ;
 }
 

@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
   Window window;
   Demo demo(window);
 
-  //ScSky testScene(demo);
+  ScSky testScene(demo);
 
   FpsCounter fpsCounter(2, 64);
   float timeLast, time, frameTime;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render
-    //testScene.draw();
+    testScene.draw();
   }
 
   return 0;

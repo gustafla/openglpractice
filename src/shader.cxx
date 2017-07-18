@@ -14,6 +14,7 @@ std::string trackNameToUniformName(std::string const &name) {
 }
 
 Shader Shader::loadFromFile(Demo const &demo, std::string filename) {
+  msg("Shader::loadFromFile " + filename);
   return Shader(demo, GlShader::loadFromFile(filename));
 }
 
@@ -24,6 +25,7 @@ Shader::Shader(Demo const &demo, GlShader const &fs):
       program.getAttribLocation("a_pos"), 3, GL_FLOAT, GL_FALSE,
       3*sizeof(GLfloat), &Verts::square)
 {
+  msg("Shader::Shader(Demo const &demo, GlShader const &fs)");
 }
 
 Shader::Shader(Demo const &demo, std::string const &fsSource):
