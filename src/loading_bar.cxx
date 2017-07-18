@@ -22,11 +22,11 @@ static std::string const _fs =
 "}\n";
 
 LoadingBar::LoadingBar(Window &window):
+  window(window),
   state(0.f),
-  shader(GlShader(GL_VERTEX_SHADER, _vs), GlShader(GL_FRAGMENT_SHADER, _fs)),
-  vertexAttrib(shader.getAttribLocation("a_pos"), 3, GL_FLOAT, GL_FALSE,
-      3*sizeof(GLfloat), &Verts::square),
-  window(window)
+  program(GlShader(GL_VERTEX_SHADER, _vs), GlShader(GL_FRAGMENT_SHADER, _fs)),
+  vertexAttrib(program.getAttribLocation("a_pos"), 3, GL_FLOAT, GL_FALSE,
+      3*sizeof(GLfloat), &Verts::square)
 {
   chk(__FILE__, __LINE__);
   draw();
@@ -38,18 +38,19 @@ void LoadingBar::setState(float state) {
 }
 
 void LoadingBar::draw() const {
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
   chk(__FILE__, __LINE__);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  shader.use();
+  program.use();
   chk(__FILE__, __LINE__);
   vertexAttrib.bind();
   chk(__FILE__, __LINE__);
 
   // Draw base
-  glUniform1f(shader.getUniformLocation("u_bright"), 1.0f);
-  glUniform1f(shader.getUniformLocation("u_xscale"), 0.9f);
-  glUniform1f(shader.getUniformLocation("u_yscale"), 0.15f);
+  glUniform1f(program.getUniformLocation("u_bright"), 1.0f);
+  glUniform1f(program.getUniformLocation("u_xscale"), 0.9f);
+  glUniform1f(program.getUniformLocation("u_yscale"), 0.15f);
   chk(__FILE__, __LINE__);
   glDrawArrays(GL_TRIANGLES, 0, 6);
   chk(__FILE__, __LINE__);
@@ -58,9 +59,9 @@ void LoadingBar::draw() const {
   chk(__FILE__, __LINE__);
 
   // Draw unfill
-  glUniform1f(shader.getUniformLocation("u_bright"), 0.0f);
-  glUniform1f(shader.getUniformLocation("u_xscale"), 0.88f);
-  glUniform1f(shader.getUniformLocation("u_yscale"), 0.12f);
+  glUniform1f(program.getUniformLocation("u_bright"), 0.0f);
+  glUniform1f(program.getUniformLocation("u_xscale"), 0.88f);
+  glUniform1f(program.getUniformLocation("u_yscale"), 0.12f);
   chk(__FILE__, __LINE__);
   glDrawArrays(GL_TRIANGLES, 0, 6);
   chk(__FILE__, __LINE__);
@@ -69,9 +70,9 @@ void LoadingBar::draw() const {
   chk(__FILE__, __LINE__);
 
   // Draw fill
-  glUniform1f(shader.getUniformLocation("u_bright"), 1.0f);
-  glUniform1f(shader.getUniformLocation("u_xscale"), 0.88f*state);
-  glUniform1f(shader.getUniformLocation("u_yscale"), 0.12f);
+  glUniform1f(program.getUniformLocation("u_bright"), 1.0f);
+  glUniform1f(program.getUniformLocation("u_xscale"), 0.88f*state);
+  glUniform1f(program.getUniformLocation("u_yscale"), 0.12f);
   chk(__FILE__, __LINE__);
   glDrawArrays(GL_TRIANGLES, 0, 6);
   chk(__FILE__, __LINE__);

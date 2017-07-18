@@ -11,12 +11,13 @@ GlProgram GlProgram::loadFromFiles(std::string const &vsName,
 
 GlProgram::GlProgram() {
   id = glCreateProgram();
+  chk(__FILE__, __LINE__);
 }
 
 GlProgram::GlProgram(GlShader const &vs, GlShader const &fs):
   GlProgram()
 {
-  use();
+  //use();
   attachShader(vs);
   attachShader(fs);
   link();
@@ -28,10 +29,12 @@ GlProgram::~GlProgram() {
 
 void GlProgram::attachShader(GlShader const &s) {
   glAttachShader(id, s.getId());
+  chk(__FILE__, __LINE__);
 }
 
 GLint GlProgram::link() {
   glLinkProgram(id);
+  chk(__FILE__, __LINE__);
 
   GLint succ;
   GLchar log[512];
@@ -45,12 +48,15 @@ GLint GlProgram::link() {
   int uniformCount;
   int uniformLength;
   glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &uniformCount);
+  chk(__FILE__, __LINE__);
   glGetProgramiv(id, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformLength);
+  chk(__FILE__, __LINE__);
   GLchar* ufmName = new GLchar[uniformLength];
   GLint ufmSize;
   GLenum ufmType;
   for (int i=0; i<uniformCount; i++) {
     glGetActiveUniform(id, i, uniformLength, NULL, &ufmSize, &ufmType, ufmName);
+    chk(__FILE__, __LINE__);
     msg("GlProgram has uniform " + std::string(ufmName));
     uniforms[std::string(ufmName)] = glGetUniformLocation(id, ufmName)+1;
   }
@@ -60,13 +66,16 @@ GLint GlProgram::link() {
   int attribCount;
   int attribLength;
   glGetProgramiv(id, GL_ACTIVE_ATTRIBUTES, &attribCount);
+  chk(__FILE__, __LINE__);
   glGetProgramiv(id, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &attribLength);
+  chk(__FILE__, __LINE__);
   GLchar* atrName = new GLchar[attribLength];
   GLint atrSize;
   GLenum atrType;
   for (int i=0; i<attribCount; i++) {
     glGetActiveAttrib(id, i, attribLength, NULL, &atrSize, &atrType,
         atrName);
+    chk(__FILE__, __LINE__);
     attributes[std::string(atrName)] = glGetAttribLocation(id, atrName)+1;
   }
   delete[] atrName;
@@ -76,6 +85,7 @@ GLint GlProgram::link() {
 
 void GlProgram::use() const {
   glUseProgram(id);
+  chk(__FILE__, __LINE__);
 }
 
 GLuint GlProgram::getId() {

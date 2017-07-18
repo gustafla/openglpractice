@@ -10,3 +10,8 @@ GLfloat const Verts::square[] = {
 };
 
 size_t const Verts::lenSquare = sizeof(square) / sizeof(GLfloat);
+
+Verts::Verts():
+bufSquare(GL_ARRAY_BUFFER,
+    sizeof(GLfloat)*Verts::lenSquare, Verts::square, GL_STATIC_DRAW)
+{}

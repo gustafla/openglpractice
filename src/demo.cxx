@@ -61,6 +61,10 @@ Shaders const &Demo::getShaders() const {
   return shaders;
 }
 
+Verts const &Demo::getVerts() const {
+  return verts;
+}
+
 void Demo::update() {
   time = player.getTime();
 #ifndef SYNC_PLAYER

@@ -6,12 +6,12 @@ set (CMAKE_CXX_STANDARD 11)
 
 # Flags
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -Dkiss_fft_scalar=float")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -lGLESv2")
 
 if (EXISTS /opt/vc/lib)
   message ("Building for Raspberry Pi")
   set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DBUILD_RPI -DSYNC_PLAYER")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_RPI -DSYNC_PLAYER -I/opt/vc/include/ -L/opt/vc/lib -lGLESv2 -lEGL -lbcm_host")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_RPI -DSYNC_PLAYER -I/opt/vc/include/ -L/opt/vc/lib -lEGL -lbcm_host")
 else()
   message ("Building debug for PC")
   set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
@@ -23,7 +23,7 @@ file(GLOB SRC_FILES
   "src/*.cxx"
   "src/scenes/*.cxx"
   "src/kissfft/*.c"
-  "/usr/lib/rocket/*.c"
+  "src/rocket/*.c"
 )
 
 # add the executable

@@ -17,11 +17,11 @@ GlBuffer::~GlBuffer() {
   glDeleteBuffers(1, &id);
 }
 
-void GlBuffer::bind() {
+void GlBuffer::bind() const {
   glBindBuffer(type, id);
 }
 
-void GlBuffer::unbind() {
+void GlBuffer::unbind() const {
   glBindBuffer(type, 0);
 }
 

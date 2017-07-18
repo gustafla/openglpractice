@@ -15,7 +15,7 @@ class LoadingBar: public Drawable {
     void draw() const;
 
     float state;
-    GlProgram shader;
+    GlProgram program;
     GlVertexAttrib vertexAttrib;
 
     Window &window;

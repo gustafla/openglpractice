@@ -40,6 +40,7 @@ GlShader::GlShader(GLenum const type):
   type(type)
 {
   id = glCreateShader(type);
+  chk(__FILE__, __LINE__);
 }
 
 GlShader::GlShader(GLenum const type, GLsizei const count,
@@ -65,13 +66,16 @@ GlShader::~GlShader() {
 void GlShader::setSource(GLsizei const count, GLchar const *sources[]) {
   std::vector<GLint> lens(count, -1);
   glShaderSource(id, count, sources, &lens[0]);
+  chk(__FILE__, __LINE__);
 }
 
 GLint GlShader::compile(std::string const &extra) {
   glCompileShader(id); 
+  chk(__FILE__, __LINE__);
   GLint succ;
   GLchar log[512];
   glGetShaderiv(id, GL_COMPILE_STATUS, &succ);
+  chk(__FILE__, __LINE__);
   if (!succ) {
     glGetShaderInfoLog(id, 512, NULL, log);
     die("Error compiling shader:\n" + std::string(extra) + "\n"

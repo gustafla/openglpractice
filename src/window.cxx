@@ -11,6 +11,7 @@ Window::Window():
   bind();
   glClearColor(0,0,0,1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+  chk(__FILE__, __LINE__);
 }
 
 Window::~Window() {
@@ -116,8 +117,8 @@ void Window::open() {
 
   context = SDL_GL_CreateContext(window);
 
-  glewExperimental = GL_TRUE;
-  glewInit();
+  /*glewExperimental = GL_TRUE;
+  glewInit();*/
 
   SDL_GL_SetSwapInterval(1);
   SDL_ShowCursor(0);
@@ -125,7 +126,7 @@ void Window::open() {
 #endif // BUILD_RPI
 
 bool Window::swapBuffers() const {
-  chk();
+  chk(__FILE__, __LINE__);
 
 #ifdef BUILD_RPI
   eglSwapBuffers(display, buffer);

@@ -3,7 +3,8 @@
 #include "window.hxx"
 #include "player.hxx"
 #include "shaders.hxx"
-#include <rocket/sync.h>
+#include "rocket/sync.h"
+#include "verts.hxx"
 #include <map>
 
 class Demo {
@@ -12,6 +13,7 @@ class Demo {
     ~Demo();
     Player const &getPlayer() const;
     Shaders const &getShaders() const;
+    Verts const &getVerts() const;
     void update();
     sync_track const *getRocketTrack(std::string const &name) const;
     float const getValue(sync_track const *track) const;
@@ -24,6 +26,7 @@ class Demo {
   private:
     Window &window;
     Shaders shaders; // Automatically compile shader storage class
+    Verts verts; // Automatically load buffer storage class
     Player player;
     sync_device *rocket;
 

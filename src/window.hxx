@@ -3,17 +3,19 @@
 #include "bindable.hxx"
 #include <string>
 
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+
 #ifdef BUILD_RPI
 #include <bcm_host.h>
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
 #include <SDL/SDL.h>
 #else
-#include <GL/glew.h>
+//#include <GL/glew.h>
 #include <SDL2/SDL.h>
 #endif // BUILD_RPI
+
 
 class Window: public Bindable {
   public:
