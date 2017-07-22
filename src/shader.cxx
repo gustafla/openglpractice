@@ -36,12 +36,9 @@ Shader::Shader(Demo const &demo, std::string const &fsSource):
 void Shader::draw() const {
   program.use();
   vaPos.bind();
-  glUniform1f(program.getUniformLocation("u_time"),
-      demo.getTime());
-  glUniform1f(program.getUniformLocation("u_fft_bass"),
-      demo.getPlayer().getFftBass());
-  glUniform1f(program.getUniformLocation("u_fft_treble"),
-      demo.getPlayer().getFftTreble());
+  glUniform1f(program.getUniformLocation("u_time"), demo.getTime());
+  glUniform1f(program.getUniformLocation("u_fft_bass"), demo.getFftBass());
+  glUniform1f(program.getUniformLocation("u_fft_treble"), demo.getFftTreble());
 
   for (auto const &t: tracks) {
     glUniform1f(t.id, demo.getValue(t.track));
