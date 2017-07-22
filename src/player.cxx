@@ -87,6 +87,7 @@ void Player::playerCallback(void *userData, uint8_t *stream, int len) {
 
   // Don't play if empty
   if (player->nBytesLeft == 0) {
+    player->pause();
     return;
   }
 

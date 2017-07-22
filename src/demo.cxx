@@ -2,7 +2,7 @@
 #include "debug.hxx"
 #include <cmath>
 
-float const Demo::BPM = 160.f;
+float const Demo::BPM = 174.f;
 int const Demo::RPB = 8;
 double const Demo::ROW_RATE = (double(BPM) / 60) * RPB;
 
@@ -102,3 +102,4 @@ float const Demo::getFftBass() const {
 float const Demo::getFftTreble() const {
   return fftTreble * getValue(fftTrebleMult);
 }
+

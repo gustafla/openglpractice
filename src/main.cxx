@@ -8,6 +8,12 @@
 #include "scenes/test.hxx"
 #include "scenes/sky.hxx"
 
+std::vector<Drawable> _scenes;
+
+void initScenes(Demo &d) {
+  _scenes = {ScSky(d), ScTest(d)};
+}
+
 int main(int argc, char *argv[]) {
   std::cout <<
 #ifdef BUILD_NAME
@@ -26,7 +32,9 @@ int main(int argc, char *argv[]) {
   Window window;
   Demo demo(window);
 
-  ScSky testScene(demo);
+  sync_track const *scn = demo.getRocketTrack("scene");
+  initScenes(demo);
+  ScSky lol(demo);
 
   FpsCounter fpsCounter(2, 64);
   float timeLast, time, frameTime;
@@ -51,7 +59,18 @@ int main(int argc, char *argv[]) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render
-    testScene.draw();
+    //_scenes[static_cast<int>(demo.getValue(scn))].draw();
+    //_scenes[0].draw();
+    lol.draw();
+
+    // Pressed R to reload
+#ifndef SYNC_PLAYER
+    if (window.getEvents().type == SDL_KEYDOWN) {
+      if (window.getEvents().key.keysym.sym == SDLK_r) {
+        initScenes(demo);
+      }
+    }
+#endif
   }
 
   return 0;
