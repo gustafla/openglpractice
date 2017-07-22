@@ -25,11 +25,13 @@ class Window: public Bindable {
     void restoreViewport() const;
     bool swapBuffers() const;
     SDL_Event const &getEvents() const;
+    int const getWidth() const;
+    int const getHeight() const;
 
+  private:
     int const width;
     int const height;
 
-  private:
     void open();
     void close();
 

@@ -36,6 +36,8 @@ Demo::Demo(Window &window):
   fftBass(0.f),
   fftTreble(0.f),
   window(window),
+  width(window.getWidth()),
+  height(window.getHeight()),
   player("music.ogg", &window)
 {
   rocket = sync_create_device("sync");
@@ -87,19 +89,26 @@ sync_track const *Demo::getRocketTrack(std::string const &name) const {
   return sync_get_track(rocket, name.c_str());
 }
 
-float const Demo::getValue(sync_track const *track) const {
+float Demo::getValue(sync_track const *track) const {
   return sync_get_val(track, time*ROW_RATE);
 }
 
-float const Demo::getTime() const {
+float Demo::getTime() const {
   return time;
 }
 
-float const Demo::getFftBass() const {
+float Demo::getFftBass() const {
   return fftBass * getValue(fftBassMult);
 }
 
-float const Demo::getFftTreble() const {
+float Demo::getFftTreble() const {
   return fftTreble * getValue(fftTrebleMult);
 }
 
+float Demo::getWidth() const {
+  return width;
+}
+
+float Demo::getHeight() const {
+  return height;
+}

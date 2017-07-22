@@ -16,10 +16,12 @@ class Demo {
     Verts const &getVerts() const;
     void update();
     sync_track const *getRocketTrack(std::string const &name) const;
-    float const getValue(sync_track const *track) const;
-    float const getTime() const;
-    float const getFftBass() const;
-    float const getFftTreble() const;
+    float getValue(sync_track const *track) const;
+    float getTime() const;
+    float getFftBass() const;
+    float getFftTreble() const;
+    float getWidth() const;
+    float getHeight() const;
 
     static float const BPM;
     static int const RPB;
@@ -37,4 +39,7 @@ class Demo {
     float fftTreble;
     sync_track const *fftBassMult;
     sync_track const *fftTrebleMult;
+
+    float const width;
+    float const height;
 };

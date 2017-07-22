@@ -4,7 +4,8 @@
 #include <iostream>
 
 Window::Window():
-  width(960), height(540)
+  width(960),
+  height(540)
 {
   open();
   restoreViewport();
@@ -164,4 +165,12 @@ void Window::restoreViewport() const {
 
 SDL_Event const &Window::getEvents() const {
   return events;
+}
+
+int const Window::getWidth() const {
+  return width;
+}
+
+int const Window::getHeight() const {
+  return height;
 }

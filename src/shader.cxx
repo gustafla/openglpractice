@@ -39,6 +39,8 @@ void Shader::draw() const {
   glUniform1f(program.getUniformLocation("u_time"), demo.getTime());
   glUniform1f(program.getUniformLocation("u_fft_bass"), demo.getFftBass());
   glUniform1f(program.getUniformLocation("u_fft_treble"), demo.getFftTreble());
+  glUniform2f(program.getUniformLocation("u_resolution"),
+      demo.getWidth(), demo.getHeight());
 
   for (auto const &t: tracks) {
     glUniform1f(t.id, demo.getValue(t.track));
