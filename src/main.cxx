@@ -1,6 +1,7 @@
 #include "debug.hxx"
 #include <iostream>
 #include <string>
+#include <memory>
 #include "window.hxx"
 #include "fps_counter.hxx"
 #include "demo.hxx"
@@ -9,10 +10,11 @@
 #include "scenes/test.hxx"
 #include "scenes/sky.hxx"
 
-std::vector<Drawable> _scenes;
+std::vector<std::unique_ptr<Drawable>> _scenes;
 
 void initScenes(Demo &d) {
-  _scenes = {ScSky(d), ScTest(d)};
+  _scenes.clear();
+  _scenes.push_back(std::unique_ptr<Drawable>(new ScSky(d)));
 }
 
 int main(int argc, char *argv[]) {
@@ -60,9 +62,7 @@ int main(int argc, char *argv[]) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render
-    //_scenes[static_cast<int>(demo.getValue(scn))].draw();
-    //_scenes[0].draw();
-    lol.draw();
+    _scenes[static_cast<int>(demo.getValue(scn))]->draw();
 
     // Pressed R to reload
 #ifndef SYNC_PLAYER

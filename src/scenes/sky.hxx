@@ -10,7 +10,7 @@
 class ScSky: public Drawable {
   public:
     ScSky(Demo const &demo);
-    void draw() const;
+    virtual void draw() const;
 
   private:
     Demo const &demo;

@@ -2,5 +2,5 @@
 
 class Drawable {
   public:
-    virtual void draw() const {};
+    virtual void draw() const;
 };
