@@ -4,6 +4,7 @@
 #include "window.hxx"
 #include "fps_counter.hxx"
 #include "demo.hxx"
+#include "mixer.hxx"
 
 #include "scenes/test.hxx"
 #include "scenes/sky.hxx"
