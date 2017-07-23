@@ -15,5 +15,5 @@ class ScSky: public Drawable {
   private:
     Demo const &demo;
     Shader sky;
-    //GlTexture clouds;
+    GlTexture clouds;
 };

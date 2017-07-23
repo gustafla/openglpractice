@@ -26,6 +26,9 @@ Shader::Shader(Demo const &demo, GlShader const &fs):
       3*sizeof(GLfloat), &Verts::square)
 {
   msg("Shader::Shader(Demo const &demo, GlShader const &fs)");
+  program.use();
+  glUniform2f(program.getUniformLocation("u_resolution"),
+      demo.getWidth(), demo.getHeight());
 }
 
 Shader::Shader(Demo const &demo, std::string const &fsSource):
@@ -39,8 +42,6 @@ void Shader::draw() const {
   glUniform1f(program.getUniformLocation("u_time"), demo.getTime());
   glUniform1f(program.getUniformLocation("u_fft_bass"), demo.getFftBass());
   glUniform1f(program.getUniformLocation("u_fft_treble"), demo.getFftTreble());
-  glUniform2f(program.getUniformLocation("u_resolution"),
-      demo.getWidth(), demo.getHeight());
 
   for (auto const &t: tracks) {
     glUniform1f(t.id, demo.getValue(t.track));

@@ -2,6 +2,10 @@
 #include "stb_image.h"
 #include <iostream>
 
+static const GLenum FORMAT_LUT[] = {
+  GL_NONE, GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_RGB, GL_RGBA
+};
+
 GlTexture GlTexture::loadFromFile(std::string const &filename,
     GLenum const target) {
   GlTexture texture(target);
@@ -18,8 +22,8 @@ GlTexture GlTexture::loadFromFile(std::string const &filename,
   unsigned char *data = stbi_load(filename.c_str(), &width, &height,
       &nChannels, 0);
   if (data) { // set it into the texture object
-    texture.setTexImage2D(0, GL_RGB, width, height, 0, GL_RGB,
-        GL_UNSIGNED_BYTE, data);
+    texture.setTexImage2D(0, FORMAT_LUT[nChannels], width, height, 0,
+        FORMAT_LUT[nChannels], GL_UNSIGNED_BYTE, data);
   } else {
     std::cout << "Failed to load texture " << filename << std::endl;
   }
@@ -41,7 +45,7 @@ GlTexture::~GlTexture() {
   glDeleteTextures(1, &id);
 }
 
-void GlTexture::bind() {
+void GlTexture::bind() const {
   glBindTexture(target, id);
 }
 

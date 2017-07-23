@@ -2,8 +2,8 @@
 
 ScSky::ScSky(Demo const &demo):
   demo(demo),
-  sky(Shader::loadFromFile(demo, "sky.frag"))
-//  clouds(GL_TEXTURE_2D)
+  sky(Shader::loadFromFile(demo, "sky.frag")),
+  clouds(GlTexture::loadFromFile("test.png"))
 {
   sky.addRocketTrack("sky:sunpos.x");
   sky.addRocketTrack("sky:sunpos.y");
@@ -11,5 +11,7 @@ ScSky::ScSky(Demo const &demo):
 }
 
 void ScSky::draw() const {
+  GlTexture::useUnit(0);
+  clouds.bind();
   sky.draw();
 }

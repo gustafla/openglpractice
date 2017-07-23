@@ -7,7 +7,7 @@ class GlTexture {
   public:
     GlTexture(GLenum const target);
     ~GlTexture();
-    void bind();
+    void bind() const;
     void setTexImage2D(GLint const level, GLint const internalFormat,
         GLsizei const width, GLsizei const height, GLint const border,
         GLenum const format, GLenum const type, GLvoid const *data);
@@ -17,7 +17,7 @@ class GlTexture {
     GLuint getId() const;
 
     static GlTexture loadFromFile(std::string const &filename,
-        GLenum const target);
+        GLenum const target=GL_TEXTURE_2D);
     static void useUnit(unsigned int const offset);
 
   private:
