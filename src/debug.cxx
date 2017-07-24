@@ -22,7 +22,7 @@ void chk(std::string const &msg) {
     case GL_OUT_OF_MEMORY:
       die(msg + "\nOpenGL out of memory"); break;
     case GL_INVALID_FRAMEBUFFER_OPERATION:
-      die(msg + "\nOpenGL invalid framebuffer operation"); break;
+      /*die(msg + "\nOpenGL invalid framebuffer operation");*/ break;
     case GL_INVALID_OPERATION:
       die(msg + "\nOpenGL invalid operation"); break;
     case GL_INVALID_VALUE:

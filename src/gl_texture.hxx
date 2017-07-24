@@ -19,7 +19,6 @@ class GlTexture {
         GLvoid const *data) const;
     void generateMipmap();
     void setTexParameter(GLenum pName, GLint param);
-    // do etc when needed
     GLuint getId() const;
     GLsizei getWidth() const;
     GLsizei getHeight() const;

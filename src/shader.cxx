@@ -33,6 +33,14 @@ Shader::Shader(Demo const &demo, GlShader const &fs):
   program.use();
   glUniform2f(program.getUniformLocation("u_resolution"),
       demo.getWidth(), demo.getHeight());
+
+  // Set up sampler ufms
+  glUniform1i(program.getUniformLocation("u_f1"), 0);
+  glUniform1i(program.getUniformLocation("u_f2"), 1);
+  glUniform1i(program.getUniformLocation("u_t1"), 2);
+  glUniform1i(program.getUniformLocation("u_t2"), 3);
+  glUniform1i(program.getUniformLocation("u_t3"), 4);
+  glUniform1i(program.getUniformLocation("u_t4"), 5);
 }
 
 Shader::Shader(Demo const &demo, std::string const &fsSource):

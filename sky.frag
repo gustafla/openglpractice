@@ -27,6 +27,6 @@ void main() {
   vec3 t = texture2D(u_t1, gl_FragCoord.xy/u_resolution).rgb; // Sample cloud tex
   float a = t.r;
   t = mix(u_sky_hccol, u_sky_lccol, a);
-  c = mix(c, t, a); // Mix clouds
+  c = mix(c, t, max(a-0.3, 0.)); // Mix clouds
   gl_FragColor = vec4(c, 1.);
 }

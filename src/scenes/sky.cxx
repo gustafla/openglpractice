@@ -4,14 +4,19 @@
 
 ScSky::ScSky(Demo const &demo):
   demo(demo),
+  pipeline(demo),
   sky(Shader::loadFromFile(demo, "sky.frag")),
-  clouds(demo.getWidth()/8, demo.getHeight()/8, GL_LUMINANCE, GL_LINEAR),
+  rays(Shader::loadFromFile(demo, "rays.frag")),
+  clouds(demo.getWidth()/10, demo.getHeight()/10, GL_LUMINANCE, GL_LINEAR),
   cloudbuf(new GLubyte[clouds.getWidth()*clouds.getHeight()]),
   octaves(demo.getRocketTrack("sky:ocataves")),
   lacunarity(demo.getRocketTrack("sky:lacunarity")),
   gain(demo.getRocketTrack("sky:gain")),
   mult(demo.getRocketTrack("sky:mult"))
 {
+  pipeline.addStage(&sky);
+  pipeline.addStage(&rays);
+
   sky.addRocketTrack("sky:sunpos.x");
   sky.addRocketTrack("sky:sunpos.y");
 
@@ -37,10 +42,10 @@ ScSky::~ScSky() {
 }
 
 void ScSky::draw() const {
-  GlTexture::useUnit(0);
+  GlTexture::useUnit(2);
   clouds.bind();
   genClouds();
-  sky.draw();
+  pipeline.draw();
 }
 
 void ScSky::genClouds() const {
