@@ -13,6 +13,10 @@ std::string trackNameToUniformName(std::string const &name) {
   return "u_" + cleaned;
 }
 
+std::string trackNameToBaseName(std::string const &name) {
+  return name.substr(0, name.find_last_of("."));
+}
+
 Shader Shader::loadFromFile(Demo const &demo, std::string filename) {
   msg("Shader::loadFromFile " + filename);
   return Shader(demo, GlShader::loadFromFile(filename));
@@ -43,16 +47,44 @@ void Shader::draw() const {
   glUniform1f(program.getUniformLocation("u_fft_bass"), demo.getFftBass());
   glUniform1f(program.getUniformLocation("u_fft_treble"), demo.getFftTreble());
 
-  for (auto const &t: tracks) {
-    glUniform1f(t.id, demo.getValue(t.track));
+  int ntrack=1;
+  for (std::pair<std::string, RocketTrackUniform> const &t: tracks) {
+    switch(t.second.tracks.size()) {
+      default:
+        die("Shader's rocket track " + t.first + " has incorrect size!"); break;
+      case 1:
+        msg("id now: " + std::to_string(t.second.id));
+        glUniform1f(t.second.id, V(t.second.tracks.at(0))); break;
+      case 2:
+        glUniform2f(t.second.id, V(t.second.tracks.at(0)),
+            V(t.second.tracks.at(1))); break;
+      case 3:
+        glUniform3f(t.second.id, V(t.second.tracks.at(0)),
+            V(t.second.tracks.at(1)), V(t.second.tracks.at(2))); break;
+      case 4:
+        glUniform4f(t.second.id, V(t.second.tracks.at(0)),
+            V(t.second.tracks.at(1)), V(t.second.tracks.at(2)),
+            V(t.second.tracks.at(3))); break;
+    }
+    chk(__FILE__ + std::string(" track=") + std::to_string(ntrack)
+        + " (total=" + std::to_string(tracks.size()) + ")", __LINE__);
+    ntrack++;
   }
 
   glDrawArrays(GL_TRIANGLES, 0, Verts::lenSquare/3);
 }
 
 void Shader::addRocketTrack(std::string const &name) {
-  std::string ufm = trackNameToUniformName(name);
+  std::string base = trackNameToBaseName(name);
+  std::string ufm = trackNameToUniformName(base);
   msg("Rocket uniform " + std::string(ufm));
-  tracks.push_back(RocketTrackUniform(demo.getRocketTrack(name),
-        program.getUniformLocation(ufm)));
+  if (tracks.count(base)) {
+    msg("preexisiting " + base);
+    tracks.at(base).tracks.push_back(demo.getRocketTrack(name));
+  } else {
+    GLint id = program.getUniformLocation(ufm);
+    msg("id: " + std::to_string(id));
+    tracks.insert(std::pair<std::string, RocketTrackUniform>(base,
+          RocketTrackUniform(demo.getRocketTrack(name), id)));
+  }
 }

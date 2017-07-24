@@ -7,6 +7,8 @@
 #include "verts.hxx"
 #include <map>
 
+#define V(x) demo.getValue(x)
+
 class Demo {
   public:
     Demo(Window &window);
@@ -20,8 +22,8 @@ class Demo {
     float getTime() const;
     float getFftBass() const;
     float getFftTreble() const;
-    float getWidth() const;
-    float getHeight() const;
+    int getWidth() const;
+    int getHeight() const;
 
     static float const BPM;
     static int const RPB;
@@ -40,6 +42,6 @@ class Demo {
     sync_track const *fftBassMult;
     sync_track const *fftTrebleMult;
 
-    float const width;
-    float const height;
+    int const width;
+    int const height;
 };

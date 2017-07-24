@@ -105,10 +105,10 @@ float Demo::getFftTreble() const {
   return fftTreble * getValue(fftTrebleMult);
 }
 
-float Demo::getWidth() const {
+int Demo::getWidth() const {
   return width;
 }
 
-float Demo::getHeight() const {
+int Demo::getHeight() const {
   return height;
 }

@@ -6,6 +6,7 @@
 #include "demo.hxx"
 #include "drawable.hxx"
 #include <vector>
+#include <map>
 
 class Shader: public Drawable {
   public:
@@ -24,12 +25,11 @@ class Shader: public Drawable {
     class RocketTrackUniform {
       public:
         RocketTrackUniform(sync_track const *track, GLint const id):
-          track(track),
           id(id)
-        {}
-        sync_track const *track;
+        {tracks.push_back(track);}
+        std::vector<sync_track const*>tracks;
         GLint const id;
     };
 
-    std::vector<RocketTrackUniform> tracks;
+    std::map<std::string, RocketTrackUniform> tracks;
 };
