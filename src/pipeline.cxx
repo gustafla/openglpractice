@@ -42,6 +42,7 @@ void Pipeline::draw() const {
       framebuffers[i-2].getTexture().bind();
     }
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     stages[i]->draw();
     chk(__FILE__ + std::string(" i=") + std::to_string(i), __LINE__);
   }
