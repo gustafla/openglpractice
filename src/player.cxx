@@ -9,8 +9,8 @@
 Player::Player(std::string const &filename, Window *window):
   callbackTicks(SDL_GetTicks()), samplePos(0)
 {
-  LoadingBar *loadingBar = NULL;
-  if (window != NULL) {
+  LoadingBar *loadingBar = nullptr;
+  if (window != nullptr) {
     loadingBar = new LoadingBar(*window);
     loadingBar->setState(0.1);
   }
@@ -26,7 +26,7 @@ Player::Player(std::string const &filename, Window *window):
       + std::to_string(((sizeof(float)*(nSamples/N_FFT)*2)/1024.f)/1024.f)
       + "MB");
 
-  if (loadingBar != NULL) {
+  if (loadingBar != nullptr) {
     delete loadingBar;
   }
 }
@@ -124,7 +124,7 @@ void Player::computeFft(int16_t *audioData, LoadingBar *loadingBar) {
   fftTrebleData = new float[nSamples/N_FFT]; // Number of samples in music divided by 
   // fft frame size
 
-  kiss_fft_cfg cfg = kiss_fft_alloc(N_FFT, 0, NULL, NULL);
+  kiss_fft_cfg cfg = kiss_fft_alloc(N_FFT, 0, nullptr, nullptr);
 
   kiss_fft_cpx in[N_FFT];
   kiss_fft_cpx out[N_FFT];
@@ -148,7 +148,7 @@ void Player::computeFft(int16_t *audioData, LoadingBar *loadingBar) {
     }
     fftTrebleData[i] = avgTreble / (N_FFT-(N_FFT/BASS_RANGE));
 
-    if (loadingBar != NULL && i%100 == 0) {
+    if (loadingBar != nullptr && i%100 == 0) {
       float state = 0.5 + (0.5f * (i/static_cast<float>(nSamples/N_FFT)));
       loadingBar->setState(state);
     }
@@ -164,7 +164,7 @@ int16_t *Player::loadVorbisFile(std::string const &filename,
   nSamples = stb_vorbis_decode_filename(filename.c_str(), &channels,
       &sampleRate, &buffer);
 
-  if (loadingBar != NULL) {
+  if (loadingBar != nullptr) {
     loadingBar->setState(0.4);
   }
 
@@ -179,11 +179,11 @@ int16_t *Player::loadVorbisFile(std::string const &filename,
   want.userdata = (void*)this;
 
 #ifdef BUILD_RPI
-  if(SDL_OpenAudio(&want, NULL) < 0) {
+  if(SDL_OpenAudio(&want, nullptr) < 0) {
     die("Failed to get required audio format!");
   }
 #else
-  audioDevice = SDL_OpenAudioDevice(NULL, 0, &want, &have,
+  audioDevice = SDL_OpenAudioDevice(nullptr, 0, &want, &have,
       SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 
   if (want.format != have.format) {
@@ -196,7 +196,7 @@ int16_t *Player::loadVorbisFile(std::string const &filename,
   nBytesLeft = nSamples * sampleSize;
   audioPos = audioData = (uint8_t*)buffer;
 
-  if (loadingBar != NULL) {
+  if (loadingBar != nullptr) {
     loadingBar->setState(0.5);
   }
 

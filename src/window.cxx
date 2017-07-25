@@ -83,7 +83,7 @@ void Window::open() {
   }
 
   buffer = eglCreateWindowSurface(
-      display, eglConfig, (EGLNativeWindowType)&nativeWindow, NULL);
+      display, eglConfig, (EGLNativeWindowType)&nativeWindow, nullptr);
 
   if (buffer == EGL_NO_SURFACE) {
     die("Failed to get EGL back buffer.");

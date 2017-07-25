@@ -49,7 +49,7 @@ GlTexture::GlTexture(GLsizei width, GLsizei height, GLenum format, GLint filter,
     GLint wrap, GLenum target):
   GlTexture(target)
 {
-  setTexImage2D(0, format, width, height, 0, format, PREF_FORMAT, NULL);
+  setTexImage2D(0, format, width, height, 0, format, PREF_FORMAT, nullptr);
   setTexParameter(GL_TEXTURE_WRAP_S, wrap);
   setTexParameter(GL_TEXTURE_WRAP_T, wrap);
   setTexParameter(GL_TEXTURE_MIN_FILTER, filter);

@@ -84,7 +84,7 @@ GLint GlShader::compile(std::string const &extra) {
   glGetShaderiv(id, GL_COMPILE_STATUS, &succ);
   chk(__FILE__, __LINE__);
   if (!succ) {
-    glGetShaderInfoLog(id, 512, NULL, log);
+    glGetShaderInfoLog(id, 512, nullptr, log);
     die("Error compiling shader:\n" + std::string(extra) + "\n"
         + std::string(log));
   }

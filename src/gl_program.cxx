@@ -43,7 +43,7 @@ GLint GlProgram::link() {
   GLchar log[512];
   glGetProgramiv(id, GL_LINK_STATUS, &succ);
   if (!succ) {
-    glGetProgramInfoLog(id, 512, NULL, log);
+    glGetProgramInfoLog(id, 512, nullptr, log);
     msg("Error linking program\n" + std::string(log));
   }
 
@@ -59,7 +59,7 @@ GLint GlProgram::link() {
   GLint ufmSize;
   GLenum ufmType;
   for (int i=0; i<uniformCount; i++) {
-    glGetActiveUniform(id, i, uniformLength, NULL, &ufmSize, &ufmType, ufmName);
+    glGetActiveUniform(id, i, uniformLength, nullptr, &ufmSize, &ufmType, ufmName);
     chk(__FILE__, __LINE__);
     msg("GlProgram has uniform " + std::string(ufmName));
     uniforms[std::string(ufmName)] = glGetUniformLocation(id, ufmName);
@@ -77,7 +77,7 @@ GLint GlProgram::link() {
   GLint atrSize;
   GLenum atrType;
   for (int i=0; i<attribCount; i++) {
-    glGetActiveAttrib(id, i, attribLength, NULL, &atrSize, &atrType,
+    glGetActiveAttrib(id, i, attribLength, nullptr, &atrSize, &atrType,
         atrName);
     chk(__FILE__, __LINE__);
     attributes[std::string(atrName)] = glGetAttribLocation(id, atrName);

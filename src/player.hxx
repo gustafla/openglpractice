@@ -9,7 +9,7 @@
 
 class Player {
   public:
-    Player(std::string const &filename, Window *window=NULL);
+    Player(std::string const &filename, Window *window=nullptr);
     ~Player();
     void play();
     void pause();
@@ -38,8 +38,8 @@ class Player {
     static void playerCallback(void *userData, uint8_t *stream, int len);
 
     int16_t *loadVorbisFile(std::string const &filename,
-        LoadingBar *loadingBar=NULL);
-    void computeFft(int16_t *audioData, LoadingBar *loadingBar=NULL);
+        LoadingBar *loadingBar=nullptr);
+    void computeFft(int16_t *audioData, LoadingBar *loadingBar=nullptr);
 
 #ifndef BUILD_RPI
     SDL_AudioDeviceID audioDevice;
