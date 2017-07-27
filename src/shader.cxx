@@ -61,7 +61,6 @@ void Shader::draw() const {
       default:
         die("Shader's rocket track " + t.first + " has incorrect size!"); break;
       case 1:
-        msg("id now: " + std::to_string(t.second.id));
         glUniform1f(t.second.id, V(t.second.tracks.at(0))); break;
       case 2:
         glUniform2f(t.second.id, V(t.second.tracks.at(0)),

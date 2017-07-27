@@ -13,6 +13,8 @@ ScSky::ScSky(Demo const &demo):
   lacunarity(demo.getRocketTrack("sky:lacunarity")),
   gain(demo.getRocketTrack("sky:gain")),
   mult(demo.getRocketTrack("sky:mult")),
+  clouds_x(demo.getRocketTrack("sky:clouds.x")),
+  clouds_z(demo.getRocketTrack("sky:clouds.z")),
   fbTest(demo.getWidth(), demo.getHeight())
 {
   pipeline.addStage(&sky);
@@ -20,8 +22,8 @@ ScSky::ScSky(Demo const &demo):
 
   sky.addRocketTrack("sky:sunpos.x");
   sky.addRocketTrack("sky:sunpos.y");
-  rays.addRocketTrack("sky:sunpos.x");
-  rays.addRocketTrack("sky:sunpos.y");
+  //rays.addRocketTrack("sky:sunpos.x");
+  //rays.addRocketTrack("sky:sunpos.y");
 
   sky.addRocketTrack("sky:lcolor.r");
   sky.addRocketTrack("sky:lcolor.g");
@@ -49,19 +51,14 @@ void ScSky::draw() const {
   clouds.bind();
   genClouds();
   pipeline.draw();
-  /*fbTest.bind();
-  sky.draw();
-  fbTest.unbind();
-  GlTexture::useUnit(0);
-  fbTest.getTexture().bind();
-  rays.draw();*/
 }
 
 void ScSky::genClouds() const {
   for (int x=0; x<clouds.getWidth(); x++) {
     for (int y=0; y<clouds.getHeight(); y++) {
       float v = std::min(std::max(stb_perlin_turbulence_noise3(
-              x*0.02f+demo.getTime(), y*0.05f, demo.getTime(),
+              x*0.02f+V(clouds_x)*demo.getTime(), y*0.05f,
+              V(clouds_z)*demo.getTime(),
               V(lacunarity), V(gain),
               V(octaves), 0, 0, 0)*V(mult), 0.f),
           255.f);

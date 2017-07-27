@@ -12,7 +12,7 @@
 #include "scenes/test.hxx"
 #include "scenes/sky.hxx"
 
-#define NOISE_SIZE 512
+#define NOISE_SIZE 128
 
 uint32_t g_seed = 20; 
 inline uint32_t fastrand() { 
@@ -57,6 +57,10 @@ int main(int argc, char *argv[]) {
   // Post processing
   GlFramebuffer postBuf(demo.getWidth(), demo.getHeight());
   Shader post(demo, GlShader::loadFromFile("post.frag"));
+  post.addRocketTrack("post:whiteout");
+  post.addRocketTrack("post:fft_bass");
+  post.addRocketTrack("post:fft_treble");
+  post.addRocketTrack("post:rbs");
   GlTexture noise(NOISE_SIZE, NOISE_SIZE, GL_RGB, GL_LINEAR);
   generateNoise(noise);
 

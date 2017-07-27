@@ -4,10 +4,9 @@ precision highp float;
 
 varying vec4 v_pos;
 uniform vec2 u_resolution;
-uniform vec2 u_sky_sunpos;
 uniform sampler2D u_f1;
 
-#define ITR 8
+#define ITR 3
 
 vec3 sample(vec2 pos, float m, float s) {
   return clamp(texture2D(u_f1, pos).rgb * m - s, 0., 1.);
