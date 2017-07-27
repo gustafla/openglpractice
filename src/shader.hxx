@@ -14,8 +14,14 @@ class Shader: public Drawable {
     Shader(Demo const &demo, std::string const &fsSource);
     void draw() const;
 
-    static Shader loadFromFile(Demo const &demo, std::string filename);
+    void setUniform(std::string const &name, int n, float const v[]) const;
+    void setUniform(std::string const &name, int n, int const v[]) const;
+    void setUniform(GLuint id, int n, float const v[]) const;
+    void setUniform(GLuint id, int n, int const v[]) const;
+
     void addRocketTrack(std::string const &name);
+
+    static Shader loadFromFile(Demo const &demo, std::string filename);
 
   private:
     Demo const &demo;

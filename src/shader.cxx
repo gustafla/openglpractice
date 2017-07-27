@@ -96,3 +96,49 @@ void Shader::addRocketTrack(std::string const &name) {
           RocketTrackUniform(demo.getRocketTrack(name), id)));
   }
 }
+
+void Shader::setUniform(GLuint id, int n, float const v[]) const {
+  GLint previousProgram;
+  glGetIntegerv(GL_CURRENT_PROGRAM, &previousProgram);
+  program.use();
+  switch(n) {
+    case 1:
+      glUniform1f(id, v[0]); break;
+    case 2:
+      glUniform2f(id, v[0], v[1]); break;
+    case 3:
+      glUniform3f(id, v[0], v[1], v[2]); break;
+    case 4:
+      glUniform4f(id, v[0], v[1], v[2], v[3]); break;
+    default:
+      die("Shader::setUniform (float) invalid size");
+  }
+  glUseProgram(previousProgram);
+}
+
+void Shader::setUniform(GLuint id, int n, int const v[]) const {
+  GLint previousProgram;
+  glGetIntegerv(GL_CURRENT_PROGRAM, &previousProgram);
+  program.use();
+  switch(n) {
+    case 1:
+      glUniform1i(id, v[0]); break;
+    case 2:
+      glUniform2i(id, v[0], v[1]); break;
+    case 3:
+      glUniform3i(id, v[0], v[1], v[2]); break;
+    case 4:
+      glUniform4i(id, v[0], v[1], v[2], v[3]); break;
+    default:
+      die("Shader::setUniform (int) invalid size");
+  }
+  glUseProgram(previousProgram);
+}
+
+void Shader::setUniform(std::string const &name, int n, float const v[]) const {
+  setUniform(program.getUniformLocation(name), n, v);
+}
+
+void Shader::setUniform(std::string const &name, int n, int const v[]) const {
+  setUniform(program.getUniformLocation(name), n, v);
+}

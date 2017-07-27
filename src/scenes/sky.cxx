@@ -12,7 +12,8 @@ ScSky::ScSky(Demo const &demo):
   octaves(demo.getRocketTrack("sky:ocataves")),
   lacunarity(demo.getRocketTrack("sky:lacunarity")),
   gain(demo.getRocketTrack("sky:gain")),
-  mult(demo.getRocketTrack("sky:mult"))
+  mult(demo.getRocketTrack("sky:mult")),
+  fbTest(demo.getWidth(), demo.getHeight())
 {
   pipeline.addStage(&sky);
   pipeline.addStage(&rays);
@@ -46,6 +47,12 @@ void ScSky::draw() const {
   clouds.bind();
   genClouds();
   pipeline.draw();
+  /*fbTest.bind();
+  sky.draw();
+  fbTest.unbind();
+  GlTexture::useUnit(0);
+  fbTest.getTexture().bind();
+  rays.draw();*/
 }
 
 void ScSky::genClouds() const {

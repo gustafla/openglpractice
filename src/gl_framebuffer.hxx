@@ -10,6 +10,7 @@ class GlFramebuffer: public Bindable {
     GlFramebuffer(GLsizei width, GLsizei height);
     ~GlFramebuffer();
     GlTexture const &getTexture() const;
+    void storeCurrent();
     void bind() const;
     void unbind() const;
 
@@ -17,4 +18,5 @@ class GlFramebuffer: public Bindable {
     GlTexture texture;
     GlRenderbuffer depth;
     GLuint id;
+    GLint prevId;
 };

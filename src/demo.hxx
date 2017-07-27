@@ -8,6 +8,7 @@
 #include <map>
 
 #define V(x) demo.getValue(x)
+#define DEMO_N_PREV_FBO 2
 
 class Demo {
   public:

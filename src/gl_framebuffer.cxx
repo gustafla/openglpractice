@@ -2,6 +2,7 @@
 #include "debug.hxx"
 
 GlFramebuffer::GlFramebuffer(GLsizei width, GLsizei height):
+  prevId(0),
   texture(width, height, GL_RGBA),
   depth(width, height)
 {
@@ -31,15 +32,19 @@ GlFramebuffer::GlFramebuffer(GLsizei width, GLsizei height):
 
 GlFramebuffer::~GlFramebuffer() {
   glDeleteFramebuffers(1, &id);
+  msg("Framebuffer deleted.");
+}
+
+void GlFramebuffer::storeCurrent() {
+  glGetIntegerv(GL_FRAMEBUFFER_BINDING, &prevId);
 }
 
 void GlFramebuffer::bind() const {
   glBindFramebuffer(GL_FRAMEBUFFER, id);
-  glViewport(0, 0, texture.getWidth(), texture.getHeight());
 }
 
 void GlFramebuffer::unbind() const {
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  glBindFramebuffer(GL_FRAMEBUFFER, prevId);
 }
 
 GlTexture const &GlFramebuffer::getTexture() const {

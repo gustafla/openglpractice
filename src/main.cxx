@@ -37,7 +37,11 @@ int main(int argc, char *argv[]) {
 
   sync_track const *scn = demo.getRocketTrack("scene");
   initScenes(demo);
-  ScSky lol(demo);
+
+  // Free some memory
+#ifdef BUILD_RELEASE
+  glReleaseShaderCompiler();
+#endif
 
   FpsCounter fpsCounter(2, 64);
   float timeLast, time, frameTime;
@@ -65,7 +69,7 @@ int main(int argc, char *argv[]) {
     _scenes[static_cast<int>(demo.getValue(scn))]->draw();
 
     // Pressed R to reload
-#ifndef SYNC_PLAYER
+#ifndef BUILD_RELEASE
     if (window.getEvents().type == SDL_KEYDOWN) {
       if (window.getEvents().key.keysym.sym == SDLK_r) {
         initScenes(demo);

@@ -27,5 +27,7 @@ class ScSky: public Drawable {
     sync_track const *gain;
     sync_track const *mult;
 
+    GlFramebuffer fbTest;
+
     void genClouds() const;
 };

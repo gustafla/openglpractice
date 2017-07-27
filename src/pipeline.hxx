@@ -16,5 +16,7 @@ class Pipeline: public Drawable {
   private:
     Demo const &demo;
     std::vector<Drawable const*> stages;
-    std::vector<GlFramebuffer> framebuffers;
+    std::vector<std::unique_ptr<GlFramebuffer>> framebuffers;
+
+    void bindTextures(int stage) const;
 };
