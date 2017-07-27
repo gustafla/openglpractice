@@ -20,6 +20,8 @@ ScSky::ScSky(Demo const &demo):
 
   sky.addRocketTrack("sky:sunpos.x");
   sky.addRocketTrack("sky:sunpos.y");
+  rays.addRocketTrack("sky:sunpos.x");
+  rays.addRocketTrack("sky:sunpos.y");
 
   sky.addRocketTrack("sky:lcolor.r");
   sky.addRocketTrack("sky:lcolor.g");
