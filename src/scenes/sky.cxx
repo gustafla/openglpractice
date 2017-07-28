@@ -9,7 +9,6 @@ ScSky::ScSky(Demo const &demo):
   rays(Shader::loadFromFile(demo, "rays.frag")),
   clouds(demo.getWidth()/10, demo.getHeight()/10, GL_LUMINANCE, GL_LINEAR),
   cloudbuf(new GLubyte[clouds.getWidth()*clouds.getHeight()]),
-  octaves(demo.getRocketTrack("sky:ocataves")),
   lacunarity(demo.getRocketTrack("sky:lacunarity")),
   gain(demo.getRocketTrack("sky:gain")),
   mult(demo.getRocketTrack("sky:mult")),
@@ -60,7 +59,7 @@ void ScSky::genClouds() const {
               x*0.02f+V(clouds_x)*demo.getTime(), y*0.05f,
               V(clouds_z)*demo.getTime(),
               V(lacunarity), V(gain),
-              V(octaves), 0, 0, 0)*V(mult), 0.f),
+              5, 0, 0, 0)*V(mult), 0.f),
           255.f);
       //msg(std::to_string(v));
       cloudbuf[x + y * clouds.getWidth()] = v;

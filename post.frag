@@ -23,7 +23,7 @@ void main() {
       texture2D(u_f1, vec2(p.x-u_post_rbs, p.y)).r,
       texture2D(u_f1, p).g,
       texture2D(u_f1, vec2(p.x+u_post_rbs, p.y)).b);
-  c += texture2D(u_t1, p*4.).rgb * 0.2; // Add noise
+  c += texture2D(u_t1, p*8.).rgb * 0.2; // Add noise
 
   c -= length(v_pos.xy)*0.18; // Vignette
 

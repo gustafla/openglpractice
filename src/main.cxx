@@ -12,7 +12,7 @@
 #include "scenes/test.hxx"
 #include "scenes/sky.hxx"
 
-#define NOISE_SIZE 128
+#define NOISE_SIZE 64
 
 uint32_t g_seed = 20; 
 inline uint32_t fastrand() { 
