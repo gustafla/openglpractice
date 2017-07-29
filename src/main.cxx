@@ -67,6 +67,11 @@ int main(int argc, char *argv[]) {
   sync_track const *scn = demo.getRocketTrack("scene");
   initScenes(demo);
 
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_CULL_FACE);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   // Free some memory
 #ifdef BUILD_RELEASE
   glReleaseShaderCompiler();
@@ -88,15 +93,18 @@ int main(int argc, char *argv[]) {
     // Update demo data
     demo.update();
 
-    // Bind window FB
-    window.bind();
+#ifndef SYNC_PLAYER
+    if (!demo.getPlayer().isPlaying()) {
+      SDL_Delay(100);
+      continue;
+    }
+#endif
 
     // Render
-    postBuf.storeCurrent();
     postBuf.bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     _scenes[static_cast<int>(demo.getValue(scn))]->draw();
-    postBuf.unbind();
+    window.bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GlTexture::useUnit(0);
     postBuf.getTexture().bind();

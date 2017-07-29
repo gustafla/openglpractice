@@ -1,21 +1,18 @@
 #include "bind_array.hxx"
 
-BindArray::BindArray() {
-}
-
-void BindArray::bind() {
+void BindArray::bind() const {
   // Bind required buffers
   for (auto const &b: binds) {
     b->bind();
   }
 }
 
-void BindArray::unbind() {
+void BindArray::unbind() const {
   for (auto const &b: binds) {
     b->unbind();
   }
 }
 
-void BindArray::recordBind(std::shared_ptr<Bindable> bindable) {
+void BindArray::recordBind(std::shared_ptr<Bindable const> bindable) {
   binds.push_back(bindable);
 }

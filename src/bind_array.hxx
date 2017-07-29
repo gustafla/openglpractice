@@ -7,11 +7,10 @@
 
 class BindArray: public Bindable {
   public:
-    BindArray();
-    void bind();
-    void unbind();
-    void recordBind(std::shared_ptr<Bindable> bindable);
+    void bind() const;
+    void unbind() const;
+    void recordBind(std::shared_ptr<Bindable const> bindable);
 
   private:
-    std::vector<std::shared_ptr<Bindable>> binds;
+    std::vector<std::shared_ptr<Bindable const>> binds;
 };

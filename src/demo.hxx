@@ -6,6 +6,10 @@
 #include "rocket/sync.h"
 #include "verts.hxx"
 #include <map>
+#include <glm/vec3.hpp> // glm::vec3
+#include <glm/vec4.hpp> // glm::vec4
+#include <glm/mat4x4.hpp> // glm::mat4
+#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
 
 #define V(x) demo.getValue(x)
 #define DEMO_N_PREV_FBO 2
@@ -25,6 +29,7 @@ class Demo {
     float getFftTreble() const;
     int getWidth() const;
     int getHeight() const;
+    glm::mat4 const &getProjectionMatrix() const;
 
     static float const BPM;
     static int const RPB;
@@ -45,4 +50,6 @@ class Demo {
 
     int const width;
     int const height;
+
+    glm::mat4 projectionMatrix;
 };

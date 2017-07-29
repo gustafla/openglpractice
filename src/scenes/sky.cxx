@@ -9,11 +9,12 @@ ScSky::ScSky(Demo const &demo):
   rays(Shader::loadFromFile(demo, "rays.frag")),
   clouds(demo.getWidth()/10, demo.getHeight()/10, GL_LUMINANCE, GL_LINEAR),
   cloudbuf(new GLubyte[clouds.getWidth()*clouds.getHeight()]),
-  lacunarity(demo.getRocketTrack("sky:lacunarity")),
   gain(demo.getRocketTrack("sky:gain")),
   mult(demo.getRocketTrack("sky:mult")),
   clouds_x(demo.getRocketTrack("sky:clouds.x")),
   clouds_z(demo.getRocketTrack("sky:clouds.z")),
+  tunnel_alpha(demo.getRocketTrack("sky:tunnel.a")),
+  tunnelShader(GlProgram::loadFromFiles("tunnel.vert", "tunnel.frag")),
   fbTest(demo.getWidth(), demo.getHeight())
 {
   pipeline.addStage(&sky);
@@ -39,6 +40,16 @@ ScSky::ScSky(Demo const &demo):
   sky.addRocketTrack("sky:lccol.r");
   sky.addRocketTrack("sky:lccol.g");
   sky.addRocketTrack("sky:lccol.b");
+
+  // Setup tunnel rendering
+  tunnelShader.use();
+  glUniformMatrix4fv(tunnelShader.getUniformLocation("u_projection"),
+      1, GL_FALSE, &demo.getProjectionMatrix()[0][0]);
+  tunnelBinds.recordBind(std::shared_ptr<Bindable const>(
+        &demo.getVerts().bufTunnel));
+  tunnelBinds.recordBind(std::shared_ptr<Bindable const>(
+        new GlVertexAttrib(tunnelShader.getAttribLocation("a_pos"), 3,
+          GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), nullptr)));
 }
 
 ScSky::~ScSky() {
@@ -50,6 +61,22 @@ void ScSky::draw() const {
   clouds.bind();
   genClouds();
   pipeline.draw();
+
+  // Draw tunnel
+  float a = V(tunnel_alpha);
+  if (a > 0.01f) {
+    glLineWidth(4);
+    tunnelShader.use();
+    glUniform1f(tunnelShader.getUniformLocation("u_time"), demo.getTime());
+    glUniform1f(tunnelShader.getUniformLocation("u_fft_bass"),
+        demo.getFftBass());
+    glUniform1f(tunnelShader.getUniformLocation("u_fft_treble"),
+        demo.getFftTreble());
+    glUniform1f(tunnelShader.getUniformLocation("u_tunnel_alpha"), a);
+    tunnelBinds.bind();
+    glDrawArrays(GL_LINES, 0, demo.getVerts().tunnel.size()/3);
+    tunnelBinds.unbind();
+  }
 }
 
 void ScSky::genClouds() const {
@@ -58,7 +85,7 @@ void ScSky::genClouds() const {
       float v = std::min(std::max(stb_perlin_turbulence_noise3(
               x*0.02f+V(clouds_x)*demo.getTime(), y*0.05f,
               V(clouds_z)*demo.getTime(),
-              V(lacunarity), V(gain),
+              2., V(gain),
               5, 0, 0, 0)*V(mult), 0.f),
           255.f);
       //msg(std::to_string(v));

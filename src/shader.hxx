@@ -28,12 +28,17 @@ class Shader: public Drawable {
     GlProgram program;
     GlVertexAttrib vaPos;
 
+    GLuint const idTime;
+    GLuint const idFftBass;
+    GLuint const idFftTreble;
+
     class RocketTrackUniform {
       public:
         RocketTrackUniform(sync_track const *track, GLint const id):
-          id(id)
-        {tracks.push_back(track);}
-        std::vector<sync_track const*>tracks;
+          id(id), nTracks(1)
+        {tracks[0]=track;}
+        sync_track const *tracks[4];
+        int nTracks;
         GLint const id;
     };
 

@@ -25,6 +25,9 @@ Shader Shader::loadFromFile(Demo const &demo, std::string filename) {
 Shader::Shader(Demo const &demo, GlShader const &fs):
   demo(demo),
   program(demo.getShaders().vs, fs),
+  idTime(program.getUniformLocation("u_time")),
+  idFftBass(program.getUniformLocation("u_fft_bass")),
+  idFftTreble(program.getUniformLocation("u_fft_treble")),
   vaPos(
       program.getAttribLocation("a_pos"), 3, GL_FLOAT, GL_FALSE,
       3*sizeof(GLfloat), &Verts::square)
@@ -35,12 +38,13 @@ Shader::Shader(Demo const &demo, GlShader const &fs):
       demo.getWidth(), demo.getHeight());
 
   // Set up sampler ufms
-  glUniform1i(program.getUniformLocation("u_f1"), 0);
-  glUniform1i(program.getUniformLocation("u_f2"), 1);
-  glUniform1i(program.getUniformLocation("u_t1"), 2);
-  glUniform1i(program.getUniformLocation("u_t2"), 3);
-  glUniform1i(program.getUniformLocation("u_t3"), 4);
-  glUniform1i(program.getUniformLocation("u_t4"), 5);
+  for (int i=0; i<DEMO_N_PREV_FBO; ++i) {
+    glUniform1i(program.getUniformLocation("u_f" + std::to_string(i+1)), i);
+  }
+  glUniform1i(program.getUniformLocation("u_t1"), DEMO_N_PREV_FBO+0);
+  glUniform1i(program.getUniformLocation("u_t2"), DEMO_N_PREV_FBO+1);
+  glUniform1i(program.getUniformLocation("u_t3"), DEMO_N_PREV_FBO+2);
+  glUniform1i(program.getUniformLocation("u_t4"), DEMO_N_PREV_FBO+3);
 }
 
 Shader::Shader(Demo const &demo, std::string const &fsSource):
@@ -51,31 +55,31 @@ Shader::Shader(Demo const &demo, std::string const &fsSource):
 void Shader::draw() const {
   program.use();
   vaPos.bind();
-  glUniform1f(program.getUniformLocation("u_time"), demo.getTime());
-  glUniform1f(program.getUniformLocation("u_fft_bass"), demo.getFftBass());
-  glUniform1f(program.getUniformLocation("u_fft_treble"), demo.getFftTreble());
+  glUniform1f(idTime, demo.getTime());
+  glUniform1f(idFftBass, demo.getFftBass());
+  glUniform1f(idFftTreble, demo.getFftTreble());
 
-  int ntrack=1;
-  for (std::pair<std::string, RocketTrackUniform> const &t: tracks) {
-    switch(t.second.tracks.size()) {
+  int track=1;
+  for (auto const &t: tracks) {
+    switch(t.second.nTracks) {
       default:
         die("Shader's rocket track " + t.first + " has incorrect size!"); break;
       case 1:
-        glUniform1f(t.second.id, V(t.second.tracks.at(0))); break;
+        glUniform1f(t.second.id, V(t.second.tracks[0])); break;
       case 2:
-        glUniform2f(t.second.id, V(t.second.tracks.at(0)),
-            V(t.second.tracks.at(1))); break;
+        glUniform2f(t.second.id, V(t.second.tracks[0]),
+            V(t.second.tracks[1])); break;
       case 3:
-        glUniform3f(t.second.id, V(t.second.tracks.at(0)),
-            V(t.second.tracks.at(1)), V(t.second.tracks.at(2))); break;
+        glUniform3f(t.second.id, V(t.second.tracks[0]),
+            V(t.second.tracks[1]), V(t.second.tracks[2])); break;
       case 4:
-        glUniform4f(t.second.id, V(t.second.tracks.at(0)),
-            V(t.second.tracks.at(1)), V(t.second.tracks.at(2)),
-            V(t.second.tracks.at(3))); break;
+        glUniform4f(t.second.id, V(t.second.tracks[0]),
+            V(t.second.tracks[1]), V(t.second.tracks[2]),
+            V(t.second.tracks[3])); break;
     }
-    chk(__FILE__ + std::string(" track=") + std::to_string(ntrack)
+    chk(__FILE__ + std::string(" track=") + std::to_string(track)
         + " (total=" + std::to_string(tracks.size()) + ")", __LINE__);
-    ntrack++;
+    track++;
   }
 
   glDrawArrays(GL_TRIANGLES, 0, Verts::lenSquare/3);
@@ -87,7 +91,13 @@ void Shader::addRocketTrack(std::string const &name) {
   msg("Rocket uniform " + std::string(ufm));
   if (tracks.count(base)) {
     msg("preexisiting " + base);
-    tracks.at(base).tracks.push_back(demo.getRocketTrack(name));
+    RocketTrackUniform &t = tracks.at(base);
+    if (t.nTracks < 4) {
+      t.tracks[t.nTracks] = demo.getRocketTrack(name);
+      t.nTracks++;
+    } else {
+      die("Shader: RocketTrackUniform too many tracks per uniform.");
+    }
   } else {
     GLint id = program.getUniformLocation(ufm);
     msg("id: " + std::to_string(id));

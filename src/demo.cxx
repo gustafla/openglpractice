@@ -38,7 +38,9 @@ Demo::Demo(Window &window):
   window(window),
   width(window.getWidth()),
   height(window.getHeight()),
-  player("music.ogg", &window)
+  player("music.ogg", &window),
+  projectionMatrix(glm::perspective(glm::radians(45.0f),
+        (float)(width) / (float)(height), 0.1f, 100.f))
 {
   rocket = sync_create_device("sync");
 
@@ -112,3 +114,8 @@ int Demo::getWidth() const {
 int Demo::getHeight() const {
   return height;
 }
+
+glm::mat4 const &Demo::getProjectionMatrix() const {
+  return projectionMatrix;
+}
+
