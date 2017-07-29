@@ -9,8 +9,8 @@
 #include "mixer.hxx"
 #include "shader.hxx"
 
-#include "scenes/test.hxx"
 #include "scenes/sky.hxx"
+#include "scenes/tunnel.hxx"
 
 #define NOISE_SIZE 64
 
@@ -34,6 +34,7 @@ std::vector<std::unique_ptr<Drawable>> _scenes;
 void initScenes(Demo &d) {
   _scenes.clear();
   _scenes.push_back(std::unique_ptr<Drawable>(new ScSky(d)));
+  _scenes.push_back(std::unique_ptr<Drawable>(new ScTunnel(d)));
 }
 
 int main(int argc, char *argv[]) {

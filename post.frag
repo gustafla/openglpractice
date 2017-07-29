@@ -20,9 +20,9 @@ uniform sampler2D u_t1;
 void main() {
   vec2 p = gl_FragCoord.xy / u_resolution;
   vec3 c = vec3(
-      texture2D(u_f1, vec2(p.x-u_post_rbs, p.y)).r,
+      texture2D(u_f1, vec2(p.x-u_post_rbs*0.1, p.y)).r,
       texture2D(u_f1, p).g,
-      texture2D(u_f1, vec2(p.x+u_post_rbs, p.y)).b);
+      texture2D(u_f1, vec2(p.x+u_post_rbs*0.1, p.y)).b);
   c += texture2D(u_t1, p*6.).rgb * 0.13; // Add noise
 
   c -= length(v_pos.xy)*0.18; // Vignette
