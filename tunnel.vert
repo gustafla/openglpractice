@@ -19,5 +19,6 @@ void main() {
       a_pos.y*(1.-u_fft_treble*0.03+rand(a_pos.zy+u_time*0.1)*0.14),
       a_pos.z+mod(u_time*5., 1.)-12.,
       1.);
-  gl_Position = v_pos = u_projection * p;
+  v_pos = p;
+  gl_Position = u_projection * p;
 }

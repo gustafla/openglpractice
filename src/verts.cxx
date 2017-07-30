@@ -15,16 +15,19 @@ size_t const Verts::lenSquare = sizeof(square) / sizeof(GLfloat);
 Verts::Verts():
   bufSquare(GL_ARRAY_BUFFER,
       sizeof(GLfloat)*Verts::lenSquare, Verts::square, GL_STATIC_DRAW),
-  tunnel(makeTunnel()),
+  tunnel(makeTunnel(12., 1.)),
+  tunnelHd(makeTunnel(40., 0.5)),
   bufTunnel(GL_ARRAY_BUFFER,
-      sizeof(GLfloat)*tunnel.size(), &tunnel[0], GL_STATIC_DRAW)
+      sizeof(GLfloat)*tunnel.size(), &tunnel[0], GL_STATIC_DRAW),
+  bufTunnelHd(GL_ARRAY_BUFFER,
+      sizeof(GLfloat)*tunnelHd.size(), &tunnelHd[0], GL_STATIC_DRAW)
 {}
 
-std::vector<GLfloat> Verts::makeTunnel() {
+std::vector<GLfloat> Verts::makeTunnel(float rp, float zp) {
   std::vector<GLfloat> mesh;
 
-  float const SIZ = (M_PI*2.f)/12.f;
-  for (float u=-20.f; u<20.f; u+=1.f) {
+  float const SIZ = (M_PI*2.f)/rp;
+  for (float u=-20.f; u<20.f; u+=zp) {
     for (float v=0.0f; v<2.f*M_PI-0.01; v+=SIZ) {
       // Tri 1
       mesh.push_back(std::cos(v));

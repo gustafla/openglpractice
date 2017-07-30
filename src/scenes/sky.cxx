@@ -57,7 +57,7 @@ ScSky::~ScSky() {
 }
 
 void ScSky::draw() const {
-  GlTexture::useUnit(2);
+  GlTexture::useUnit(DEMO_N_PREV_FBO + 0);
   clouds.bind();
   genClouds();
   pipeline.draw();
@@ -65,7 +65,7 @@ void ScSky::draw() const {
   // Draw tunnel
   float a = V(tunnel_alpha);
   if (a > 0.01f) {
-    glLineWidth(4);
+    glLineWidth(5);
     tunnelShader.use();
     glUniform1f(tunnelShader.getUniformLocation("u_time"), demo.getTime());
     glUniform1f(tunnelShader.getUniformLocation("u_fft_bass"),

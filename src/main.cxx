@@ -88,8 +88,10 @@ int main(int argc, char *argv[]) {
     frameTime = time - timeLast;
 
     // Run the FPS counter
+#ifndef BUILD_RELEASE
     fpsCounter.addFrameTime(frameTime);
     fpsCounter.printer(time);
+#endif
 
     // Update demo data
     demo.update();
@@ -109,7 +111,7 @@ int main(int argc, char *argv[]) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GlTexture::useUnit(0);
     postBuf.getTexture().bind();
-    GlTexture::useUnit(2);
+    GlTexture::useUnit(DEMO_N_PREV_FBO+0);
     noise.bind();
     generateNoise(noise);
     post.draw();

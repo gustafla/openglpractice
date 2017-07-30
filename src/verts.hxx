@@ -12,8 +12,10 @@ class Verts {
     static size_t const lenSquare;
 
     std::vector<GLfloat> const tunnel;
-    std::vector<GLfloat> makeTunnel();
+    std::vector<GLfloat> const tunnelHd;
+    std::vector<GLfloat> makeTunnel(float rp, float zp);
 
     GlBuffer const bufSquare;
     GlBuffer const bufTunnel;
+    GlBuffer const bufTunnelHd;
 };
