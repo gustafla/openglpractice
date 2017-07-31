@@ -87,10 +87,10 @@ int main(int argc, char *argv[]) {
     frameTime = time - timeLast;
 
     // Run the FPS counter
-//#ifndef BUILD_RELEASE
+#ifndef BUILD_RELEASE
     fpsCounter.addFrameTime(frameTime);
     fpsCounter.printer(time);
-//#endif
+#endif
 
     // Update demo data
     demo.update();
