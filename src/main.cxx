@@ -81,13 +81,13 @@ int main(int argc, char *argv[]) {
   float timeLast, time, frameTime;
 
   while (window.swapBuffers()) {
+#ifndef BUILD_RELEASE
     // Approximate timings
     timeLast = time;
     time = demo.getTime();
     frameTime = time - timeLast;
 
     // Run the FPS counter
-#ifndef BUILD_RELEASE
     fpsCounter.addFrameTime(frameTime);
     fpsCounter.printer(time);
 #endif
