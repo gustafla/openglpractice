@@ -4,8 +4,8 @@
 #include <iostream>
 
 Window::Window():
-  width(960),
-  height(540)
+  width(960/1),
+  height(540/1)
 {
   open();
   restoreViewport();

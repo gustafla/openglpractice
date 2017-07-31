@@ -9,13 +9,17 @@ class Verts {
     Verts();
 
     static GLfloat const square[];
-    static size_t const lenSquare;
+    static GLsizei const lenSquare;
 
     std::vector<GLfloat> const tunnel;
     std::vector<GLfloat> const tunnelHd;
-    std::vector<GLfloat> makeTunnel(float rp, float zp);
+    std::vector<GLfloat> makeTunnel(float rp, float zp, float end);
+
+    static GLfloat const cube[];
+    static GLsizei const lenCube;
 
     GlBuffer const bufSquare;
     GlBuffer const bufTunnel;
     GlBuffer const bufTunnelHd;
+    GlBuffer const bufCube;
 };

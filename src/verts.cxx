@@ -9,25 +9,71 @@ GLfloat const Verts::square[] = {
   1, 1, 0,
   -1, 1, 0
 };
+GLsizei const Verts::lenSquare = sizeof(Verts::square) / sizeof(GLfloat);
 
-size_t const Verts::lenSquare = sizeof(square) / sizeof(GLfloat);
+GLfloat const Verts::cube[] = {
+  -1, -1, -1,
+  -1, 1, -1,
+  1, 1, -1,
+  1, 1, -1,
+  1, -1, -1,
+  -1, -1, -1,
+
+  -1, -1, 1,
+  1, 1, 1,
+  1, -1, 1,
+  -1, -1, 1,
+  -1, 1, 1,
+  1, 1, 1,
+
+  1, 1, -1,
+  1, -1, -1,
+  1, 1, 1,
+  1, 1, 1,
+  1, -1, -1,
+  1, -1, 1,
+
+  -1, 1, -1,
+  1, 1, -1,
+  -1, 1, 1,
+  -1, 1, 1,
+  1, 1, -1,
+  1, 1, 1,
+
+  -1, -1, -1,
+  1, -1, -1,
+  -1, -1, 1,
+  1, -1, -1,
+  -1, -1, 1,
+  1, -1, 1,
+
+  -1, -1, -1,
+  -1, 1, -1,
+  -1, 1, 1,
+  -1, -1, -1,
+  -1, 1, 1,
+  -1, -1, 1
+}; // Advanced procedural mesh generation
+GLsizei const Verts::lenCube = sizeof(Verts::cube) / sizeof(GLfloat);
 
 Verts::Verts():
   bufSquare(GL_ARRAY_BUFFER,
       sizeof(GLfloat)*Verts::lenSquare, Verts::square, GL_STATIC_DRAW),
-  tunnel(makeTunnel(12., 1.)),
-  tunnelHd(makeTunnel(40., 0.5)),
+  tunnel(makeTunnel(12.f, 1.f, 10.)),
+  tunnelHd(makeTunnel(28., 0.7, -10.)),
   bufTunnel(GL_ARRAY_BUFFER,
       sizeof(GLfloat)*tunnel.size(), &tunnel[0], GL_STATIC_DRAW),
   bufTunnelHd(GL_ARRAY_BUFFER,
-      sizeof(GLfloat)*tunnelHd.size(), &tunnelHd[0], GL_STATIC_DRAW)
+      sizeof(GLfloat)*tunnelHd.size(), &tunnelHd[0], GL_STATIC_DRAW),
+  bufCube(GL_ARRAY_BUFFER,
+      sizeof(GLfloat)*Verts::lenCube, Verts::cube, GL_STATIC_DRAW)
 {}
 
-std::vector<GLfloat> Verts::makeTunnel(float rp, float zp) {
+std::vector<GLfloat> Verts::makeTunnel(float rp, float zp, float end) {
   std::vector<GLfloat> mesh;
 
   float const SIZ = (M_PI*2.f)/rp;
-  for (float u=-20.f; u<20.f; u+=zp) {
+  for (float u=-end; u<20.; u+=zp) {
     for (float v=0.0f; v<2.f*M_PI-0.01; v+=SIZ) {
       // Tri 1
       mesh.push_back(std::cos(v));
@@ -58,3 +104,4 @@ std::vector<GLfloat> Verts::makeTunnel(float rp, float zp) {
 
   return mesh;
 }
+

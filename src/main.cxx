@@ -70,9 +70,8 @@ int main(int argc, char *argv[]) {
 
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
-  glEnable(GL_BLEND);
+  glDisable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
   // Free some memory
 #ifdef BUILD_RELEASE
   glReleaseShaderCompiler();
@@ -88,10 +87,10 @@ int main(int argc, char *argv[]) {
     frameTime = time - timeLast;
 
     // Run the FPS counter
-#ifndef BUILD_RELEASE
+//#ifndef BUILD_RELEASE
     fpsCounter.addFrameTime(frameTime);
     fpsCounter.printer(time);
-#endif
+//#endif
 
     // Update demo data
     demo.update();
