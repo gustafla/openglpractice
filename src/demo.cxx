@@ -50,9 +50,6 @@ Demo::Demo(Window &window):
   }
 #endif
 
-  fftBassMult = getRocketTrack("fft:bass");
-  fftTrebleMult = getRocketTrack("fft:treble");
-
   player.play();
 }
 
@@ -100,11 +97,11 @@ float Demo::getTime() const {
 }
 
 float Demo::getFftBass() const {
-  return fftBass * getValue(fftBassMult);
+  return fftBass;
 }
 
 float Demo::getFftTreble() const {
-  return fftTreble * getValue(fftTrebleMult);
+  return fftTreble;
 }
 
 int Demo::getWidth() const {

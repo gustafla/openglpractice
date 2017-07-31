@@ -25,13 +25,14 @@ class ScTunnel: public Drawable {
         void draw() const;
 
       private:
-        Demo const demo;
+        Demo const &demo;
         GlProgram tunnelShader;
         BindArray tunnelBinds;
     };
 
-    TunnelRenderer tunnelRenderer;
+    TunnelRenderer const tunnelRenderer;
 
+    Shader bright;
     Shader gaussx;
     Shader gaussy;
     Shader tunnelpost;

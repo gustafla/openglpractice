@@ -1,7 +1,9 @@
 #include "tunnel.hxx"
+#include "../debug.hxx"
 
 ScTunnel::ScTunnel(Demo const &demo):
   demo(demo),
+  bright(Shader::loadFromFile(demo, "bright.frag")),
   gaussx(Shader::loadFromFile(demo, "gaussx.frag")),
   gaussy(Shader::loadFromFile(demo, "gaussy.frag")),
   tunnelpost(Shader::loadFromFile(demo, "tunnelpost.frag")),
@@ -9,6 +11,7 @@ ScTunnel::ScTunnel(Demo const &demo):
   tunnelRenderer(demo)
 {
   post.addStage(&tunnelRenderer);
+  post.addStage(&bright);
   post.addStage(&gaussx);
   post.addStage(&gaussy);
   post.addStage(&tunnelpost);

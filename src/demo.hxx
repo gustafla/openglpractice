@@ -47,8 +47,6 @@ class Demo {
     float time;
     float fftBass;
     float fftTreble;
-    sync_track const *fftBassMult;
-    sync_track const *fftTrebleMult;
 
     int const width;
     int const height;
