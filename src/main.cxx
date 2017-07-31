@@ -95,12 +95,14 @@ int main(int argc, char *argv[]) {
     // Update demo data
     demo.update();
 
-#ifndef SYNC_PLAYER
     if (!demo.getPlayer().isPlaying()) {
+#ifndef SYNC_PLAYER
       SDL_Delay(100);
       continue;
-    }
+#else
+      break;
 #endif
+    }
 
     // Render
     postBuf.bind();

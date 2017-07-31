@@ -6,7 +6,7 @@ set (CMAKE_CXX_STANDARD 11)
 
 # Flags
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Dkiss_fft_scalar=float")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lGLESv2")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lGLESv2 -DBUILD_NAME=dmprty")
 
 # Platform flags
 if (EXISTS /opt/vc/lib)
