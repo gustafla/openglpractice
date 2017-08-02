@@ -1,7 +1,6 @@
 #version 100
 
-precision highp float;
-precision highp int;
+precision mediump float;
 
 varying vec4 v_pos;
 

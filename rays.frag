@@ -1,6 +1,6 @@
 #version 100
 
-precision highp float;
+precision mediump float;
 
 varying vec4 v_pos;
 uniform vec2 u_resolution;

@@ -3,7 +3,7 @@
 
 static const std::string _vs =
 "#version 100\n"
-"precision highp float;\n"
+"precision mediump float;\n"
 "attribute vec3 a_pos;\n"
 "varying vec4 v_pos;\n"
 "void main() {\n"

@@ -1,6 +1,6 @@
 #version 100
 
-precision highp float;
+precision mediump float;
 
 attribute vec3 a_pos;
 varying vec4 v_pos;

@@ -1,10 +1,13 @@
 #include "debug.hxx"
-#include <GLES2/gl2.h>
 #include <cstdlib>
 #include <iostream>
+#include "window.hxx"
 
 void die(std::string const &msg) {
   std::cout << msg << std::endl;
+#ifdef BUILD_RPI
+  bcm_host_deinit();
+#endif
   exit(EXIT_FAILURE);
 }
 
