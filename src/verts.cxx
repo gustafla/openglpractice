@@ -60,7 +60,7 @@ Verts::Verts():
   bufSquare(GL_ARRAY_BUFFER,
       sizeof(GLfloat)*Verts::lenSquare, Verts::square, GL_STATIC_DRAW),
   tunnel(makeTunnel(12.f, 1.f, 10.)),
-  tunnelHd(makeTunnel(28., 0.7, -10.)),
+  tunnelHd(makeTunnel(23., 0.8, -10.)),
   bufTunnel(GL_ARRAY_BUFFER,
       sizeof(GLfloat)*tunnel.size(), &tunnel[0], GL_STATIC_DRAW),
   bufTunnelHd(GL_ARRAY_BUFFER,

@@ -12,5 +12,5 @@ uniform float u_df;
 
 void main() {
   float c = abs(-u_df/3.);
-  gl_FragColor = vec4(vec3(c+0.7, c*c+0.2, c*c*c+0.2), /**/1.);
+  gl_FragColor = vec4(vec3(c+0.3, c*c+0.2, c*c*c+0.2), /**/1.);
 }

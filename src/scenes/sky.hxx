@@ -33,7 +33,10 @@ class ScSky: public Drawable {
     sync_track const *clouds_z;
     sync_track const *tunnel_alpha;
 
-    GlFramebuffer fbTest;
+    //GlFramebuffer fbTest;
 
     void genClouds() const;
+
+    /*GlTexture cred;
+    Shader showtex;*/
 };

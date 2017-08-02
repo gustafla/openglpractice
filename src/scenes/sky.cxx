@@ -14,8 +14,9 @@ ScSky::ScSky(Demo const &demo):
   clouds_x(demo.getRocketTrack("sky:clouds.x")),
   clouds_z(demo.getRocketTrack("sky:clouds.z")),
   tunnel_alpha(demo.getRocketTrack("sky:tunnel.a")),
-  tunnelShader(GlProgram::loadFromFiles("tunnel.vert", "tunnel.frag")),
-  fbTest(demo.getWidth(), demo.getHeight())
+  tunnelShader(GlProgram::loadFromFiles("tunnel.vert", "tunnel.frag"))/*,
+  showtex(Shader::loadFromFile(demo, "showtex.frag")),
+  cred(GlTexture::loadFromFile("cred.png"))*/
 {
   pipeline.addStage(&sky);
   pipeline.addStage(&rays);
@@ -65,10 +66,11 @@ void ScSky::draw() const {
   genClouds();
   pipeline.draw();
 
+  glEnable(GL_BLEND);
+
   // Draw tunnel
   float a = V(tunnel_alpha);
   if (a > 0.01f) {
-    glEnable(GL_BLEND);
     glLineWidth(5);
     tunnelShader.use();
     glUniform1f(tunnelShader.getUniformLocation("u_time"), demo.getTime());
@@ -81,6 +83,12 @@ void ScSky::draw() const {
     glDrawArrays(GL_LINES, 0, demo.getVerts().tunnel.size()/3);
     tunnelBinds.unbind();
   }
+
+  /*if (demo.getTime() > 1792.f/8.f) {
+    GlTexture::useUnit(DEMO_N_PREV_FBO+0);
+    cred.bind();
+    showtex.draw();
+  }*/
 }
 
 void ScSky::genClouds() const {

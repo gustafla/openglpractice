@@ -69,9 +69,9 @@ void ScTunnel::TunnelRenderer::drawMetacubes(float time) const {
   glUniformMatrix4fv(u_rotation ,1, GL_FALSE, &ir[0][0]);
 
 
-  for (float x=-5; x<6; x+=1.1f) {
-    for (float y=-5; y<6; y+=1.1f) {
-      for (float z=0; z<6; z+=1.1f) {
+  for (float x=-5; x<6; x+=1.3f) {
+    for (float y=-5; y<6; y+=1.3f) {
+      for (float z=0; z<6; z+=1.5f) {
         glm::vec3 p = glm::vec3(x, y, z);
         float d =
           /*(*/ball(p-glm::vec3(V(ball1x), V(ball1y), 0.7), 4.)
