@@ -9,7 +9,6 @@ compile_commands.json
 CTestTestfile.cmake
 openglpractice*
 *.ogg
-*rocket
 src/rocket/*
 *.track
 gdb.txt

@@ -1,0 +1,522 @@
+<sync rows="4096">
+	<tracks>
+		<track name="scene">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="1" row="1016"/>
+			<key interpolation="0" value="0" row="1018"/>
+			<key interpolation="0" value="1" row="1020"/>
+			<key interpolation="0" value="0" row="1022"/>
+			<key interpolation="0" value="1" row="1024"/>
+			<key interpolation="0" value="0" row="1536"/>
+		</track>
+		<track name="sky:sunpos.y">
+			<key interpolation="1" value="1" row="0"/>
+			<key interpolation="1" value="-0.5" row="512"/>
+			<key interpolation="0" value="0.8" row="632"/>
+			<key interpolation="1" value="-0.2" row="633"/>
+			<key interpolation="0" value="0.1" row="1016"/>
+			<key interpolation="1" value="-0.9" row="1536"/>
+			<key interpolation="1" value="0.1" row="1792"/>
+			<key interpolation="0" value="1" row="2048"/>
+		</track>
+		<track name="sky:sunpos.x">
+			<key interpolation="1" value="0.2" row="0"/>
+			<key interpolation="1" value="-0.1" row="512"/>
+			<key interpolation="0" value="0.3" row="632"/>
+			<key interpolation="1" value="-0.8" row="633"/>
+			<key interpolation="0" value="0.6" row="1016"/>
+			<key interpolation="1" value="0.3" row="1536"/>
+			<key interpolation="1" value="-0.1" row="1792"/>
+			<key interpolation="0" value="-0.4" row="2048"/>
+		</track>
+		<track name="sky:gain">
+			<key interpolation="1" value="0.3" row="0"/>
+			<key interpolation="0" value="0.6" row="424"/>
+			<key interpolation="0" value="0.5" row="1536"/>
+		</track>
+		<track name="sky:mult">
+			<key interpolation="1" value="255" row="0"/>
+			<key interpolation="3" value="320" row="368"/>
+			<key interpolation="1" value="350" row="384"/>
+			<key interpolation="1" value="320" row="424"/>
+			<key interpolation="0" value="300" row="512"/>
+			<key interpolation="0" value="400" row="513"/>
+		</track>
+		<track name="sky:lcolor.r">
+			<key interpolation="1" value="0.03" row="0"/>
+			<key interpolation="0" value="0.4" row="512"/>
+			<key interpolation="1" value="0.4" row="513"/>
+			<key interpolation="0" value="0.3" row="632"/>
+			<key interpolation="0" value="0.3" row="633"/>
+			<key interpolation="0" value="0.3" row="1536"/>
+		</track>
+		<track name="sky:lcolor.g">
+			<key interpolation="1" value="0.03" row="0"/>
+			<key interpolation="0" value="0.35" row="512"/>
+			<key interpolation="1" value="0.4" row="513"/>
+			<key interpolation="0" value="0.3" row="632"/>
+			<key interpolation="0" value="0.3" row="633"/>
+			<key interpolation="1" value="0.25" row="1536"/>
+			<key interpolation="0" value="0.3" row="1792"/>
+		</track>
+		<track name="sky:lcolor.b">
+			<key interpolation="1" value="0.04" row="0"/>
+			<key interpolation="0" value="0.28" row="512"/>
+			<key interpolation="1" value="0.4" row="513"/>
+			<key interpolation="0" value="0.3" row="632"/>
+			<key interpolation="0" value="0.3" row="633"/>
+			<key interpolation="1" value="0.2" row="1536"/>
+			<key interpolation="0" value="0.4" row="1792"/>
+		</track>
+		<track name="sky:hcolor.r">
+			<key interpolation="1" value="0.34" row="0"/>
+			<key interpolation="0" value="0.03" row="512"/>
+			<key interpolation="0" value="0.03" row="513"/>
+			<key interpolation="0" value="0.5" row="1536"/>
+		</track>
+		<track name="sky:hcolor.g">
+			<key interpolation="1" value="0.35" row="0"/>
+			<key interpolation="0" value="0.03" row="512"/>
+			<key interpolation="0" value="0.03" row="513"/>
+			<key interpolation="0" value="0.6" row="1536"/>
+		</track>
+		<track name="sky:hcolor.b">
+			<key interpolation="1" value="0.4" row="0"/>
+			<key interpolation="0" value="0.03" row="512"/>
+			<key interpolation="0" value="0.03" row="513"/>
+			<key interpolation="0" value="1" row="1536"/>
+		</track>
+		<track name="sky:hccol.r">
+			<key interpolation="0" value="1.6" row="0"/>
+			<key interpolation="1" value="1.6" row="408"/>
+			<key interpolation="0" value="1.1" row="448"/>
+			<key interpolation="0" value="1" row="513"/>
+			<key interpolation="1" value="0.9" row="1536"/>
+			<key interpolation="0" value="0.7" row="1792"/>
+		</track>
+		<track name="sky:hccol.g">
+			<key interpolation="1" value="1.6" row="0"/>
+			<key interpolation="1" value="1.6" row="408"/>
+			<key interpolation="1" value="1" row="448"/>
+			<key interpolation="0" value="0.8" row="512"/>
+			<key interpolation="0" value="1" row="513"/>
+			<key interpolation="1" value="0.8" row="1536"/>
+			<key interpolation="0" value="0.7" row="1792"/>
+		</track>
+		<track name="sky:hccol.b">
+			<key interpolation="1" value="1.8" row="0"/>
+			<key interpolation="1" value="1.6" row="408"/>
+			<key interpolation="1" value="0.9" row="448"/>
+			<key interpolation="0" value="0.5" row="512"/>
+			<key interpolation="0" value="1" row="513"/>
+			<key interpolation="0" value="0.8" row="1536"/>
+		</track>
+		<track name="sky:lccol.r">
+			<key interpolation="0" value="0.2" row="0"/>
+			<key interpolation="0" value="0" row="513"/>
+			<key interpolation="0" value="0.2" row="1536"/>
+		</track>
+		<track name="sky:lccol.g">
+			<key interpolation="0" value="0.2" row="0"/>
+			<key interpolation="0" value="0" row="513"/>
+			<key interpolation="0" value="0.2" row="1536"/>
+		</track>
+		<track name="sky:lccol.b">
+			<key interpolation="0" value="0.2" row="0"/>
+			<key interpolation="0" value="0" row="513"/>
+			<key interpolation="0" value="0.25" row="1536"/>
+		</track>
+		<track name="sky:clouds.z">
+			<key interpolation="0" value="-0.14" row="0"/>
+			<key interpolation="0" value="0.8" row="512"/>
+			<key interpolation="0" value="-1" row="633"/>
+			<key interpolation="0" value="0.13" row="1536"/>
+		</track>
+		<track name="sky:clouds.x">
+			<key interpolation="0" value="0.21" row="0"/>
+			<key interpolation="0" value="-1.2" row="512"/>
+			<key interpolation="0" value="-0.2" row="633"/>
+			<key interpolation="0" value="-0.13" row="1536"/>
+		</track>
+		<track name="sky:tunnel.a">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="1" value="0" row="768"/>
+			<key interpolation="1" value="0.2" row="816"/>
+			<key interpolation="0" value="0.3" row="1024"/>
+			<key interpolation="0" value="0" row="1536"/>
+		</track>
+		<track name="post:whiteout">
+			<key interpolation="1" value="-0.3" row="0"/>
+			<key interpolation="1" value="-0.15" row="12"/>
+			<key interpolation="1" value="-0.1" row="24"/>
+			<key interpolation="0" value="0" row="48"/>
+			<key interpolation="1" value="0" row="496"/>
+			<key interpolation="1" value="0.05" row="500"/>
+			<key interpolation="1" value="0.1" row="504"/>
+			<key interpolation="1" value="0.3" row="508"/>
+			<key interpolation="0" value="0.9" row="512"/>
+			<key interpolation="0" value="0" row="513"/>
+			<key interpolation="1" value="0" row="632"/>
+			<key interpolation="0" value="0.3" row="634"/>
+			<key interpolation="0" value="0" row="635"/>
+			<key interpolation="1" value="0" row="1016"/>
+			<key interpolation="0" value="1" row="1024"/>
+			<key interpolation="0" value="0" row="1025"/>
+			<key interpolation="1" value="0" row="1528"/>
+			<key interpolation="1" value="1" row="1536"/>
+			<key interpolation="1" value="0.6" row="1552"/>
+			<key interpolation="1" value="0.2" row="1576"/>
+			<key interpolation="1" value="0.1" row="1600"/>
+			<key interpolation="1" value="0" row="1672"/>
+			<key interpolation="0" value="-0.3" row="1792"/>
+			<key interpolation="1" value="-0.3" row="2024"/>
+			<key interpolation="0" value="-1" row="2048"/>
+		</track>
+		<track name="post:fft_bass">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="0" row="1024"/>
+		</track>
+		<track name="post:fft_treble">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="0.1" row="496"/>
+			<key interpolation="0" value="0.4" row="512"/>
+			<key interpolation="0" value="0.8" row="640"/>
+			<key interpolation="1" value="0" row="1024"/>
+			<key interpolation="1" value="0.6" row="1040"/>
+			<key interpolation="1" value="0.1" row="1536"/>
+			<key interpolation="0" value="0.2" row="1792"/>
+			<key interpolation="1" value="0.2" row="1960"/>
+			<key interpolation="0" value="0" row="2040"/>
+		</track>
+		<track name="post:rbs">
+			<key interpolation="1" value="0.001" row="0"/>
+			<key interpolation="0" value="0.04" row="40"/>
+			<key interpolation="0" value="0.12" row="512"/>
+			<key interpolation="1" value="0.12" row="712"/>
+			<key interpolation="0" value="0.03" row="776"/>
+			<key interpolation="1" value="0.2" row="1024"/>
+			<key interpolation="0" value="0.05" row="1040"/>
+			<key interpolation="1" value="0.2" row="1056"/>
+			<key interpolation="0" value="0.03" row="1064"/>
+			<key interpolation="1" value="0.5" row="1088"/>
+			<key interpolation="0" value="0.1" row="1095"/>
+			<key interpolation="1" value="0.4" row="1096"/>
+			<key interpolation="0" value="0.05" row="1104"/>
+			<key interpolation="1" value="0.1" row="1120"/>
+			<key interpolation="0" value="0" row="1127"/>
+			<key interpolation="1" value="0.4" row="1128"/>
+			<key interpolation="0" value="0.06" row="1136"/>
+			<key interpolation="1" value="0" row="1160"/>
+			<key interpolation="0" value="0.1" row="1176"/>
+			<key interpolation="1" value="0.4" row="1184"/>
+			<key interpolation="0" value="0.08" row="1192"/>
+			<key interpolation="1" value="0.5" row="1216"/>
+			<key interpolation="0" value="0.2" row="1224"/>
+			<key interpolation="0" value="0.07" row="1232"/>
+			<key interpolation="1" value="0" row="1304"/>
+			<key interpolation="1" value="1" row="1312"/>
+			<key interpolation="0" value="0" row="1320"/>
+			<key interpolation="1" value="0.2" row="1328"/>
+			<key interpolation="1" value="0.03" row="1344"/>
+			<key interpolation="0" value="0.2" row="1352"/>
+			<key interpolation="1" value="0" row="1353"/>
+			<key interpolation="0" value="0.3" row="1360"/>
+			<key interpolation="0" value="0" row="1361"/>
+			<key interpolation="1" value="0" row="1376"/>
+			<key interpolation="1" value="0.3" row="1384"/>
+			<key interpolation="0" value="0.1" row="1392"/>
+			<key interpolation="1" value="0" row="1432"/>
+			<key interpolation="1" value="1" row="1436"/>
+			<key interpolation="0" value="0.1" row="1440"/>
+			<key interpolation="1" value="0.5" row="1441"/>
+			<key interpolation="0" value="0.09" row="1448"/>
+			<key interpolation="1" value="0" row="1456"/>
+			<key interpolation="1" value="0.6" row="1464"/>
+			<key interpolation="0" value="0" row="1471"/>
+			<key interpolation="1" value="0.5" row="1472"/>
+			<key interpolation="0" value="0.1" row="1488"/>
+			<key interpolation="0" value="0.08" row="1536"/>
+		</track>
+		<track name="tunnel:ball1.x">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="1" value="-5" row="1024"/>
+			<key interpolation="1" value="5" row="1040"/>
+			<key interpolation="0" value="-3" row="1042"/>
+			<key interpolation="0" value="-5" row="1043"/>
+			<key interpolation="0" value="5" row="1046"/>
+			<key interpolation="0" value="-5" row="1048"/>
+			<key interpolation="1" value="5" row="1049"/>
+			<key interpolation="0" value="0" row="1056"/>
+			<key interpolation="1" value="5" row="1072"/>
+			<key interpolation="1" value="-5" row="1080"/>
+			<key interpolation="0" value="0" row="1088"/>
+			<key interpolation="0" value="4" row="1120"/>
+			<key interpolation="0" value="-3" row="1123"/>
+			<key interpolation="0" value="2" row="1125"/>
+			<key interpolation="1" value="-1" row="1126"/>
+			<key interpolation="0" value="0" row="1128"/>
+			<key interpolation="1" value="-5" row="1160"/>
+			<key interpolation="0" value="0" row="1168"/>
+			<key interpolation="1" value="-5" row="1176"/>
+			<key interpolation="1" value="3" row="1184"/>
+			<key interpolation="0" value="-5" row="1192"/>
+			<key interpolation="0" value="0" row="1193"/>
+			<key interpolation="1" value="-2" row="1248"/>
+			<key interpolation="0" value="2" row="1255"/>
+			<key interpolation="0" value="0" row="1256"/>
+			<key interpolation="1" value="-5" row="1288"/>
+			<key interpolation="0" value="0" row="1296"/>
+			<key interpolation="0" value="-5" row="1304"/>
+			<key interpolation="1" value="3" row="1312"/>
+			<key interpolation="0" value="-5" row="1320"/>
+			<key interpolation="0" value="0" row="1321"/>
+			<key interpolation="0" value="3" row="1370"/>
+			<key interpolation="0" value="-2" row="1371"/>
+			<key interpolation="0" value="1" row="1372"/>
+			<key interpolation="0" value="0" row="1373"/>
+			<key interpolation="1" value="-2" row="1376"/>
+			<key interpolation="0" value="2" row="1383"/>
+			<key interpolation="0" value="0" row="1384"/>
+			<key interpolation="1" value="-5" row="1416"/>
+			<key interpolation="0" value="0" row="1424"/>
+			<key interpolation="1" value="-5" row="1432"/>
+			<key interpolation="1" value="3" row="1440"/>
+			<key interpolation="0" value="-5" row="1448"/>
+			<key interpolation="0" value="0" row="1449"/>
+			<key interpolation="1" value="3" row="1456"/>
+			<key interpolation="1" value="-2" row="1464"/>
+			<key interpolation="0" value="0" row="1472"/>
+			<key interpolation="1" value="-2" row="1504"/>
+			<key interpolation="0" value="2" row="1511"/>
+			<key interpolation="0" value="0" row="1512"/>
+			<key interpolation="1" value="-4" row="1520"/>
+			<key interpolation="1" value="4" row="1528"/>
+			<key interpolation="0" value="-4" row="1536"/>
+		</track>
+		<track name="tunnel:ball1.y">
+			<key interpolation="0" value="0" row="0"/>
+			<key interpolation="0" value="0" row="1024"/>
+			<key interpolation="0" value="1" row="1040"/>
+			<key interpolation="0" value="-1" row="1041"/>
+			<key interpolation="0" value="1" row="1042"/>
+			<key interpolation="0" value="-1" row="1043"/>
+			<key interpolation="0" value="1" row="1044"/>
+			<key interpolation="0" value="-1" row="1045"/>
+			<key interpolation="0" value="1" row="1046"/>
+			<key interpolation="1" value="-6" row="1056"/>
+			<key interpolation="1" value="4" row="1064"/>
+			<key interpolation="0" value="-1" row="1080"/>
+			<key interpolation="1" value="0" row="1088"/>
+			<key interpolation="1" value="3" row="1092"/>
+			<key interpolation="1" value="0" row="1096"/>
+			<key interpolation="1" value="3" row="1100"/>
+			<key interpolation="1" value="0" row="1104"/>
+			<key interpolation="1" value="3" row="1108"/>
+			<key interpolation="1" value="0" row="1112"/>
+			<key interpolation="0" value="-1" row="1113"/>
+			<key interpolation="0" value="2" row="1114"/>
+			<key interpolation="0" value="-3" row="1115"/>
+			<key interpolation="1" value="4" row="1116"/>
+			<key interpolation="0" value="-5" row="1117"/>
+			<key interpolation="0" value="3" row="1118"/>
+			<key interpolation="0" value="-1" row="1119"/>
+			<key interpolation="0" value="0" row="1120"/>
+			<key interpolation="1" value="-5" row="1136"/>
+			<key interpolation="1" value="5" row="1144"/>
+			<key interpolation="0" value="0" row="1152"/>
+			<key interpolation="0" value="-3" row="1168"/>
+			<key interpolation="0" value="3" row="1170"/>
+			<key interpolation="0" value="-3" row="1172"/>
+			<key interpolation="0" value="3" row="1174"/>
+			<key interpolation="0" value="0" row="1176"/>
+			<key interpolation="0" value="0" row="1193"/>
+			<key interpolation="1" value="5" row="1216"/>
+			<key interpolation="0" value="0" row="1224"/>
+			<key interpolation="1" value="5" row="1232"/>
+			<key interpolation="0" value="-5" row="1236"/>
+			<key interpolation="1" value="5" row="1237"/>
+			<key interpolation="0" value="-5" row="1240"/>
+			<key interpolation="1" value="5" row="1241"/>
+			<key interpolation="1" value="-5" row="1244"/>
+			<key interpolation="0" value="5" row="1245"/>
+			<key interpolation="0" value="3" row="1248"/>
+			<key interpolation="0" value="0" row="1256"/>
+			<key interpolation="1" value="-5" row="1264"/>
+			<key interpolation="1" value="5" row="1272"/>
+			<key interpolation="0" value="0" row="1280"/>
+			<key interpolation="0" value="-3" row="1296"/>
+			<key interpolation="0" value="3" row="1298"/>
+			<key interpolation="0" value="-3" row="1300"/>
+			<key interpolation="0" value="3" row="1302"/>
+			<key interpolation="0" value="0" row="1304"/>
+			<key interpolation="0" value="0" row="1321"/>
+			<key interpolation="1" value="5" row="1344"/>
+			<key interpolation="0" value="0" row="1352"/>
+			<key interpolation="0" value="-5" row="1368"/>
+			<key interpolation="1" value="5" row="1369"/>
+			<key interpolation="0" value="-5" row="1374"/>
+			<key interpolation="1" value="5" row="1375"/>
+			<key interpolation="0" value="3" row="1376"/>
+			<key interpolation="0" value="0" row="1384"/>
+			<key interpolation="1" value="-5" row="1392"/>
+			<key interpolation="1" value="5" row="1400"/>
+			<key interpolation="0" value="0" row="1408"/>
+			<key interpolation="0" value="-3" row="1424"/>
+			<key interpolation="0" value="3" row="1426"/>
+			<key interpolation="0" value="-3" row="1428"/>
+			<key interpolation="0" value="3" row="1430"/>
+			<key interpolation="0" value="0" row="1432"/>
+			<key interpolation="0" value="0" row="1449"/>
+			<key interpolation="1" value="5" row="1472"/>
+			<key interpolation="0" value="0" row="1480"/>
+			<key interpolation="0" value="5" row="1488"/>
+			<key interpolation="0" value="-5" row="1489"/>
+			<key interpolation="0" value="5" row="1490"/>
+			<key interpolation="0" value="-5" row="1491"/>
+			<key interpolation="0" value="5" row="1492"/>
+			<key interpolation="0" value="-5" row="1493"/>
+			<key interpolation="0" value="5" row="1494"/>
+			<key interpolation="0" value="-5" row="1495"/>
+			<key interpolation="0" value="2" row="1496"/>
+			<key interpolation="0" value="-2" row="1497"/>
+			<key interpolation="0" value="2" row="1498"/>
+			<key interpolation="0" value="-2" row="1499"/>
+			<key interpolation="0" value="2" row="1500"/>
+			<key interpolation="0" value="-2" row="1501"/>
+			<key interpolation="0" value="2" row="1502"/>
+			<key interpolation="0" value="-2" row="1503"/>
+			<key interpolation="0" value="3" row="1504"/>
+			<key interpolation="0" value="0" row="1512"/>
+		</track>
+		<track name="tunnel:cube_rot.x">
+			<key interpolation="1" value="0" row="1088"/>
+			<key interpolation="0" value="5" row="1120"/>
+			<key interpolation="1" value="0" row="1128"/>
+			<key interpolation="0" value="4" row="1134"/>
+			<key interpolation="0" value="0" row="1136"/>
+			<key interpolation="1" value="1" row="1152"/>
+			<key interpolation="0" value="0" row="1160"/>
+			<key interpolation="1" value="0" row="1193"/>
+			<key interpolation="1" value="1" row="1199"/>
+			<key interpolation="0" value="-1" row="1208"/>
+			<key interpolation="0" value="0" row="1248"/>
+			<key interpolation="0" value="0" row="1264"/>
+			<key interpolation="1" value="1" row="1280"/>
+			<key interpolation="1" value="0" row="1288"/>
+			<key interpolation="0" value="4" row="1320"/>
+			<key interpolation="1" value="0" row="1321"/>
+			<key interpolation="1" value="1" row="1327"/>
+			<key interpolation="1" value="-1" row="1336"/>
+			<key interpolation="0" value="5" row="1375"/>
+			<key interpolation="0" value="0" row="1376"/>
+			<key interpolation="1" value="0" row="1392"/>
+			<key interpolation="1" value="6" row="1400"/>
+			<key interpolation="1" value="1" row="1408"/>
+			<key interpolation="0" value="0" row="1416"/>
+			<key interpolation="1" value="0" row="1449"/>
+			<key interpolation="1" value="1" row="1455"/>
+			<key interpolation="0" value="-1" row="1464"/>
+			<key interpolation="0" value="0" row="1504"/>
+			<key interpolation="1" value="4" row="1520"/>
+			<key interpolation="1" value="-2" row="1528"/>
+			<key interpolation="0" value="0" row="1536"/>
+		</track>
+		<track name="tunnel:cube_rot.y">
+			<key interpolation="1" value="0" row="1088"/>
+			<key interpolation="0" value="5" row="1120"/>
+			<key interpolation="1" value="0" row="1128"/>
+			<key interpolation="0" value="3" row="1134"/>
+			<key interpolation="0" value="0" row="1136"/>
+			<key interpolation="1" value="1" row="1152"/>
+			<key interpolation="0" value="0" row="1160"/>
+			<key interpolation="1" value="0" row="1193"/>
+			<key interpolation="0" value="1" row="1199"/>
+			<key interpolation="1" value="0" row="1208"/>
+			<key interpolation="0" value="-1" row="1216"/>
+			<key interpolation="0" value="0" row="1248"/>
+			<key interpolation="0" value="0" row="1264"/>
+			<key interpolation="1" value="1" row="1280"/>
+			<key interpolation="0" value="0" row="1288"/>
+			<key interpolation="1" value="0" row="1321"/>
+			<key interpolation="0" value="1" row="1327"/>
+			<key interpolation="1" value="0" row="1336"/>
+			<key interpolation="0" value="-1" row="1344"/>
+			<key interpolation="0" value="0" row="1376"/>
+			<key interpolation="1" value="0" row="1392"/>
+			<key interpolation="1" value="5" row="1400"/>
+			<key interpolation="1" value="1" row="1408"/>
+			<key interpolation="0" value="0" row="1416"/>
+			<key interpolation="1" value="0" row="1449"/>
+			<key interpolation="0" value="1" row="1455"/>
+			<key interpolation="1" value="0" row="1464"/>
+			<key interpolation="0" value="-1" row="1472"/>
+			<key interpolation="0" value="0" row="1504"/>
+			<key interpolation="1" value="4" row="1520"/>
+			<key interpolation="1" value="-2" row="1528"/>
+			<key interpolation="0" value="0" row="1536"/>
+		</track>
+		<track name="tunnel:ball.r">
+			<key interpolation="0" value="5" row="0"/>
+			<key interpolation="1" value="0" row="1024"/>
+			<key interpolation="1" value="8" row="1032"/>
+			<key interpolation="0" value="0" row="1039"/>
+			<key interpolation="0" value="5" row="1040"/>
+			<key interpolation="1" value="5" row="1072"/>
+			<key interpolation="1" value="2" row="1080"/>
+			<key interpolation="1" value="5" row="1088"/>
+			<key interpolation="1" value="6" row="1096"/>
+			<key interpolation="1" value="3" row="1100"/>
+			<key interpolation="1" value="6" row="1104"/>
+			<key interpolation="1" value="4" row="1108"/>
+			<key interpolation="0" value="5" row="1112"/>
+			<key interpolation="1" value="2" row="1192"/>
+			<key interpolation="1" value="3" row="1200"/>
+			<key interpolation="1" value="4" row="1204"/>
+			<key interpolation="1" value="8" row="1208"/>
+			<key interpolation="1" value="2" row="1210"/>
+			<key interpolation="1" value="4" row="1212"/>
+			<key interpolation="0" value="3" row="1216"/>
+			<key interpolation="0" value="5" row="1217"/>
+			<key interpolation="1" value="2" row="1224"/>
+			<key interpolation="0" value="7" row="1231"/>
+			<key interpolation="0" value="5" row="1232"/>
+			<key interpolation="1" value="6" row="1248"/>
+			<key interpolation="1" value="2" row="1252"/>
+			<key interpolation="0" value="5" row="1256"/>
+			<key interpolation="1" value="6" row="1257"/>
+			<key interpolation="0" value="2" row="1263"/>
+			<key interpolation="0" value="5" row="1264"/>
+			<key interpolation="0" value="8" row="1280"/>
+			<key interpolation="0" value="5" row="1287"/>
+			<key interpolation="1" value="2" row="1320"/>
+			<key interpolation="1" value="3" row="1328"/>
+			<key interpolation="1" value="4" row="1332"/>
+			<key interpolation="1" value="8" row="1336"/>
+			<key interpolation="1" value="4" row="1340"/>
+			<key interpolation="0" value="3" row="1344"/>
+			<key interpolation="1" value="5" row="1345"/>
+			<key interpolation="1" value="-2" row="1349"/>
+			<key interpolation="1" value="2" row="1352"/>
+			<key interpolation="0" value="6" row="1359"/>
+			<key interpolation="0" value="5" row="1360"/>
+			<key interpolation="1" value="6" row="1376"/>
+			<key interpolation="1" value="2" row="1380"/>
+			<key interpolation="0" value="5" row="1384"/>
+			<key interpolation="1" value="2" row="1448"/>
+			<key interpolation="1" value="3" row="1456"/>
+			<key interpolation="1" value="4" row="1460"/>
+			<key interpolation="1" value="8" row="1464"/>
+			<key interpolation="1" value="4" row="1468"/>
+			<key interpolation="0" value="3" row="1472"/>
+			<key interpolation="0" value="5" row="1473"/>
+			<key interpolation="1" value="6" row="1504"/>
+			<key interpolation="1" value="2" row="1508"/>
+			<key interpolation="1" value="5" row="1512"/>
+			<key interpolation="0" value="8" row="1519"/>
+			<key interpolation="1" value="2" row="1520"/>
+			<key interpolation="1" value="7" row="1528"/>
+			<key interpolation="0" value="20" row="1536"/>
+		</track>
+	</tracks>
+	<bookmarks/>
+</sync>
