@@ -1,4 +1,4 @@
-## Mehu - dmpty
+## Mehu - dmprty
 
 Raspberry Pi 512MB, Assembly 2017  
 A small and lazy thing for a small and lazy party :)
